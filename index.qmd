@@ -48,6 +48,16 @@ Start watching [lesson 1](Lessons/lesson1.qmd) now!
 
 ## Real results
 
+以下是一个用Markdown格式编写的复杂数学公式：
+
+$$
+\int_{-\infty}^{\infty} \frac{e^{-x^2/2}}{\sqrt{2\pi}} \left( \sum_{n=0}^{\infty} \frac{H_n(x)}{\sqrt{2^n n!}} z^n \right) dx = e^{z^2/2}
+$$
+
+这是高斯积分与埃尔米特多项式的一个关系式，其中$H_n(x)$是埃尔米特多项式。
+
+如果您需要更复杂的公式或特定主题的公式，请告诉我。
+
 Our videos have been viewed over 6,000,000 times already! Take a look at the [dozens of testimonials](Resources/testimonials.qmd) about our book and course by alumni, top academics, and industry experts.
 
 ::: {layout="[70,30]"}
