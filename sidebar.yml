@@ -13,16 +13,6 @@ website:
           - Lessons/lesson7.qmd
           - Lessons/lesson8.qmd
           - Lessons/lesson8a.qmd
-          - section: Summaries
-            contents:
-              - Lessons/Summaries/lesson1.qmd
-              - Lessons/Summaries/lesson2.qmd
-              - Lessons/Summaries/lesson3.qmd
-              - Lessons/Summaries/lesson4.qmd
-              - Lessons/Summaries/lesson5.qmd
-              - Lessons/Summaries/lesson6.qmd
-              - Lessons/Summaries/lesson7.qmd
-              - Lessons/Summaries/lesson8.qmd
       - section: Part 2
         contents:
           - Lessons/part2.qmd
