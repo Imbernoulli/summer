@@ -1,0 +1,35 @@
+project:
+  type: website
+  resources:
+    - "www/*"
+  preview:
+    port: 3000
+    browser: false
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+website:
+  title: "Practical Deep Learning for Coders"
+  description: "Learn Deep Learning with fastai and PyTorch, 2022"
+  twitter-card: true
+  open-graph: true
+  reader-mode: true
+  page-navigation: true
+  repo-branch: master
+  repo-url: https://github.com/fastai/course22-web
+  repo-actions: [issue]
+  navbar:
+    background: primary
+    search: true
+    right:
+      - icon: github
+        href: https://github.com/fastai/course22
+  sidebar:
+    style: "floating"
+
+metadata-files:
+  - sidebar.yml
