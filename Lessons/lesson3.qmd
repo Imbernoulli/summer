@@ -1,34 +1,356 @@
 ---
-title: "3: Neural net foundations"
+title: "3: Python实用进阶"
 ---
 
-::: {layout="[30,70]"}
+## 进阶心法：拥抱命令行
 
-![](../images/bear_sunnies2.png)
+当你熟练使用 VS Code 或 PyCharm 这样的 IDE 时，你会发现它们侧边栏上有一个绿色的“运行”按钮，以及强大的图形化调试（Debug）工具。这些功能非常高效，但我强烈建议你先“封印”它们。
 
-Today we'll be learning about the mathematical foundations of deep learning: *Stochastic gradient descent* (SGD), and the flexibility of linear functions layered with non-linear activation functions. We'll be focussing particularly on a popular combination called the *Rectified linear function* (ReLU).
+### 为什么要坚持使用命令行？
 
-:::
+- **理解程序的真实运行环境**  
+  你的 Python 代码最终是在操作系统中的一个进程里执行的，而不是在 IDE 的“魔法盒子”里。命令行就是这个真实环境最直接的交互窗口。理解 `python your_script.py` 这行命令的背后意义，比点击一个按钮要重要得多。它告诉你：“我正在调用 Python 解释器，让它来执行这个脚本文件。”
 
-## Video
+- **掌握处理参数的能力**  
+  真实世界的程序很少是“一键运行”就完事的。它们通常需要接收外部传入的参数来改变行为。例如，一个处理文件的脚本需要知道要处理哪个文件；一个数据转换工具需要知道输出格式是什么。这些参数都是通过命令行传入的。如果你只用 IDE 的运行按钮，你将失去练习这项核心技能的机会。
 
-<iframe width="514" height="289" src="https://www.youtube-nocookie.com/embed/hBBOjCiFcuo?modestbranding=1" title="fast.ai lesson 3" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+- **学习更本质的调试方法**  
+  图形化的 Debugger 非常强大，但它也隐藏了许多底层细节。`pdb` 是 Python 内置的命令行调试工具。学会使用它，意味着你可以在任何地方进行调试，哪怕是在一个没有图形界面的服务器上。这种能力是专业开发者必备的。它能让你更深刻地理解代码的执行流程、作用域和调用栈。
 
-This lesson is based partly on [chapter 4](https://github.com/fastai/fastbook/blob/master/04_mnist_basics.ipynb) of the [book](https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch/dp/1492045527).
+当你真正理解了命令行的工作方式后，再回头去使用 IDE 的便捷功能，你就会明白那些按钮背后到底发生了什么，从而更好地驾驭这些工具，而不是成为它们的“囚徒”。
 
-## Resources
 
-- Notebooks for this lesson:
-  - [HuggingFace Spaces Pets repository](https://huggingface.co/spaces/jph00/pets/tree/main)
-  - [Which image models are best?](https://www.kaggle.com/code/jhoward/which-image-models-are-best/)
-  - [How does a neural net really work?](https://www.kaggle.com/code/jhoward/how-does-a-neural-net-really-work)
-- Other resources for the lesson
-  - Titanic spreadsheet: see the [course repository](https://github.com/fastai/course22)
-  - Titanic data (training CSV) can be downloaded from [Kaggle](https://www.kaggle.com/competitions/titanic/)
-- [Solutions ](https://forums.fast.ai/t/fastbook-chapter-4-questionnaire-solutions-wiki/67253) to chapter 4 questions from the book
+## 在命令行中处理参数
 
-## Links from the lesson
+让我们的脚本变得更实用！一个能接收参数的程序才算得上是一个真正的“工具”。
 
-- [Know your pet](https://gettoknowyourpet.com/)
-- ["Lesson 0"](https://www.youtube.com/watch?v=gGxe2mN3kAg)
+### 方式一：使用 sys.argv（入门）
 
+Python 的 `sys` 模块提供了一个名为 `argv` 的列表，它可以捕获所有从命令行传入的参数。
+
+- `sys.argv` 是一个列表（list）。
+- 列表的第一个元素 `sys.argv[0]` 永远是脚本文件自己的名字。
+- 从 `sys.argv[1]` 开始，依次是用户传入的参数。
+
+#### 示例：greet_user.py
+
+```{python}
+#| eval: false
+# greet_user.py
+import sys
+
+# 检查用户是否传入了足够多的参数
+if len(sys.argv) > 1:
+    # sys.argv[0] 是脚本名 'greet_user.py'
+    # sys.argv[1] 是我们期望的第一个参数
+    name = sys.argv[1]
+    print(f"你好，{name}！欢迎来到命令行世界。")
+else:
+    print("错误：请输入你的名字作为参数！")
+    print("用法: python greet_user.py [你的名字]")
+
+# 让我们看看 sys.argv 到底是什么
+print(f"\ Debug Info")
+print(f"sys.argv 的内容是: {sys.argv}")
+print(f"总共有 {len(sys.argv)} 个元素。")
+```
+
+#### 在命令行中运行它：
+
+**不带参数运行：**
+
+```{bash}
+python greet_user.py
+```
+
+输出：
+
+```
+错误：请输入你的名字作为参数！
+用法: python greet_user.py [你的名字]
+ Debug Info
+sys.argv 的内容是: ['greet_user.py']
+总共有 1 个元素。
+```
+
+**带一个参数运行：**
+
+```{bash}
+python greet_user.py 张三
+```
+
+输出：
+
+```
+你好，张三！欢迎来到命令行世界。
+ Debug Info
+sys.argv 的内容是: ['greet_user.py', '张三']
+总共有 2 个元素。
+```
+
+**带多个参数运行：**
+
+```{bash}
+python greet_user.py "张三" "来自北京"
+```
+
+如果你传入的参数包含空格，请用引号把它包起来。`sys.argv` 会把每个用空格隔开的单元（或引号包起来的整体）当作一个独立的参数。
+
+> 对于简单的脚本，`sys.argv` 足够好用。但当参数变得复杂时（例如需要处理 `-f`, `--file` 这样的选项），我们通常会使用更强大的 `argparse` 模块，你可以在学完基础后自行探索。
+
+
+## 使用 pdb 进行命令行调试
+
+当你的代码出错了，或者你想观察代码的执行过程，`print()` 是最简单的调试方法，但它不够灵活。这时，`pdb` 就该登场了。
+
+`pdb` 允许你在程序的任意位置设置一个“断点”，然后逐行执行代码，检查变量，让你像侦探一样剖析程序的每一步。
+
+### 如何启动 pdb？
+
+你只需要在你想要暂停的地方，加入下面这两行代码：
+
+```{python}
+#| eval: false
+import pdb
+pdb.set_trace()
+```
+
+这就像在你的代码里设置了一个检查站。当程序运行到这里时，它会自动停下来，并给你一个 `(Pdb)` 的交互式提示符。
+
+### pdb 实战演练
+
+让我们来调试一个有问题的函数。创建一个文件 `buggy_calculator.py`：
+
+```{python}
+#| eval: false
+import pdb
+
+def calculate_sum(data_list):
+    total = 0
+    for item in data_list:
+        # 我们怀疑这里可能出问题，所以设置一个断点
+        pdb.set_trace() 
+        total += item
+    return total
+
+numbers = [1, 2, "3", 4, 5] # 列表中混入了一个字符串
+result = calculate_sum(numbers)
+print(f"计算结果是: {result}")
+```
+
+#### 在命令行运行这个脚本：
+
+```{bash}
+#| eval: false
+python buggy_calculator.py
+```
+
+当程序执行到 `pdb.set_trace()` 时，它会暂停，你的终端会显示类似这样的信息：
+
+```
+> /path/to/your/buggy_calculator.py(8)calculate_sum()
+-> total += item
+(Pdb)
+```
+
+你进入了 pdb 的调试环境！你可以输入不同的命令来控制和检查程序。
+
+
+## pdb 常用核心命令
+
+记住下面几个命令，你就能解决 80% 的问题：
+
+- `l` (list): 查看当前代码及上下文。它会显示你正停在哪一行，以及周围的代码。
+- `n` (next): 执行下一行代码。如果下一行是函数调用，它会直接执行完整个函数，不会进入函数内部。
+- `s` (step): 执行下一行代码。如果下一行是函数调用，它会进入该函数内部，让你逐行调试函数里的代码。
+- `c` (continue): 继续执行代码，直到遇到下一个断点或者程序结束。
+- `p <变量名>` (print): 打印一个变量的当前值。例如，输入 `p total` 或 `p item`。
+- `q` (quit): 退出调试并终止程序。
+
+### 用这些命令找出 `buggy_calculator.py` 的问题
+
+程序停在了 `total += item` 这一行。我们先用 `l` 看一下代码：
+
+```
+(Pdb) l
+  3     def calculate_sum(data_list):
+  4         total = 0
+  5         for item in data_list:
+  6             # 我们怀疑这里可能出问题，所以设置一个断点
+  7             import pdb; pdb.set_trace()
+  8  ->         total += item
+  9         return total
+ 10
+ 11     numbers = [1, 2, "3", 4, 5] # 列表中混入了一个字符串
+ 12     result = calculate_sum(numbers)
+```
+
+我们想知道 `total` 和 `item` 当前的值。使用 `p` 命令：
+
+```
+(Pdb) p total
+0
+(Pdb) p item
+1
+```
+
+第一次循环没问题。我们让程序继续执行，进入下一次循环。输入 `c`：
+
+```
+(Pdb) c
+```
+
+程序会再次在断点处停下。再次检查变量：
+
+```
+(Pdb) p total
+1
+(Pdb) p item
+2
+```
+
+第二次循环也没问题。再次输入 `c`，进入第三次循环：
+
+```
+(Pdb) c
+```
+
+再次检查变量：
+
+```
+(Pdb) p total
+3
+(Pdb) p item
+'3'
+```
+
+啊哈！问题找到了！`total` 是整数 3，但 `item` 是字符串 `'3'`。整数和字符串不能直接用 `+` 相加，这会导致 `TypeError`。
+
+我们已经找到了 bug 的根源。现在输入 `q` 退出调试。
+
+```
+(Pdb) q
+```
+
+现在你知道了，问题在于 `numbers` 列表中的数据类型不统一。`pdb` 让你像用显微镜一样精确地定位了问题所在。
+
+
+## pip & conda：命令行下的包管理
+
+除了运行和调试脚本，命令行还有一项超级重要的用途——**管理 Python 包和环境**。
+
+### pip：Python 的官方包管理工具
+
+- **安装第三方库：**
+
+  ```{bash}
+  #| eval: false
+  pip install requests
+  ```
+
+- **查看已安装的包：**
+
+  ```{bash}
+  #| eval: false
+  pip list
+  ```
+
+- **升级包：**
+
+  ```{bash}
+  #| eval: false
+  pip install --upgrade numpy
+  ```
+
+- **卸载包：**
+
+  ```{bash}
+  #| eval: false
+  pip uninstall requests
+  ```
+
+- **指定安装版本：**
+
+  ```{bash}
+  #| eval: false
+  pip install pandas==2.0.3
+  ```
+
+- **导出依赖列表：**
+
+  ```{bash}
+  #| eval: false
+  pip freeze > requirements.txt
+  ```
+
+- **根据依赖列表安装：**
+
+  ```{bash}
+  #| eval: false
+  pip install -r requirements.txt
+  ```
+
+> pip 是最常用的 Python 包管理工具，适合绝大部分纯 Python 包的安装。
+
+
+### conda：强大的多语言环境和包管理器
+
+如果你用的是 Anaconda/Miniconda，或者需要管理依赖复杂、含有大量 C/C++ 库的包（如数据科学、机器学习领域常用的 numpy、pandas、scipy、pytorch 等），建议用 conda！
+
+- **创建新环境：**
+
+  ```{bash}
+  #| eval: false
+  conda create -n myenv python=3.10
+  ```
+
+- **激活环境：**
+
+  ```{bash}
+  #| eval: false
+  conda activate myenv
+  ```
+
+- **安装包：**
+
+  ```{bash}
+  #| eval: false
+  conda install numpy pandas matplotlib
+  ```
+
+- **列出所有环境：**
+
+  ```{bash}
+  #| eval: false
+  conda env list
+  ```
+
+- **导出环境配置：**
+
+  ```{bash}
+  #| eval: false
+  conda env export > environment.yml
+  ```
+
+- **根据配置文件还原环境：**
+
+  ```{bash}
+  #| eval: false
+  conda env create -f environment.yml
+  ```
+
+- **删除环境：**
+
+  ```{bash}
+  #| eval: false
+  conda remove -n myenv --all
+  ```
+
+> conda 不仅能管理 Python 包，还能管理 R、Java、C/C++ 等语言的依赖，适合需要跨语言和复杂依赖的项目。
+
+
+## 总结
+
+掌握命令行运行、参数传递、调试（pdb）、包管理（pip/conda），是从“会写 Python 代码”到“会用 Python 解决问题”的关键一步。这个过程也许比点击按钮更“麻烦”，但它会赋予你对程序更深刻的理解和更强的控制力。
+
+现在，去尝试修改 `buggy_calculator.py`，修复那个 bug，然后再次用命令行运行它吧！并试着用 `pip` 或 `conda` 安装你需要的包，用命令行一步步成长为真正的开发者！
