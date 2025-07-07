@@ -182,7 +182,7 @@ python greet_user_argparse.py 张三 --city 北京
 
 你只需要在你想要暂停的地方，加入下面这两行代码：
 
-```{python
+```{python}
 import pdb
 pdb.set_trace()
 ```
