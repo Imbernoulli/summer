@@ -182,7 +182,7 @@ print(text.strip())      # 去除首尾空格: "Python is Fun!"
 print(text.replace("Fun", "Awesome")) # 替换: "  Python is Awesome!  "
 ```
 
-### 4 数据结构：列表、元组和字典
+### 数据结构：列表、元组和字典
 
 当我们需要存储一组数据时，就需要用到更复杂的数据结构。
 
@@ -263,7 +263,7 @@ del student["city"]
 print(student) # 输出: {'name': '李四', 'age': 23, 'email': 'lisi@example.com'}
 ```
 
-### 5 流程控制
+### 流程控制
 
 流程控制让你的代码可以根据不同的条件执行不同的路径，或者重复执行某些任务。
 
