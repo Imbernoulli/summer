@@ -34,8 +34,7 @@ Python 的 `sys` 模块提供了一个名为 `argv` 的列表，它可以捕获�
 
 #### 示例：greet_user.py
 
-```{python}
-#| eval: false
+```{python
 # greet_user.py
 import sys
 
@@ -109,8 +108,7 @@ python greet_user.py "张三" "来自北京"
 
 你只需要在你想要暂停的地方，加入下面这两行代码：
 
-```{python}
-#| eval: false
+```{python
 import pdb
 pdb.set_trace()
 ```
@@ -121,8 +119,7 @@ pdb.set_trace()
 
 让我们来调试一个有问题的函数。创建一个文件 `buggy_calculator.py`：
 
-```{python}
-#| eval: false
+```{python
 import pdb
 
 def calculate_sum(data_list):
@@ -140,8 +137,7 @@ print(f"计算结果是: {result}")
 
 #### 在命令行运行这个脚本：
 
-```{bash}
-#| eval: false
+```{bash
 python buggy_calculator.py
 ```
 
@@ -244,49 +240,42 @@ python buggy_calculator.py
 - **安装第三方库：**
 
   ```{bash}
-  #| eval: false
   pip install requests
   ```
 
 - **查看已安装的包：**
 
   ```{bash}
-  #| eval: false
   pip list
   ```
 
 - **升级包：**
 
   ```{bash}
-  #| eval: false
   pip install --upgrade numpy
   ```
 
 - **卸载包：**
 
   ```{bash}
-  #| eval: false
   pip uninstall requests
   ```
 
 - **指定安装版本：**
 
   ```{bash}
-  #| eval: false
   pip install pandas==2.0.3
   ```
 
 - **导出依赖列表：**
 
   ```{bash}
-  #| eval: false
   pip freeze > requirements.txt
   ```
 
 - **根据依赖列表安装：**
 
   ```{bash}
-  #| eval: false
   pip install -r requirements.txt
   ```
 
@@ -300,49 +289,42 @@ python buggy_calculator.py
 - **创建新环境：**
 
   ```{bash}
-  #| eval: false
   conda create -n myenv python=3.10
   ```
 
 - **激活环境：**
 
   ```{bash}
-  #| eval: false
   conda activate myenv
   ```
 
 - **安装包：**
 
   ```{bash}
-  #| eval: false
   conda install numpy pandas matplotlib
   ```
 
 - **列出所有环境：**
 
   ```{bash}
-  #| eval: false
   conda env list
   ```
 
 - **导出环境配置：**
 
   ```{bash}
-  #| eval: false
   conda env export > environment.yml
   ```
 
 - **根据配置文件还原环境：**
 
   ```{bash}
-  #| eval: false
   conda env create -f environment.yml
   ```
 
 - **删除环境：**
 
   ```{bash}
-  #| eval: false
   conda remove -n myenv --all
   ```
 
