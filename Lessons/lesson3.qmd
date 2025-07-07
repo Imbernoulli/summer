@@ -107,7 +107,7 @@ python greet_user.py "张三" "来自北京"
 #### 示例：greet_user_argparse.py
 
 ```{python}
-# greet_user_argparse.py
+#| eval: false
 import argparse
 
 parser = argparse.ArgumentParser(description="欢迎使用命令行问候脚本")
