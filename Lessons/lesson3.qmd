@@ -183,6 +183,7 @@ python greet_user_argparse.py 张三 --city 北京
 你只需要在你想要暂停的地方，加入下面这两行代码：
 
 ```{python}
+#| eval: false
 import pdb
 pdb.set_trace()
 ```
@@ -193,7 +194,8 @@ pdb.set_trace()
 
 让我们来调试一个有问题的函数。创建一个文件 `buggy_calculator.py`：
 
-```{python
+```{python}
+#| eval: false
 import pdb
 
 def calculate_sum(data_list):
@@ -211,7 +213,7 @@ print(f"计算结果是: {result}")
 
 #### 在命令行运行这个脚本：
 
-```{bash
+```{bash}
 python buggy_calculator.py
 ```
 
