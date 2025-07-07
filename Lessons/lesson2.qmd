@@ -1,36 +1,419 @@
 ---
-title: "2: Deployment"
+title: "2: Python入门"
 ---
 
-::: {layout="[30,70]"}
+## Python 入门完全指南
 
-![](../images/excited_code3.png)
+欢迎来到 Python 的世界！Python 是一种功能强大、用途广泛且极其易于学习的编程语言。无论你是想进入数据科学、人工智能、网站开发还是只想写一些自动化脚本，Python 都是绝佳的起点。
 
-Today you'll be designing your own machine learning project, creating your own dataset, training a model using your data, and finally deploying an application on the web. We'll be using a particular deployment target called [Hugging Face Space](https://huggingface.co/spaces) with [Gradio](https://gradio.app/), and will also see how to use JavaScript to implement an interface in the browser. Deploying to other services will look very similar to the approach you'll study in this lesson.
+本教程将从零开始，带你一步步掌握 Python 的核心知识。
 
-:::
+### 准备工作：安装 Python
 
-## Video
+在开始编程之前，你需要在你的电脑上安装 Python 环境。
 
-<iframe width="514" height="289" src="https://www.youtube-nocookie.com/embed/F4tvM4Vb3A0?modestbranding=1" title="fast.ai lesson 2" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+**检查是否已安装：**
 
-This lesson is based partly on [chapter 2](https://github.com/fastai/fastbook/blob/master/02_production.ipynb) of the [book](https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch/dp/1492045527).
+打开你的终端（在 Windows 上是 `命令提示符` 或 `PowerShell`，在 macOS 或 Linux 上是 `终端`），然后输入：
 
-## Resources
+```{bash}
+python --version
+```
 
-- Notebook---saving a basic fastai model:
-  - [Kaggle](https://www.kaggle.com/jhoward/saving-a-basic-fastai-model)
-  - [Colab](https://colab.research.google.com/drive/1M-mzhZdFQ2XWBSbLCuKzrmLsm0aLEYxQ?usp=sharing)
-- Chapter 2 [notebook](https://github.com/fastai/fastbook/blob/master/02_production.ipynb)
-- [Solutions](https://forums.fast.ai/t/fastbook-chapter-2-questionnaire-solutions-wiki/66392) to chapter 2 questions from the book
+或者（对于某些系统）：
 
-## Links
+```{bash}
+python3 --version
+```
 
-- [Gradio tutorial](https://tmabraham.github.io/blog/gradio_hf_spaces_tutorial) from @ilovescience 
-- [HF Spaces](https://huggingface.co/spaces)
-- Installing a python environment
-  - [fastsetup](https://github.com/fastai/fastsetup)
-  - Windows: [WSL](https://docs.microsoft.com/en-us/windows/wsl/install) and [Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)
-- tinypets [github](https://github.com/fastai/tinypets) / [site](https://fastai.github.io/tinypets/)
-- tinypets fork [github](https://github.com/jph00/tinypets) / [site](https://jph00.github.io/tinypets/)
+如果你看到了类似 `Python 3.x.x` 的输出，那么恭喜你，Python 已经安装好了！如果提示命令未找到，或者版本是 2.x.x，我们强烈建议你安装最新的 Python 3 版本。
 
+**下载和安装：**
+
+1.  访问 Python 官网：[https://www.python.org/downloads/](https://www.python.org/downloads/)
+2.  网站会自动检测你的操作系统并推荐合适的下载版本。点击 "Download Python" 按钮即可。
+3.  **Windows 用户请注意：** 在安装过程中，请务必勾选 **"Add Python to PATH"** 这个选项，这会让后续操作方便很多。
+4.  按照安装向导的提示完成安装即可。
+
+**Windows安装教程**
+
+<iframe width="514" height="289" src="https://player.bilibili.com/player.html?bvid=BV1YJ411j7fm&page=1" title="Windows10 下 Python 安装运行" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+**Mac自带Python**
+
+<iframe width="514" height="289" src="https://player.bilibili.com/player.html?bvid=BV1jr4y1y7hc&page=1" title="Python编程环境安装——MacOS版本" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+**代码编辑器推荐：**
+
+虽然你可以用记事本写代码，但一个好的代码编辑器会让你的编程体验大大提升。对于初学者，我们推荐：
+
+  * **Visual Studio Code (VS Code):** 免费、功能强大，拥有庞大的插件生态系统。安装 Python 插件后会变得非常好用。
+  * **PyCharm Community Edition:** 由 JetBrains 公司开发的专业 Python IDE，社区版免费。
+
+
+### 你的第一个 Python 程序：`Hello, World!`
+
+这是编程界的传统，让我们用 Python 向世界问好。
+
+1.  打开你的代码编辑器，新建一个文件，并将其命名为 `hello.py`（`.py` 是 Python 文件的标准扩展名）。
+2.  在文件中输入以下代码：
+
+```{python}
+print("Hello, World!")
+```
+
+3.  保存文件。
+4.  打开终端，使用 `cd` 命令切换到你保存 `hello.py` 文件的目录。例如，如果文件在桌面上，你可以输入 `cd Desktop`。
+5.  运行你的程序！在终端中输入：
+
+
+```{bash}
+python hello.py
+```
+
+或者（如果你的系统同时有 Python 2 和 3）：
+
+```{bash}
+python3 hello.py
+```
+
+你应该会在终端看到输出：
+
+```
+Hello, World!
+```
+
+恭喜你！你已经成功运行了你的第一个 Python 程序。`print()` 是 Python 的一个内置函数，用于在屏幕上输出信息。
+
+
+### Python 基础语法
+
+#### 注释
+
+注释是代码中不会被执行的部分，用于解释代码的功能，方便自己和他人阅读。
+
+  * **单行注释：** 使用 `#` 号。`#` 号之后的所有内容都会被忽略。
+
+
+
+```{python}
+# 这是一行注释，用来解释下面的代码
+print("Hello, Python!") # 这也是一行注释
+```
+
+* **多行注释：** 使用三个单引号 `'''` 或三个双引号 `"""` 将注释内容包裹起来。
+
+
+```{python}
+'''
+这是一个多行注释。
+可以写很多行的说明文字。
+这部分内容不会被执行。
+'''
+print("欢迎学习 Python！")
+```
+
+#### 变量与数据类型
+
+**变量 (Variable)** 就像一个带标签的盒子，你可以把数据放进去。在 Python 中，你不需要提前声明变量的类型，直接赋值即可。
+
+
+```{python}
+# 变量赋值
+message = "你好，世界！" # 字符串 (String)
+age = 20                # 整数 (Integer)
+price = 99.99           # 浮点数 (Float)
+is_learning = True      # 布尔值 (Boolean)
+```
+
+**常见数据类型：**
+
+  * **字符串 (String / `str`):** 文本信息，用单引号 `' '` 或双引号 `" "` 包裹。
+  * **整数 (Integer / `int`):** 没有小数部分的数字。
+  * **浮点数 (Float / `float`):** 带有小数部分的数字。
+  * **布尔值 (Boolean / `bool`):** 只有两个值 `True` (真) 和 `False` (假)，注意首字母大写。
+
+你可以使用 `type()` 函数来查看一个变量的数据类型：
+
+
+```{python}
+name = "小明"
+age = 18
+print(type(name))  # 输出: <class 'str'>
+print(type(age))   # 输出: <class 'int'>
+```
+
+#### 字符串操作
+
+字符串是 Python 中最常用的数据类型之一。
+
+  * **拼接 (Concatenation):** 使用 `+` 号。
+
+
+
+```{python}
+first_name = "张"
+last_name = "三"
+full_name = first_name + last_name
+print(full_name) # 输出: 张三
+```
+
+* **格式化字符串 (f-string):** 这是推荐的、更现代的字符串格式化方法。在字符串引号前加上 `f`，然后用 `{}` 包裹变量。
+
+
+
+```{python}
+name = "小红"
+age = 19
+intro = f"我的名字是 {name}，我今年 {age} 岁了。"
+print(intro) # 输出: 我的名字是 小红，我今年 19 岁了。
+```
+
+* **常用方法:**
+
+
+
+```{python}
+text = "  Python is Fun!  "
+print(text.lower())      # 全部转为小写: "  python is fun!  "
+print(text.upper())      # 全部转为大写: "  PYTHON IS FUN!  "
+print(text.strip())      # 去除首尾空格: "Python is Fun!"
+print(text.replace("Fun", "Awesome")) # 替换: "  Python is Awesome!  "
+```
+
+### 4 数据结构：列表、元组和字典
+
+当我们需要存储一组数据时，就需要用到更复杂的数据结构。
+
+#### 列表 (List)
+
+列表是一个有序的、可变的集合。你可以添加、删除或修改列表中的元素。用方括号 `[]` 定义。
+
+
+```{python}
+# 创建一个列表
+fruits = ["苹果", "香蕉", "橙子"]
+print(fruits) # 输出: ['苹果', '香蕉', '橙子']
+
+# 访问元素（索引从 0 开始）
+print(fruits[0]) # 输出: 苹果
+print(fruits[1]) # 输出: 香蕉
+
+# 修改元素
+fruits[1] = "西瓜"
+print(fruits) # 输出: ['苹果', '西瓜', '橙子']
+
+# 添加元素
+fruits.append("葡萄") # 在末尾添加
+print(fruits) # 输出: ['苹果', '西瓜', '橙子', '葡萄']
+
+# 删除元素
+fruits.remove("西瓜")
+print(fruits) # 输出: ['苹果', '橙子', '葡萄']
+
+# 获取列表长度
+print(len(fruits)) # 输出: 3
+```
+
+#### 元组 (Tuple)
+
+元组是一个有序的、**不可变**的集合。一旦创建，就不能修改。用圆括号 `()` 定义。
+
+
+```{python}
+# 创建一个元组
+point = (10, 20)
+print(point) # 输出: (10, 20)
+
+# 访问元素
+print(point[0]) # 输出: 10
+
+# 尝试修改元组会报错
+# point[0] = 15 # 这行代码会引发 TypeError
+```
+
+> **何时使用元组？** 当你希望数据是只读的、不被意外修改时，例如坐标点、配置信息等。
+
+#### 字典 (Dictionary)
+
+字典是一个无序的、键值对 (key-value) 的集合。每个元素都由一个唯一的 **键 (key)** 和对应的 **值 (value)** 组成。用花括号 `{}` 定义。
+
+
+```{python}
+# 创建一个字典
+student = {
+    "name": "李四",
+    "age": 22,
+    "city": "北京"
+}
+print(student) # 输出: {'name': '李四', 'age': 22, 'city': '北京'}
+
+# 访问值 (通过键)
+print(student["name"]) # 输出: 李四
+print(student["age"])  # 输出: 22
+
+# 添加或修改键值对
+student["email"] = "lisi@example.com" # 添加新键值对
+student["age"] = 23                   # 修改已有的值
+print(student) # 输出: {'name': '李四', 'age': 23, 'city': '北京', 'email': 'lisi@example.com'}
+
+# 删除键值对
+del student["city"]
+print(student) # 输出: {'name': '李四', 'age': 23, 'email': 'lisi@example.com'}
+```
+
+### 5 流程控制
+
+流程控制让你的代码可以根据不同的条件执行不同的路径，或者重复执行某些任务。
+
+#### 条件判断 (`if`, `elif`, `else`)
+
+
+```{python}
+age = 18
+
+if age < 18:
+    print("你是未成年人。")
+elif age == 18:
+    print("你刚满 18 岁。")
+else:
+    print("你是成年人。")
+
+# 注意：
+# 1. 条件后面要加冒号 :
+# 2. 下一级的代码块需要缩进（通常是 4 个空格）
+# 3. `elif` 是 "else if" 的缩写，可以有多个。
+# 4. `else` 是可选的。
+```
+
+#### 循环 (`for` 和 `while`)
+
+##### `for` 循环
+
+`for` 循环用于遍历一个序列（如列表、元组、字符串或范围）。
+
+
+```{python}
+# 遍历列表
+fruits = ["苹果", "香蕉", "橙子"]
+for fruit in fruits:
+    print(f"我喜欢吃 {fruit}")
+
+# 使用 range() 函数进行固定次数的循环
+# range(5) 会生成从 0 到 4 的数字序列
+for i in range(5):
+    print(f"这是第 {i+1} 次循环")
+```
+
+##### `while` 循环
+
+`while` 循环在给定条件为 `True` 时会一直执行。
+
+
+```{python}
+count = 0
+while count < 5:
+    print(f"当前的数字是: {count}")
+    count = count + 1 # 必须更新循环变量，否则会造成无限循环！
+
+print("循环结束！")
+```
+
+## 函数
+
+函数是一段可重复使用的代码块，用于执行特定的任务。使用函数可以使你的代码更有条理、更易于维护。
+
+#### 定义和调用函数
+
+
+```{python}
+# 定义一个简单的函数
+def greet():
+    print("你好！欢迎使用本程序。")
+
+# 调用函数
+greet()
+greet()
+```
+
+#### 参数和返回值
+
+函数可以接受输入（**参数**）并产生输出（**返回值**）。
+
+
+```{python}
+# 带参数的函数
+def greet_user(name):
+    """这是一个文档字符串，用于解释函数的功能。"""
+    print(f"你好，{name}！")
+
+greet_user("小王") # 输出: 你好，小王！
+greet_user("小李") # 输出: 你好，小李！
+
+
+# 带参数和返回值的函数
+def add(a, b):
+    """这个函数计算两个数的和并返回结果。"""
+    result = a + b
+    return result
+
+sum_result = add(5, 3)
+print(f"5 + 3 = {sum_result}") # 输出: 5 + 3 = 8
+```
+
+
+### 模块和库：扩展你的 Python 能力
+
+Python 的强大之处在于其庞大的标准库和第三方库生态系统。
+
+  * **模块 (Module):** 一个 `.py` 文件就是一个模块。你可以使用 `import` 语句来使用其他模块中定义的函数或变量。
+  * **库 (Library):** 库是相关模块的集合。
+
+**示例：使用 `random` 模块生成随机数**
+
+`random` 是 Python 的一个标准库模块，无需额外安装。
+
+
+```{python}
+import random # 导入 random 模块
+
+# 生成一个 1 到 10 之间的随机整数
+random_number = random.randint(1, 10)
+print(f"生成的随机数是: {random_number}")
+
+# 从列表中随机选择一个元素
+fruits = ["苹果", "香蕉", "橙子", "西瓜"]
+random_fruit = random.choice(fruits)
+print(f"今天的水果是: {random_fruit}")
+```
+
+**安装第三方库：**
+
+如果想使用非标准库（例如用于数据分析的 `pandas`，或网络请求的 `requests`），你需要使用 `pip`（Python 的包管理器）来安装。
+
+打开终端并输入：
+
+```{bash}
+pip install requests
+pip install pandas
+```
+
+### 下一步学习建议
+
+恭喜你完成了 Python 的基础入门！你现在已经掌握了编写简单 Python 程序所需的核心知识。
+
+接下来，你可以根据你的兴趣选择深入学习的方向：
+
+  * **网站开发:** 学习 Django 或 Flask 框架。
+  * **数据科学/机器学习:** 学习 NumPy, Pandas, Matplotlib, Scikit-learn 等库。
+  * **自动化脚本:** 深入学习文件操作、网络请求等。
+  * **游戏开发:** 探索 Pygame 库。
+
+**最重要的一点是：多写代码，多练习！** 尝试解决一些小程序问题，比如：
+
+  * 写一个简单的计算器。
+  * 写一个猜数字游戏。
+  * 写一个程序来整理你电脑上的文件。
+
+编程是一项技能，通过不断的实践才能变得更加熟练。祝你编程愉快！
