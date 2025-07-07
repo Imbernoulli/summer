@@ -399,6 +399,16 @@ pip install requests
 pip install pandas
 ```
 
+### 清华大学计算机系相关资料
+
+**课程回放：**
+
+<iframe width="514" height="289" src="https://player.bilibili.com/player.html?bvid=BV1Ny411B7Ex&page=1" title="【清华大学计算机系科协算协联合暑培 2024】Python - 基础 Track" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+**讲义：**
+
+[讲义](https://summer24.net9.org/basic/python/handout/)
+
 ### 下一步学习建议
 
 恭喜你完成了 Python 的基础入门！你现在已经掌握了编写简单 Python 程序所需的核心知识。
@@ -417,13 +427,3 @@ pip install pandas
   * 写一个程序来整理你电脑上的文件。
 
 如果想系统学习Python，可阅读[《Python编程从入门到实践》](https://file.notion.so/f/f/18d1828d-75b8-416c-9256-652a1a81baa2/4e393a7a-06a6-420a-8f80-7a99811878e4/Untitled.pdf?table=block&id=07ded07f-c832-40a8-a89f-af36d1a589fe&spaceId=18d1828d-75b8-416c-9256-652a1a81baa2&expirationTimestamp=1751932800000&signature=ruXk2_vOTCZvnHktme70fqXNtkzAi02iQD-b7ejeODY&downloadName=Python+编程从入门到实践.pdf).
-
-#### 清华大学计算机系相关资料
-
-**课程回放：**
-
-<iframe width="514" height="289" src="https://player.bilibili.com/player.html?bvid=BV1Ny411B7Ex&page=1" title="【清华大学计算机系科协算协联合暑培 2024】Python - 基础 Track" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-**讲义：**
-
-[讲义](https://summer24.net9.org/basic/python/handout/)
