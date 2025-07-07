@@ -13,22 +13,22 @@ format:
     toc: true
 
 website:
-  title: "Practical Deep Learning for Coders"
+  title: "SEM Coding Summer 2025"
   site-url: https://Imbernoulli.github.io/summer/
-  description: "Learn Deep Learning with fastai and PyTorch, 2022"
+  description: "清华大学经管学院暑期代码能力提升培训"
   twitter-card: true
   open-graph: true
   reader-mode: true
   page-navigation: true
   repo-branch: master
-  repo-url: https://github.com/fastai/course22-web
+  repo-url: https://github.com/Imbernoulli/summer
   repo-actions: [issue]
   navbar:
     background: primary
     search: true
     right:
       - icon: github
-        href: https://github.com/fastai/course22
+        href: https://github.com/Imbernoulli/summer
   sidebar:
     style: "floating"
 
