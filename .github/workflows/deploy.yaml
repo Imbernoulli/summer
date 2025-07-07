@@ -11,6 +11,7 @@ jobs:
       - name: Install quarto
         run: |
           wget -q $(curl https://latest.fast.ai/pre/quarto-dev/quarto-cli/linux-amd64.deb)
+          python3 -m pip install jupyter
           sudo dpkg -i quarto*.deb
           rm quarto*.deb
           quarto render
