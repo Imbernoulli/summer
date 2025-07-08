@@ -525,11 +525,26 @@ c.speak()  # 输出: 喵喵！
 - **多态**：同一个方法名，不同子类有不同实现，调用时自动选择对应的方法。
 
 ```{python}
+class Animal:
+    def speak(self):
+        print("动物叫")
+
+class Dog(Animal):
+    def speak(self):
+        self.bark()
+
+    def bark(self):
+        print("汪汪！")
+
+class Cat(Animal):
+    def speak(self):
+        print("喵喵！")
+
 animals = [Dog(), Cat()]
 for animal in animals:
     animal.speak()
 # 输出:
-# 汪汪！（如果 Dog 也有 speak）
+# 汪汪！
 # 喵喵！
 ```
 
