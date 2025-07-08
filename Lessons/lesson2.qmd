@@ -399,6 +399,218 @@ pip install requests
 pip install pandas
 ```
 
+### 面向对象编程（OOP）
+
+Python 支持面向对象编程（OOP, Object-Oriented Programming），这是一种模拟现实世界思考问题的方法。通过**类和对象**，我们可以组织更复杂的代码，构建出具有良好结构和可扩展性的程序。
+
+#### 为什么要用面向对象？
+
+- 让代码**更贴近现实世界**，更容易理解和维护
+- **数据和功能绑定**在一起，便于复用
+- 可以写出**更大的项目**，比如游戏、网站、软件等
+
+#### 一、类（Class）和对象（Object）
+
+- **类**是一个模板，用来描述一类事物的共同属性和行为。
+- **对象**是根据类创建的具体实例。类好比蓝图，对象好比房子。
+
+**举例：用类描述学生，每个学生就是一个对象。**
+
+```{python}
+class Student:
+    pass  # 空语句，暂时不定义内容
+
+s1 = Student()  # 创建一个学生对象
+s2 = Student()  # 再创建一个学生对象
+```
+
+#### 二、属性和方法
+
+属性和方法是类的“成员”。  
+- **属性**（变量）：对象的状态或特征  
+- **方法**（函数）：对象的行为或动作
+
+##### 2.1 初始化方法 `__init__`
+
+- 每次创建对象时，都会自动调用 `__init__`
+- 用于给新对象**赋初值**
+
+```{python}
+class Student:
+    def __init__(self, name, age):
+        self.name = name  # 实例属性
+        self.age = age
+
+s = Student("小明", 18)
+print(s.name) # 输出: 小明
+print(s.age)  # 输出: 18
+```
+
+**注意：`self` 总是指向当前对象本身。**
+
+##### 2.2 实例方法
+
+- 普通方法都必须有 `self` 参数，表示操作的是哪个对象
+
+```{python}
+class Student:
+    def __init__(self, name):
+        self.name = name
+
+    def say_hello(self):
+        print(f"大家好，我是{self.name}")
+
+s = Student("小明")
+s.say_hello()  # 输出: 大家好，我是小明
+```
+
+##### 2.3 类属性和实例属性
+
+- **实例属性**：每个对象自己的数据，用 `self.xxx` 定义
+- **类属性**：所有对象共享的数据，直接在类内定义
+
+```{python}
+class Dog:
+    species = "犬科"  # 类属性
+
+    def __init__(self, name):
+        self.name = name  # 实例属性
+
+dog1 = Dog("旺财")
+dog2 = Dog("小黑")
+print(dog1.species)  # 输出: 犬科
+print(dog2.species)  # 输出: 犬科
+```
+
+#### 三、继承与多态
+
+##### 3.1 继承
+
+- **继承**允许一个类（子类）获得另一个类（父类）的所有成员。
+- 方便**代码复用**，比如所有动物都会吃东西。
+
+```{python}
+class Animal:
+    def eat(self):
+        print("吃东西")
+
+class Dog(Animal):
+    def bark(self):
+        print("汪汪！")
+
+d = Dog()
+d.eat()  # 输出: 吃东西
+d.bark() # 输出: 汪汪！
+```
+
+##### 3.2 方法重写（Override）
+
+- 子类可以重写父类的方法，实现不同的行为。
+
+```{python}
+class Animal:
+    def speak(self):
+        print("动物叫")
+
+class Cat(Animal):
+    def speak(self):
+        print("喵喵！")
+
+c = Cat()
+c.speak()  # 输出: 喵喵！
+```
+
+##### 3.3 多态
+
+- **多态**：同一个方法名，不同子类有不同实现，调用时自动选择对应的方法。
+
+```{python}
+animals = [Dog(), Cat()]
+for animal in animals:
+    animal.speak()
+# 输出:
+# 汪汪！（如果 Dog 也有 speak）
+# 喵喵！
+```
+
+#### 四、封装
+
+- **封装**就是隐藏对象的内部细节，只暴露必要的接口。
+- Python 通过**下划线**约定变量/方法的访问权限。
+
+| 变量名          | 说明                  |
+| --------------- | --------------------- |
+| name            | 公有，外部可访问      |
+| _name           | 受保护，不建议外部访问|
+| __name          | 私有，类外无法直接访问 |
+
+```{python}
+class Person:
+    def __init__(self, name):
+        self.name = name      # 公有属性
+        self._age = 18        # 受保护属性
+        self.__salary = 5000  # 私有属性
+
+    def get_salary(self):
+        return self.__salary
+
+p = Person("小李")
+print(p.name)       # 正常访问
+print(p._age)       # 可以访问，但不建议
+# print(p.__salary)  # 会报错
+print(p.get_salary()) # 推荐通过方法访问私有属性
+```
+
+#### 五、特殊方法和魔法方法
+
+Python 有很多以 **双下划线**开头和结尾的“魔法方法”，让对象参与各种内置操作。
+
+- `__init__`：初始化对象
+- `__str__`：定义 print(对象) 时的输出
+- `__len__`：定义 len(对象) 的行为
+
+```{python}
+class Book:
+    def __init__(self, title):
+        self.title = title
+
+    def __str__(self):
+        return f"《{self.title}》"
+
+b = Book("Python入门")
+print(b)  # 输出: 《Python入门》
+```
+
+#### 六、实战：自定义一个简单的学生管理系统（面向对象版）
+
+```{python}
+class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+    def show(self):
+        print(f"{self.name} 的成绩是 {self.score}")
+
+# 管理多个学生
+students = [
+    Student("小明", 90),
+    Student("小红", 95),
+    Student("小刚", 88)
+]
+
+# 遍历所有学生
+for stu in students:
+    stu.show()
+```
+
+#### 七、面向对象思维举例
+
+- **对象是什么？** 现实世界的事物，比如“小明”、一辆汽车、一本书
+- **类是什么？** 模型或模板，比如“学生类”、“汽车类”
+- **属性是什么？** 事物的特征，比如“姓名”、“颜色”
+- **方法是什么？** 事物的行为，比如“学习”、“启动”
+
 ### 清华大学计算机系相关资料
 
 **课程回放：**
