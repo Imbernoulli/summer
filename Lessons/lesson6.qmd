@@ -355,7 +355,7 @@ fig.show()
 ### 安装 Bokeh
 
 ```bash
-pip install bokeh
+pip install bokeh bokeh_sampledata
 ```
 
 ### 创建 Web 原生图表
