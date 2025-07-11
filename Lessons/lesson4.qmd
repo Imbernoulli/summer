@@ -1,22 +1,362 @@
 ---
-title: "4: Natural Language (NLP)"
+title: "4: Git与GitHub的应用"
 ---
 
-::: {layout="[30,70]"}
+## Git 与 GitHub 入门指南 
 
-![](../images/cute_bunny.png)
+欢迎来到版本控制的世界！本指南将带你深入了解 Git 和 GitHub，从基本概念到日常协作流程，并使用图表让复杂的概念变得一目了然。无论你是编程新手还是想系统学习的开发者，这篇教程都将是你的得力助手。
 
-It's time for us to learn how to analyse natural language documents, using Natural Language Processing (NLP). We'll be focusing on the [Hugging Face](https://huggingface.co/) ecosystem, especially the [Transformers](https://huggingface.co/docs/transformers/index) library, and the vast collection of pretrained [NLP models](https://huggingface.co/models). Our project today will be to classify that similarity of phrases used to describe [US patents](https://www.kaggle.com/competitions/us-patent-phrase-to-phrase-matching). A similar approach can be applied to a wide variety of practical issues, in fields as wide-reaching as marketing, logistics, and medicine.
+### **为什么需要版本控制？**
 
-:::
+想象一下你正在进行一个复杂的项目，无论是写代码、写论文还是设计作品。你一定会遇到以下问题：
 
-## Video
+  * **混乱的文件管理**：`项目_v1.zip`, `项目_v2_final.zip`, `项目_final_final_我发誓是最终版.zip`... 这种方式既原始又低效。
+  * **无法追溯的错误**：你今天写的代码导致整个项目无法运行，但你不记得昨天做了哪些修改，想恢复到之前的版本变得异常困难。
+  * **协作冲突**：你和你的同伴修改了同一个文件，当你们试图合并工作时，一个人的修改覆盖了另一个人的，造成了“代码冲突”的噩梦。
 
-<iframe width="514" height="289" src="https://www.youtube-nocookie.com/embed/toUgBQv1BT8?modestbranding=1" title="fast.ai lesson 4" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+**版本控制系统 (Version Control System, VCS)** 正是为解决这些问题而生的。
 
-This lesson is based partly on [chapter 10](https://github.com/fastai/fastbook/blob/master/10_nlp.ipynb) of the [book](https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch/dp/1492045527).
+**Git** 是当今最流行、最强大的**分布式版本控制系统**。它就像一个精密的时光机和协作中心，能够：
 
-## Resources
+1.  **记录每一次变更**：对文件的每一次增、删、改，Git 都会拍下一张“快照”(snapshot)。
+2.  **随时回溯历史**：你可以轻松地将整个项目恢复到过去的任意一个“快照”状态。
+3.  **支持并行开发**：通过“分支”功能，团队成员可以在不互相干扰的独立空间里开发新功能。
+4.  **高效解决冲突**：当不同人的修改发生冲突时，Git 提供了工具来帮助你清晰地合并它们。
 
-- Notebook: [Getting started with NLP for absolute beginners](https://www.kaggle.com/code/jhoward/getting-started-with-nlp-for-absolute-beginners)
+**GitHub** 又是什么呢？
+它是一个基于云的**代码托管平台**。如果说 Git 是你本地的“时光机”，那 GitHub 就是这个“时光机”的云端枢纽和社交网络。它提供了：
 
+  * **远程仓库**：一个安全的地方来存储你的代码和所有版本历史。
+  * **协作工具**：强大的 Pull Request、Code Review 和 Issue Tracking 功能，让团队协作变得前所未有的高效。
+  * **个人名片**：一个展示你技术实力的平台，你的 GitHub 主页就是程序员最好的简历。
+
+**总结：Git 是工具，负责版本控制；GitHub 是平台，负责代码托管与协作。**
+
+### **安装与初次配置**
+
+#### 1\. 安装 Git
+
+  * **Windows**: 访问 [git-scm.com/download/win](https://git-scm.com/download/win) 下载安装包。安装时，建议一路使用默认选项，它会自动安装 `Git Bash`，一个在 Windows 上模拟 Linux 命令行的强大工具。
+  * **macOS**:
+      * 最简单的方式是安装 Xcode Command Line Tools。打开“终端”(Terminal) 并输入 `xcode-select --install`。
+      * 或者使用 [Homebrew](https://brew.sh/) (推荐) 安装：`brew install git`。
+  * **Linux (Debian/Ubuntu)**: 打开终端并输入 `sudo apt-get install git`。
+
+安装后，打开终端 (或 Git Bash) 输入 `git --version`，如果看到版本号，说明安装成功。
+
+#### 2\. 配置你的身份
+
+安装 Git 后，第一件事就是设置你的用户名和邮箱。这个身份信息会附加到你的每一次“提交”(commit) 上，让别人知道是谁做的修改。
+
+```bash
+# 设置你的 GitHub 用户名
+git config --global user.name "Your GitHub Username"
+
+# 设置你的 GitHub 注册邮箱
+git config --global user.email "your.email@example.com"
+```
+
+`--global` 标志表示这是全局配置，你电脑上所有的 Git 项目都会默认使用这个配置。
+
+### **Git 核心工作流与本地操作**
+
+Git 的核心在于其三个主要区域的流转。理解了这个模型，你就理解了 Git 的一半。
+
+1.  **工作区 (Working Directory)**: 你在电脑上能直接看到和编辑的项目文件夹。
+2.  **暂存区 (Staging Area/Index)**: 一个虚拟的区域，用于临时存放你**希望包含在下一次提交中**的变更。它像一个购物车的概念，你可以把修改好的东西一件件放进去，最后统一“结账”。
+3.  **本地仓库 (Local Repository)**: `.git` 隐藏文件夹，存放了项目所有的版本历史“快照”。一旦变更被提交到这里，它就永久地记录下来了。
+
+#### **工作流图解**
+
+下面这张图清晰地展示了文件在三个区域之间的流转过程：
+
+```mermaid
+graph TD
+    A["工作区<br>(Working Directory)"] -- "git add" --> B["暂存区<br>(Staging Area)"]
+    B -- "git commit" --> C["本地仓库<br>(Local Repository)"]
+    C -- "git checkout" --> A
+    A -- "编辑文件<br>(Edit files)" --> A
+```
+
+#### **实战演练：你的第一个仓库**
+
+1.  **初始化仓库 (`git init`)**
+
+      * 在电脑上创建一个新文件夹，例如 `git-project`。
+      * 通过终端进入该文件夹：`cd path/to/git-project`。
+      * 执行初始化命令：
+        ```bash
+        git init
+        ```
+        这个命令会在当前目录下创建一个名为 `.git` 的子目录，你的本地仓库就此诞生。
+
+2.  **检查状态 (`git status`)**
+    `git status` 是你最应该频繁使用的命令。它会告诉你当前仓库的状态：哪些文件被修改了？哪些文件在暂存区？
+
+3.  **创建文件并添加到暂存区 (`git add`)**
+
+      * 在 `git-project` 文件夹中创建一个 `README.md` 文件，并写入 "Hello, Git\!"。
+      * 现在运行 `git status`，你会看到 `README.md` 出现在 "Untracked files" (未跟踪文件) 列表中。
+      * 使用 `git add` 命令来跟踪这个文件，并将其变更放入暂存区。
+        ```bash
+        # 添加指定文件到暂存区
+        git add README.md
+    
+        # 如果想添加所有已修改或新增的文件，使用点号
+        # git add .
+        ```
+      * 再次运行 `git status`，你会看到 `README.md` 现在处于 "Changes to be committed" (待提交的变更) 列表中。
+
+4.  **提交变更到仓库 (`git commit`)**
+    当暂存区里的内容准备就绪后，就可以使用 `git commit` 将它们“拍摄快照”并存入本地仓库。
+
+    ```bash
+    # -m 参数允许你直接在命令行提供提交信息
+    git commit -m "Initial commit: Create README.md"
+    ```
+
+    **编写好的 Commit Message 至关重要！** 它应该简洁明了地描述本次提交的目的。一个好的习惯是使用 "动词+宾语" 的格式，例如 "Fix: user login bug" 或 "Feat: add user profile page"。
+
+5.  **查看提交历史 (`git log`)**
+    想回顾你走过的路吗？`git log` 会按时间倒序列出所有的提交记录，包括哈希值 (唯一ID)、作者、日期和提交信息。
+
+### **连接 GitHub，走向世界**
+
+现在，你的项目只存在于你的电脑上。让我们把它推送到 GitHub，实现云端备份和远程协作。
+
+#### **本地与远程关系图解**
+
+```mermaid
+graph TD
+    subgraph "Your Computer"
+        A["本地仓库(Local Repo)"]
+    end
+
+    subgraph "GitHub Cloud"
+        B["远程仓库(Remote Repo)"]
+    end
+
+    A -- "git push" --> B
+    B -- "git pull / git clone" --> A
+```
+
+#### **操作步骤**
+
+1.  **在 GitHub 创建远程仓库**
+
+      * 登录 GitHub，点击右上角 “+” -\> “New repository”。
+      * 填写仓库名称 (建议与本地文件夹同名，如 `git-project`)。
+      * 保持 “Public” (公开) 或选择 “Private” (私有)。
+      * **非常重要**：**不要**勾选任何 “Initialize this repository with...” 的选项，因为我们已经有了一个本地仓库。
+      * 点击 “Create repository”。
+
+2.  **关联本地与远程 (`git remote add`)**
+    创建后，GitHub 会提供一个 URL。复制这个 HTTPS 或 SSH 格式的 URL。回到你的终端，运行：
+
+    ```bash
+    # 将 '你的仓库URL' 替换成你刚刚复制的地址
+    git remote add origin 你的仓库URL
+    ```
+
+      * `git remote add`：添加一个远程仓库的引用。
+      * `origin`：是这个远程仓库的默认别名，你也可以取别的名字，但 `origin` 是约定俗成的。
+
+3.  **推送本地变更 (`git push`)**
+    最后，将你本地 `main` 分支上的所有提交推送到远程仓库 `origin`。
+
+    ```bash
+    git push -u origin main
+    ```
+
+      * `push`：推送动作。
+      * `-u` (或 `--set-upstream`)：建立本地 `main` 分支与远程 `origin/main` 分支的联系。这个参数**只需要在第一次推送时使用**。之后，你只需要简单地运行 `git push`。
+      * `origin`：远程仓库的别名。
+      * `main`：你要推送的本地分支名。
+
+    现在，刷新你的 GitHub 仓库页面，代码已经成功上传！
+
+### **分支——安全开发的“平行宇宙”**
+
+分支 (Branch) 是 Git 最强大的功能之一。它允许你从主线 (通常是 `main` 分支) 创建一个独立的副本，在新功能开发、Bug 修复等工作中，你可以在这个副本上自由地实验，而不会影响到主线的稳定性。
+
+#### **分支与合并图解**
+
+```mermaid
+gitGraph
+   commit id: "Initial"
+   branch feature-A
+   checkout feature-A
+   commit id: "Add button"
+   commit id: "Style button"
+   checkout main
+   merge feature-A
+   commit id: "Release v1.0"
+```
+
+上图展示了：
+
+1.  从 `main` 分支创建了一个 `feature-A` 分支。
+2.  在 `feature-A` 上进行了两次提交 (开发新功能)。
+3.  开发完成后，切换回 `main` 分支。
+4.  将 `feature-A` 分支上的所有工作合并 (merge) 回 `main` 分支。
+
+#### **分支常用命令**
+
+  * **查看所有分支**:
+
+    ```bash
+    git branch
+    ```
+
+    星号 `*` 标记的是你当前所在的分支。
+
+  * **创建新分支**:
+
+    ```bash
+    git branch <分支名>
+    # 例如: git branch new-feature
+    ```
+
+  * **切换分支**:
+
+    ```bash
+    git checkout <分支名>
+    # 例如: git checkout new-feature
+    ```
+
+  * **创建并立即切换到新分支 (常用)**:
+
+    ```bash
+    git checkout -b <新分支名>
+    # 例如: git checkout -b another-feature
+    ```
+
+  * **合并分支**:
+    首先，切换到你希望接纳变更的分支 (目标分支)，通常是 `main`。
+
+    ```bash
+    git checkout main
+    ```
+
+    然后，执行合并命令，将其他分支的变更合并进来。
+
+    ```bash
+    git merge <要合并的分支名>
+    # 例如: git merge new-feature
+    ```
+
+  * **删除分支**:
+    当一个分支的工作已经合并完成，通常会将其删除以保持仓库整洁。
+
+    ```bash
+    git branch -d <分支名>
+    ```
+
+### **日常协作流程**
+
+```mermaid
+%%{init: { 'logLevel': 'debug', 'theme': 'base', 'gitGraph': {'showBranches': true, 'showCommitLabel': true, 'mainBranchName': 'main'}} }%%
+gitGraph
+    commit id: "初始化项目"
+    branch develop
+    checkout develop
+    commit id: "开发环境配置"
+    
+    %% --- 功能A开发 ---
+    branch feat/user-login
+    checkout feat/user-login
+    commit id: "实现UI界面"
+    commit id: "完成后端API对接"
+    
+    %% --- 在功能A开发的同时，主干发现紧急bug ---
+    checkout main
+    branch hotfix/bug-payment-api
+    checkout hotfix/bug-payment-api
+    commit id: "紧急修复支付掉单Bug"
+    checkout main
+    merge hotfix/bug-payment-api tag: "v1.0.1"
+    
+    %% --- 紧急修复也需要合并到develop分支 ---
+    checkout develop
+    merge main id: "同步紧急修复"
+    
+    %% --- 功能A开发完成，合并回develop ---
+    checkout develop
+    merge feat/user-login id: "合并用户登录功能"
+    
+    %% --- 功能B开始开发 ---
+    branch feat/data-report
+    checkout feat/data-report
+    commit id: "设计报表模型"
+    commit id: "完成报表前端"
+    checkout develop
+    
+    %% --- 功能C也开始开发 ---
+    branch feat/performance-opt
+    checkout feat/performance-opt
+    commit id: "优化数据库查询"
+    
+    %% --- 功能B开发完成，合并回develop ---
+    checkout develop
+    merge feat/data-report id: "合并数据报表功能"
+    
+    %% --- 功能C开发完成，合并回develop ---
+    checkout develop
+    merge feat/performance-opt id: "合并性能优化"
+    
+    %% --- 准备发布新版本 ---
+    branch release/v1.1.0
+    checkout release/v1.1.0
+    commit id: "版本文档和最终测试"
+    
+    %% --- 正式发布：合并到main并打上标签 ---
+    checkout main
+    merge release/v1.1.0 tag: "v1.1.0"
+    
+    %% --- 将发布分支的修改也合并回develop ---
+    checkout develop
+    merge release/v1.1.0 id: "同步发布版本v1.1.0的修改"
+
+```
+
+在真实的项目中，你通常会从一个已经存在的项目开始工作。
+
+1.  **克隆远程仓库 (`git clone`)**
+    要获取 GitHub 上的项目到你的本地，使用 `git clone`。
+
+    ```bash
+    # 替换为项目的URL
+    git clone https://github.com/some-user/some-project.git
+    ```
+
+    这个命令会自动创建项目文件夹，初始化 `.git` 仓库，并自动设置好远程别名 `origin`，还会将项目的所有数据都拉取下来。
+
+2.  **保持本地更新 (`git pull`)**
+    在你开始一天的工作前，或者在准备开发新功能前，务必从远程仓库拉取最新的变更，确保你的本地版本是最新的。
+
+    ```bash
+    git pull origin main
+    # 如果已经设置了上游分支，可以直接用 git pull
+    ```
+
+    `git pull` 实际上是 `git fetch` (从远程拉取最新数据) 和 `git merge` (将远程分支合并到本地) 的一个快捷命令。
+
+3.  **GitHub Flow：一个标准的协作模型**
+    这是一个被广泛采用的、简单高效的协作流程：
+
+    a.  从 `main` 分支创建一个描述性命名的**新分支** (`git checkout -b fix-login-bug`)。
+    b.  在新分支上进行**编码和提交**。
+    c.  将你的新分支**推送**到 GitHub (`git push origin fix-login-bug`)。
+    d.  在 GitHub 上，为你的分支创建一个 **Pull Request (PR)**。PR 是一个请求，请求项目维护者审查你的代码，并将其合并到 `main` 分支。
+    e.  团队成员在 PR 上进行**讨论和代码审查 (Code Review)**。
+    f.  一旦审查通过，项目维护者会在 GitHub 网站上点击**合并 (Merge Pull Request)** 按钮。
+    g.  合并后，你可以安全地**删除**你的功能分支。
+
+### **总结**
+
+恭喜你完成了这份详细的指南！现在你应该对 Git 和 GitHub 有了扎实的理解。
+
+  * **核心理念**：版本控制是为了追踪历史和促进协作。
+  * **本地三区**：工作区 -\> `git add` -\> 暂存区 -\> `git commit` -\> 本地仓库。
+  * **远程交互**：`git clone` 开始，`git pull` 更新，`git push` 分享。
+  * **分支是关键**：始终在独立的分支上工作，通过 Pull Request 合并，以保证 `main` 分支的稳定。

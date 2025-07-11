@@ -1,28 +1,22 @@
 ---
-title: "6: Random forests"
+title: "4: Natural Language (NLP)"
 ---
 
 ::: {layout="[30,70]"}
 
-![](../images/forest.png)
+![](../images/cute_bunny.png)
 
-Random forests started a revolution in machine learning 20 years ago. For the first time, there was a fast and reliable algorithm which made almost no assumptions about the form of the data, and required almost no preprocessing. In today's lesson, you'll learn how a random forest really works, and how to build one from scratch. And, just as importantly, you'll learn how to interpret random forests to better understand your data.
+It's time for us to learn how to analyse natural language documents, using Natural Language Processing (NLP). We'll be focusing on the [Hugging Face](https://huggingface.co/) ecosystem, especially the [Transformers](https://huggingface.co/docs/transformers/index) library, and the vast collection of pretrained [NLP models](https://huggingface.co/models). Our project today will be to classify that similarity of phrases used to describe [US patents](https://www.kaggle.com/competitions/us-patent-phrase-to-phrase-matching). A similar approach can be applied to a wide variety of practical issues, in fields as wide-reaching as marketing, logistics, and medicine.
 
 :::
 
 ## Video
 
-<iframe width="514" height="289" src="https://www.youtube-nocookie.com/embed/AdhG64NF76E?modestbranding=1" title="fast.ai lesson 6" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="514" height="289" src="https://www.youtube-nocookie.com/embed/toUgBQv1BT8?modestbranding=1" title="fast.ai lesson 4" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-This lesson is based partly on [chapter 9](https://github.com/fastai/fastbook/blob/master/09_tabular.ipynb) of the [book](https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch/dp/1492045527).
+This lesson is based partly on [chapter 10](https://github.com/fastai/fastbook/blob/master/10_nlp.ipynb) of the [book](https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch/dp/1492045527).
 
-## Lesson notebooks
+## Resources
 
-- [ How random forests really work](https://www.kaggle.com/code/jhoward/how-random-forests-really-work/)
-- [Road to the top, part 1](https://www.kaggle.com/code/jhoward/first-steps-road-to-the-top-part-1)
-
-## Links from the lesson
-
-- [How to explain Gradient Boosting](https://explained.ai/gradient-boosting/)
-- ["Statistical Modeling: The Two Cultures"](https://www.semanticscholar.org/paper/Statistical-modeling%3A-The-two-cultures-Breiman/e5df6bc6da5653ad98e754b08f63326c2e52b372)  by Leo Breiman
+- Notebook: [Getting started with NLP for absolute beginners](https://www.kaggle.com/code/jhoward/getting-started-with-nlp-for-absolute-beginners)
 
