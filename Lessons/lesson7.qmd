@@ -1,27 +1,27 @@
 ---
-title: "4: 基于{Python}的科学计算"
+title: "4: 基于Python的科学计算"
 ---
 
-{Python}凭借其简洁的语法和强大的库生态系统，已成为科学计算和数据分析领域首选的编程语言之一。本文档将引导你从基础的数值计算开始，逐步深入到更复杂的科学计算领域，并辅含有可视化的代码示例来帮助理解。
+Python凭借其简洁的语法和强大的库生态系统，已成为科学计算和数据分析领域首选的编程语言之一。本文档将引导你从基础的数值计算开始，逐步深入到更复杂的科学计算领域，并辅含有可视化的代码示例来帮助理解。
 
 
 ## 核心库：科学计算的基石
 
-{Python}的科学计算能力主要构建在几个核心库之上。掌握它们是进行高效科学计算的前提。
+Python的科学计算能力主要构建在几个核心库之上。掌握它们是进行高效科学计算的前提。
 
-  * **NumPy (Numerical {Python})**: 提供了多维数组对象（`ndarray`），以及对这些数组进行操作的各种函数。是几乎所有科学计算库的基础。
-  * **SciPy (Scientific {Python})**: 基于NumPy，提供了大量用于科学和工程计算的算法，如优化、积分、插值、信号处理、线性代数等。
+  * **NumPy (Numerical Python)**: 提供了多维数组对象（`ndarray`），以及对这些数组进行操作的各种函数。是几乎所有科学计算库的基础。
+  * **SciPy (Scientific Python)**: 基于NumPy，提供了大量用于科学和工程计算的算法，如优化、积分、插值、信号处理、线性代数等。
   * **Pandas**: 提供了高性能、易于使用的数据结构（如`DataFrame`）和数据分析工具，特别适合处理结构化数据。
   * **Matplotlib**: 一个功能强大、灵活的绘图库，可以创建各种静态、动态、交互式的图表。
 
 
 ## 一、NumPy: 高效的数值计算
 
-NumPy的核心是`ndarray`对象，它是一个n维数组，可以存储同类型的数据。与{Python}原生的列表相比，`ndarray`在数值计算上效率更高，内存占用也更少。
+NumPy的核心是`ndarray`对象，它是一个n维数组，可以存储同类型的数据。与Python原生的列表相比，`ndarray`在数值计算上效率更高，内存占用也更少。
 
 ### 1.1 创建数组
 
-你可以从{Python}列表或元组创建NumPy数组。
+你可以从Python列表或元组创建NumPy数组。
 
 ```{python}
 import numpy as np
@@ -71,7 +71,7 @@ print("Matrix product (dot product):\n", A @ B) # 或者 np.dot(A, B)
 
 ### 1.3 索引和切片
 
-NumPy的索引和切片机制非常灵活，与{Python}列表类似，但功能更强大，支持多维操作。
+NumPy的索引和切片机制非常灵活，与Python列表类似，但功能更强大，支持多维操作。
 
 ```{python}
 import numpy as np
@@ -208,57 +208,98 @@ print(average_salary_by_city)
 
 ## 四、Matplotlib: 数据可视化
 
-“一图胜千言”。Matplotlib是{Python}中最基础也最强大的绘图库，能够创建出版质量的图表。
+“一图胜千言”。Matplotlib是Python中最基础也最强大的绘图库，能够创建出版质量的图表。
 
-### 实例：泊松分布与正态分布
+### 实例：布朗运动与正态分布
 
-当泊松分布的参数 $\lambda$ (表示单位时间/空间内事件发生的平均次数) 足够大时，其形状近似于正态分布。我们可以通过模拟和可视化来展示这一点。
+**布朗运动**（或称维纳过程）是模拟粒子随机游走的数学模型。它与正态分布有着深刻的联系：**大量独立粒子经过一段时间的布朗运动后，它们最终位置的分布会趋向于一个正态分布**。
 
-泊松分布的概率质量函数为：$P(X=k) = \frac{\lambda^k e^{-\lambda}}{k\!}$
+这个现象是中心极限定理的一个直观体现。我们可以通过模拟成千上万条独立的布朗运动轨迹来验证这一点。
 
-当 $\lambda \to \infty$ 时，它近似于一个均值为 $\mu=\lambda$、方差为 $\sigma^2=\lambda$ 的正态分布。
+1.  **模拟过程**:
+      * 我们模拟 `N` 个粒子，每个粒子都从原点 (0) 出发。
+      * 每个粒子都运动 `M` 个时间步。
+      * 在每个时间步 `dt` 内，粒子的位移是一个服从正态分布的随机数（均值为0，方差为 `dt`）。
+      * 一个粒子的总位移是所有步位移的累加。
+2.  **理论**:
+      * 根据理论，在总时间 `T = M * dt` 后，所有粒子最终位置 `X(T)` 的分布应该是一个均值为 0，方差为 `T` 的正态分布，即 $X(T) \sim \mathcal{N}(0, T)$。
+
+下面的代码将模拟这个过程并进行可视化。
 
 ```{python}
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import poisson, norm
+from scipy.stats import norm
 
-# 设置泊松分布的参数 lambda
-lambda_param = 30
+# --- 1. 定义模拟参数 ---
+num_paths = 5000  # 模拟的粒子（路径）数量
+num_steps = 1000  # 每条路径的时间步数
+dt = 0.01         # 每个时间步的长度
+T = num_steps * dt # 总时间
 
-# 生成泊松分布的随机样本
-poisson_samples = poisson.rvs(mu=lambda_param, size=10000)
+# --- 2. 生成布朗运动路径 ---
+# 为每条路径的每一步生成一个随机位移
+# 位移服从均值为0, 标准差为sqrt(dt)的正态分布
+random_steps = np.random.normal(0, np.sqrt(dt), (num_paths, num_steps))
 
-# 正态分布的参数
-mu = lambda_param
-sigma = np.sqrt(lambda_param)
+# 计算每条路径在每个时间点的位置
+# 使用cumsum(axis=1)对时间步进行累加
+# 在开头插入0，表示所有路径都从0开始
+initial_positions = np.zeros((num_paths, 1))
+paths = np.concatenate((initial_positions, random_steps), axis=1)
+paths = np.cumsum(paths, axis=1)
 
-# 创建一个用于绘制正态分布曲线的 x 轴范围
-x = np.arange(mu - 4*sigma, mu + 4*sigma, 0.1)
-# 计算正态分布的概率密度函数 (PDF)
-normal_pdf = norm.pdf(x, loc=mu, scale=sigma)
+# 创建时间轴
+time_axis = np.linspace(0, T, num_steps + 1)
 
-# 可视化
+# --- 3. 可视化部分 ---
+
+# 图1：展示几条样本路径
+plt.figure(figsize=(10, 6))
+# 只画前10条路径，否则会很乱
+for i in range(10):
+    plt.plot(time_axis, paths[i, :])
+
+plt.title('Sample Brownian Motion Paths')
+plt.xlabel('Time')
+plt.ylabel('Position')
+plt.grid(True)
+plt.show()
+```
+
+```{python}
+# 图2：检验最终位置的分布
+# 提取所有路径在时间T的最终位置
+final_positions = paths[:, -1]
+
+# 计算理论上的正态分布参数
+mu = 0
+sigma = np.sqrt(T)
+
+# 创建用于绘制理论曲线的x轴
+x_theory = np.linspace(mu - 4*sigma, mu + 4*sigma, 200)
+# 计算理论正态分布的概率密度函数 (PDF)
+pdf_theory = norm.pdf(x_theory, loc=mu, scale=sigma)
+
 plt.figure(figsize=(10, 6))
 
-# 绘制泊松分布的直方图
-# `density=True` 使直方图的面积归一化，以便与PDF比较
-plt.hist(poisson_samples, bins=30, density=True, alpha=0.6, label=f'Poisson Samples (lambda={lambda_param})')
+# 绘制最终位置的直方图
+# density=True 表示将直方图面积归一化，以便与PDF比较
+plt.hist(final_positions, bins=50, density=True, alpha=0.7, label=f'Final Positions of {num_paths} Paths')
 
-# 绘制正态分布的PDF曲线
-plt.plot(x, normal_pdf, 'r-', lw=2, label=f'Normal Approx. (mu={mu}, sigma={sigma:.2f})')
+# 叠加理论上的正态分布曲线
+plt.plot(x_theory, pdf_theory, 'r-', lw=2, label=f'Normal Distribution (mu=0, sigma={sigma:.2f})')
 
-plt.title('Poisson Distribution Approaching Normal Distribution')
-plt.xlabel('Number of Events')
+plt.title('Distribution of Final Positions after Time T')
+plt.xlabel('Final Position')
 plt.ylabel('Probability Density')
 plt.legend()
 plt.grid(True)
 plt.show()
-
 ```
 
-上图清晰地展示了，当 $\lambda=30$ 时，泊松分布的样本直方图（蓝色）与一个均值和方差都等于30的正态分布曲线（红色）非常吻合。这直观地验证了中心极限定理的一个特例。
-
+**结果分析**:
+第一张图展示了粒子随机游走的轨迹。第二张图是核心，它清晰地显示了5000个粒子在运动10秒后，其最终位置的分布（蓝色直方图）与理论上的正态分布曲线（红色）完美吻合。这直观地证明了布朗运动与正态分布之间的深刻联系。
 
 ## 五、进阶话题：符号计算与机器学习
 
@@ -331,4 +372,4 @@ plt.show()
 
 ## 结论
 
-{Python}通过其强大的科学计算库生态系统，为研究人员、工程师和数据科学家提供了一套完整、高效且易于上手的工具。从基础的数组操作到复杂的机器学习模型，你都可以在{Python}中找到解决方案。希望本文档能为你开启{Python}科学计算的大门。继续探索，不断实践，你将能利用{Python}解决更多有趣的实际问题。
+Python通过其强大的科学计算库生态系统，为研究人员、工程师和数据科学家提供了一套完整、高效且易于上手的工具。从基础的数组操作到复杂的机器学习模型，你都可以在Python中找到解决方案。希望本文档能为你开启Python科学计算的大门。继续探索，不断实践，你将能利用Python解决更多有趣的实际问题。
