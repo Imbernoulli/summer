@@ -64,28 +64,52 @@ title: "2: Python爬虫原理与实践"
       * `requests`: 负责发送HTTP请求，从网站获取HTML。
       * `beautifulsoup4`: 负责解析HTML，帮我们轻松提取数据。
 
-### 2.2 实战：抓取单个页面的信息
+### 2.2 实战：抓取学者主页上的信息
 
-**目标**：抓取一个虚构的新闻网站 (`http://example.com`) 的主标题和发布日期。
+**目标**：自动抓取学者主页（如 [https://lyubh.cn](https://lyubh.cn)）上的姓名、简介、新闻动态，以及每一篇论文的标题、作者和会议。
 
-**第一步：分析目标网页（侦察工作）**
+#### 第一步：分析目标网页（侦察工作）
 
-在浏览器中打开目标网页，右键点击你想要抓取的内容（比如标题），选择“检查”或“审查元素”。这会打开开发者工具。
-
-你会看到类似这样的HTML结构：
+在浏览器中打开目标网页，右键点击你想要爬取的内容，选择“检查”或“审查元素”。你会看到类似这样的 HTML 结构：
 
 ```html
-<div class="article">
-    <h1 id="main-title">Python爬虫改变了世界</h1>
-    <span class="publish-date">发布于: 2025-07-11</span>
-    ...
-</div>
+<!-- 姓名 -->
+<h1>Bohan Lyu</h1>
+
+<!-- 简介 -->
+<p>
+  I am an undergruduate at Tsinghua University. I'm interested in ML and NLP topics. My works are published in ICML and ACL.
+</p>
+
+<!-- 新闻 -->
+<h2 id="News">News</h2>
+<ul>
+  <li>2025-07 Goedel-Prover is accepted to COLM 2025!</li>
+  ...
+</ul>
+
+<!-- 论文条目，title、作者、会议分布在同一个<tr>里 -->
+<tr class="paper-row">
+  <td>...</td>
+  <td>
+    <div>
+      <h3>Goedel-Prover: A Frontier Model for Open-Source Automated Theorem Proving</h3>
+      <br>
+      Yong Lin*, Shange Tang*, <b>Bohan Lyu</b>, Jiayun Wu, ...
+      <br>
+      <em>COLM 2025</em>
+      ...
+    </div>
+  </td>
+</tr>
 ```
 
 **侦察结论**：
 
-  * 标题在一个`<h1>`标签里，这个标签有一个独一无二的`id`叫做 `main-title`。
-  * 发布日期在一个`<span>`标签里，它的`class`是 `publish-date`。
+- 姓名在 `<h1>` 标签里。
+- 简介在第一个 `<p>` 标签里。
+- 新闻在 `<h2 id="News">` 后的 `<ul>` 里。
+- 论文信息在 `<tr class="paper-row">` 里，标题是 `<h3>`，作者是 `<h3>` 下方的所有文本，会议在 `<em>` 内。
 
 **第二步：编写Python代码**
 
