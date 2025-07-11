@@ -55,10 +55,12 @@ title: "2: Python爬虫原理与实践"
 
 1.  **安装 Python**: 确保你的电脑上安装了Python 3。
 2.  **安装必备库**: 打开你的终端或命令行工具，安装我们即将使用的两个核心库。
+
     ```bash
     pip install requests
     pip install beautifulsoup4
     ```
+
       * `requests`: 负责发送HTTP请求，从网站获取HTML。
       * `beautifulsoup4`: 负责解析HTML，帮我们轻松提取数据。
 
@@ -272,9 +274,11 @@ print(all_book_data)
 ### 4.1 安装与配置 Selenium
 
 1.  **安装 Selenium 库**:
+
     ```bash
     pip install selenium
     ```
+
 2.  **下载 WebDriver**: `Selenium`需要一个叫做`WebDriver`的驱动程序来控制浏览器。你需要下载与你的**浏览器版本完全对应**的`WebDriver`。
       * **Chrome用户**: 搜索 "ChromeDriver" 下载。
       * **Firefox用户**: 搜索 "GeckoDriver" 下载。
