@@ -11,10 +11,11 @@ website:
         contents:
           - Lessons/lesson4.qmd
           - Lessons/lesson5.qmd
-          - Lessons/lesson7.qmd
+          - Lessons/lesson6.qmd
+          
       - section: 计算机前沿展望
         contents:
-          - Lessons/lesson6.qmd
+          - Lessons/lesson7.qmd
 
       - section: 课程资源
         contents:
