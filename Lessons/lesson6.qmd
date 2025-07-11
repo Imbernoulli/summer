@@ -363,9 +363,11 @@ pip install bokeh bokeh_sampledata
 Bokeh 的核心概念是“字形”(Glyphs)。每一个你看到的视觉元素，无论是圆圈、方块还是线条，都是一个被添加到图表中的字形。你可以为这些字形设置各种视觉属性（颜色、大小、透明度等）。Bokeh 内置了一套非常实用的交互工具，如平移(pan)、滚轮缩放(wheel\_zoom)、框选缩放(box\_zoom)等，默认集成在图表中。
 
 ```{python}
-from bokeh.plotting import figure, show
-from bokeh.sampledata.iris import flowers # Bokeh 自带的鸢尾花数据集
+from bokeh.plotting import figure, output_notebook, show
+from bokeh.sampledata.iris import flowers
 from bokeh.models import HoverTool
+
+output_notebook()
 
 # 准备数据和颜色映射
 colormap = {'setosa': 'red', 'versicolor': 'green', 'virginica': 'blue'}
@@ -398,7 +400,6 @@ p.xaxis.axis_label = "Petal Length"
 p.yaxis.axis_label = "Petal Width"
 p.title.text_font_size = '16pt'
 
-# show() 会生成一个 HTML 文件并在浏览器中打开
 show(p)
 ```
 
