@@ -265,11 +265,7 @@ plt.xlabel('Time')
 plt.ylabel('Position')
 plt.grid(True)
 plt.show()
-```
 
-```{python}
-# 图2：检验最终位置的分布
-# 提取所有路径在时间T的最终位置
 final_positions = paths[:, -1]
 
 # 计算理论上的正态分布参数
