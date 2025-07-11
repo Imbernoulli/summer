@@ -1,29 +1,328 @@
 ---
-title: "5: From-scratch model"
+title: "2: Python爬虫原理与实践"
 ---
 
-::: {layout="[30,70]"}
+# Python爬虫入门指南
 
-![](../images/bear_sunnies.png)
+## 第一章：爬虫基础与核心原理再探
 
-Today we look at how to create a neural network from scratch using Python and PyTorch, and how to implement a training loop for optimising the weights of a model. We build up from a single layer regression model up to a neural net with one hidden layer, and then to a deep learning model. Along the way we'll also look at how we can use a special function called *sigmoid* to make binary classification models easier to train, and we'll also learn about *metrics*.
+在我们开始写代码之前，必须先稳固地掌握爬虫的内在逻辑。
 
-:::
+### 什么是爬虫？
 
-## Video
+网络爬虫，本质上是一个**自动化**的程序。它的核心任务是**模拟人类访问网页的行为**，但速度和规模远超人类。
 
-<iframe width="514" height="289" src="https://www.youtube-nocookie.com/embed/_rXzeWq4C6w?modestbranding=1" title="fast.ai lesson 5" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  * **人类访问网页**：打开浏览器 -\> 输入网址 (URL) -\> 回车 -\> 浏览器发送请求 -\> 服务器返回HTML代码 -\> 浏览器将代码**渲染**成我们看到的图文并茂的页面。
+  * **爬虫访问网页**：执行程序 -\> 指定URL -\> 程序发送请求 -\> 服务器返回HTML代码 -\> 程序**不渲染**，而是直接**解析**这份纯文本的HTML代码，寻找并提取数据。
 
-This lesson is based partly on [chapter 4](https://github.com/fastai/fastbook/blob/master/04_mnist_basics.ipynb) and [chapter 9](https://github.com/fastai/fastbook/blob/master/09_tabular.ipynb) of the [book](https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch/dp/1492045527).
+关键区别在于**“渲染”**和**“解析”**。浏览器负责美观地展示，而爬虫负责高效地提取。
 
-## Lesson notebooks
+### HTTP：爬虫与网站沟通的语言
 
-- [Linear model and neural net from scratch](https://www.kaggle.com/code/jhoward/linear-model-and-neural-net-from-scratch)
-- [Why you should use a framework](https://www.kaggle.com/code/jhoward/why-you-should-use-a-framework)
-- [ How random forests really work](https://www.kaggle.com/code/jhoward/how-random-forests-really-work/)
+你的爬虫程序通过HTTP协议与网站服务器对话。最常见的两种对话方式是 `GET` 和 `POST`。
 
-## Links from the lesson
+  * **`GET` 请求**：就像在浏览器地址栏输入网址后回车。这是最常见的请求，用于**获取**（GET）网页数据。我们的绝大多数抓取任务都从`GET`请求开始。
+  * **`POST` 请求**：通常用于向服务器**提交**（POST）数据，例如填写登录表单、提交搜索关键词等。有些需要登录或搜索后才能看到内容的页面，就需要模拟`POST`请求。
 
-- [OneR paper](https://link.springer.com/article/10.1023/A:1022631118932)
-- Some great Titanic notebooks: [1](https://www.kaggle.com/code/mrisdal/exploring-survival-on-the-titanic); [2](https://www.kaggle.com/code/cdeotte/titanic-wcg-xgboost-0-84688/notebook); [3](https://www.kaggle.com/code/pliptor/divide-and-conquer-0-82296); [4](https://www.kaggle.com/code/cdeotte/titanic-using-name-only-0-81818/notebook)
+### 网页的骨架：HTML简介
 
+爬虫获取到的就是一堆HTML（超文本标记语言）代码。你需要能看懂它的基本结构，才能知道去哪里找数据。
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>网页标题</title>
+</head>
+<body>
+    <div class="content">
+        <h1>这是一个主标题</h1>
+        <p id="intro">这是一个段落。</p>
+        <a href="/about.html">关于我们</a>
+    </div>
+</body>
+</html>
+```
+
+  * **标签 (Tag)**：由尖括号包围，如`<html>`, `<h1>`, `<p>`, `<a>`。它们定义了内容的类型和结构。
+  * **属性 (Attribute)**：在标签内部，提供额外信息，如`class="content"`，`id="intro"`，`href="/about.html"`。**属性是我们定位数据的关键线索**。
+
+## 第二章：环境准备与第一个静态爬虫
+
+现在，让我们卷起袖子，开始动手！
+
+### 2.1 搭建你的爬虫工作室
+
+1.  **安装 Python**: 确保你的电脑上安装了Python 3。
+2.  **安装必备库**: 打开你的终端或命令行工具，安装我们即将使用的两个核心库。
+    ```bash
+    pip install requests
+    pip install beautifulsoup4
+    ```
+      * `requests`: 负责发送HTTP请求，从网站获取HTML。
+      * `beautifulsoup4`: 负责解析HTML，帮我们轻松提取数据。
+
+### 2.2 实战：抓取单个页面的信息
+
+**目标**：抓取一个虚构的新闻网站 (`http://example.com`) 的主标题和发布日期。
+
+**第一步：分析目标网页（侦察工作）**
+
+在浏览器中打开目标网页，右键点击你想要抓取的内容（比如标题），选择“检查”或“审查元素”。这会打开开发者工具。
+
+你会看到类似这样的HTML结构：
+
+```html
+<div class="article">
+    <h1 id="main-title">Python爬虫改变了世界</h1>
+    <span class="publish-date">发布于: 2025-07-11</span>
+    ...
+</div>
+```
+
+**侦察结论**：
+
+  * 标题在一个`<h1>`标签里，这个标签有一个独一无二的`id`叫做 `main-title`。
+  * 发布日期在一个`<span>`标签里，它的`class`是 `publish-date`。
+
+**第二步：编写Python代码**
+
+```{python}
+import requests
+from bs4 import BeautifulSoup
+
+# 目标URL
+url = 'http://example.com' 
+
+# 1. 发送GET请求
+try:
+    response = requests.get(url)
+    response.raise_for_status() # 检查请求是否成功
+    html_content = response.text
+
+    # 2. 使用BeautifulSoup解析HTML
+    soup = BeautifulSoup(html_content, 'html.parser')
+
+    # 3. 定位并提取数据
+    # 通过id定位标题，id是唯一的，所以用find()
+    title_tag = soup.find('h1', id='main-title')
+    title = title_tag.text if title_tag else '标题未找到' # .text获取标签内的文本
+
+    # 通过class定位发布日期，class可能不唯一，但这里我们假设它是
+    date_tag = soup.find('span', class_='publish-date')
+    publish_date = date_tag.text if date_tag else '日期未找到'
+
+    # 4. 打印结果
+    print(f"文章标题: {title}")
+    print(f"发布日期: {publish_date.strip()}") # .strip()去除多余的空格
+
+except requests.exceptions.RequestException as e:
+    print(f"错误：无法连接到网站 {url}。原因: {e}")
+
+```
+
+## 第三章：进阶爬取技术
+
+抓取单个页面只是开始，真正的威力在于处理列表和多个页面。
+
+### 3.1 爬取列表页数据（“爬列表”）
+
+**目标**：抓取一个虚构的图书商店（`http://books.toscrape.com` - 这是一个真实的、为爬虫练习而生的网站）第一页所有书的标题和价格。
+
+**侦察工作**：
+打开网站，用开发者工具检查一本书。你会发现，每一本书的信息都在一个`<article class="product_pod">`标签里。书名在`<h3>`标签的`<a>`标签里，价格在`<p class="price_color">`标签里。
+
+**代码实现**：
+
+```{python}
+import requests
+from bs4 import BeautifulSoup
+import csv # 引入csv库，用于保存数据
+
+# 目标URL
+url = 'http://books.toscrape.com/'
+
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# 1. 定位所有包含书籍信息的article标签
+# find_all()会返回一个包含所有匹配项的列表
+books = soup.find_all('article', class_='product_pod')
+
+book_data = [] # 创建一个列表来存储所有书籍信息
+
+# 2. 循环处理每一本书
+for book in books:
+    # 在每个book标签内继续查找标题和价格
+    # 注意这里的路径查找方式
+    title = book.h3.a['title']
+    price = book.find('p', class_='price_color').text
+    
+    # 打印出来看看
+    print(f"书名: {title}, 价格: {price}")
+    
+    # 将提取的数据存入字典，再添加到列表中
+    book_data.append({'title': title, 'price': price})
+
+print(book_data)
+```
+
+### 3.2 循环爬取多个页面（“循环爬”/翻页）
+
+**目标**：抓取`books.toscrape.com`前5页所有书的信息。
+
+**侦察工作**：
+在第一页底部，找到“next”按钮。检查它的HTML，你会看到一个`<a>`标签，它的`href`属性指向下一页的地址（`catalogue/page-2.html`）。这给了我们构建下一页URL的规律。
+
+**代码实现**：
+
+```{python}
+import requests
+from bs4 import BeautifulSoup
+import time # 引入时间库，用于设置延时
+
+base_url = 'http://books.toscrape.com/catalogue/'
+all_book_data = []
+
+# 循环爬取前5页
+for i in range(1, 6): # 从第1页到第5页
+    # 构造每一页的完整URL
+    url = f"{base_url}page-{i}.html"
+    print(f"正在抓取页面: {url}")
+    
+    response = requests.get(url)
+    
+    # 如果页面不存在，则跳出循环
+    if response.status_code != 200:
+        print(f"页面 {url} 不存在，停止抓取。")
+        break
+        
+    soup = BeautifulSoup(response.text, 'html.parser')
+    books = soup.find_all('article', class_='product_pod')
+
+    for book in books:
+        title = book.h3.a['title']
+        price = book.find('p', class_='price_color').text
+        all_book_data.append({'title': title, 'price': price})
+    
+    # 做一个有礼貌的爬虫，每次请求后暂停一下
+    print(f"页面 {i} 抓取完毕，暂停1秒...")
+    time.sleep(1) 
+
+print(f"\n全部 {len(all_book_data)} 本书的信息抓取完毕！")
+# 在这里可以将 all_book_data 保存到文件
+```
+
+## 第四章：攻克动态网站（“动态爬”）
+
+**挑战**：很多现代网站使用JavaScript在页面加载后才动态地载入数据。你用`requests`直接请求，只能拿到一个空壳HTML，数据根本不在里面。
+
+**例子**：一个股价实时更新的页面，或者无限滚动的社交媒体。
+
+**解决方案**：使用**浏览器自动化工具**，如`Selenium`。
+
+`Selenium`可以驱动一个真实的浏览器（如Chrome或Firefox）去加载网页。它会等待所有JavaScript执行完毕，渲染出最终的页面，然后我们再从这个完整的页面中提取数据。
+
+### 4.1 安装与配置 Selenium
+
+1.  **安装 Selenium 库**:
+    ```bash
+    pip install selenium
+    ```
+2.  **下载 WebDriver**: `Selenium`需要一个叫做`WebDriver`的驱动程序来控制浏览器。你需要下载与你的**浏览器版本完全对应**的`WebDriver`。
+      * **Chrome用户**: 搜索 "ChromeDriver" 下载。
+      * **Firefox用户**: 搜索 "GeckoDriver" 下载。
+      * 下载后，将`chromedriver.exe`（或`geckodriver.exe`）放到你的Python脚本所在的文件夹，或者一个系统路径下。
+
+### 4.2 实战：抓取动态加载的数据
+
+**目标**：抓取一个虚构的、由JS加载名言的网站 (`http://quotes.toscrape.com/js/`) 的第一页所有名言。
+
+**侦察工作**：
+如果你直接用`requests`请求这个URL，会发现返回的HTML里根本没有名言数据。但用浏览器打开，名言却清晰可见。这就是JS动态加载的证据。
+
+**代码实现**：
+
+```{python}
+#| eval: false
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
+import time
+
+# --- Selenium 设置 ---
+# 指定WebDriver的路径（如果不在系统路径下）
+# driver_path = 'path/to/your/chromedriver.exe'
+# driver = webdriver.Chrome(executable_path=driver_path)
+driver = webdriver.Chrome() # 假设chromedriver在PATH中
+
+url = 'http://quotes.toscrape.com/js/'
+driver.get(url)
+
+try:
+    # --- 等待动态内容加载 ---
+    # 设置一个最长等待时间（10秒）
+    # 等待直到class为'quote'的元素出现
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "quote"))
+    )
+
+    # 此刻，浏览器中的页面已经完全加载好了
+    # 获取渲染后的页面源代码
+    html_content = driver.page_source
+    
+    # --- 使用BeautifulSoup解析 ---
+    soup = BeautifulSoup(html_content, 'html.parser')
+    
+    quotes = soup.find_all('div', class_='quote')
+    
+    for quote in quotes:
+        text = quote.find('span', class_='text').text
+        author = quote.find('small', class_='author').text
+        print(f"'{text}' - {author}")
+        
+finally:
+    # 完成后务必关闭浏览器，释放资源
+    time.sleep(2) # 稍等片刻，方便观察
+    driver.quit()
+
+```
+
+**动态爬取小结**：
+
+  * **优点**：能抓取几乎所有“所见即所得”的网页内容，是终极解决方案。
+  * **缺点**：速度慢（因为要真实加载整个浏览器），消耗资源多。
+
+**更高效的动态抓取思路（高级）**：
+在开发者工具的“Network”标签页下，筛选`XHR`或`Fetch`请求。你往往能找到JS用来获取数据的那个后台API接口。如果能找到这个接口，你就可以直接用`requests`去请求这个API，获取返回的JSON数据，这比启动整个Selenium快得多！
+
+## 第五章：爬虫的礼仪与法律边界
+
+技术强大，责任更重。做一个负责任的爬虫开发者至关重要。
+
+1.  **检查 `robots.txt`**: 访问 `主域名/robots.txt` (例如 `https://www.google.com/robots.txt`)。这个文件告诉你好意的爬虫哪些页面可以抓取，哪些不可以。
+
+    ```
+    User-agent: * # *代表所有爬虫
+    Disallow: /search   # 禁止抓取/search/目录下的所有内容
+    Allow: /            # 允许抓取其他所有内容
+    ```
+
+2.  **设置 `User-Agent`**: 默认情况下，`requests`的User-Agent会暴露你是Python程序。最好将其伪装成浏览器，这更礼貌，也能避免被一些简单的反爬机制拦截。
+
+    ```{python}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+    response = requests.get(url, headers=headers)
+    ```
+
+3.  **控制抓取频率**: **绝对不要**用程序疯狂请求一个网站！这会给对方服务器带来巨大压力，无异于一次小型的DDoS攻击。在循环中加入`time.sleep(seconds)`，模拟人类的浏览间隔。
+
+4.  **数据使用规范**:
+
+      * 抓取的数据如果仅用于个人学习和研究，通常问题不大。
+      * 如果用于商业目的，必须仔细阅读网站的服务条款，并警惕版权问题。
+      * **严禁**抓取、传播涉及个人隐私的数据，这是法律红线！

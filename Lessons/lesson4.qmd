@@ -1,5 +1,5 @@
 ---
-title: "4: Git与GitHub的应用"
+title: "1: Git与GitHub的应用"
 ---
 
 ## Git 与 GitHub 入门指南 
