@@ -347,63 +347,6 @@ fig.update_layout(margin=dict(l=0, r=0, b=0, t=40)) # 调整边距以更好地�
 fig.show()
 ```
 
-
-## 🌐 Bokeh：用于 Web 的交互式可视化
-
-**Bokeh** 的设计哲学与 Plotly 类似，都专注于为现代 Web 浏览器创建交互式可视化。但 Bokeh 更强调其作为构建数据应用的“积木”角色。它提供了非常灵活的组件和布局工具，开发者可以像拼乐高一样，将图表、控件（如下拉菜单、滑块）、表格等组合成一个完整的、具有复杂交互逻辑的数据仪表盘（Dashboard）。其强大的 Bokeh Server 组件甚至允许你构建能够响应 Python 后端数据变化的实时应用。
-
-### 安装 Bokeh
-
-```bash
-pip install bokeh bokeh_sampledata
-```
-
-### 创建 Web 原生图表
-
-Bokeh 的核心概念是“字形”(Glyphs)。每一个你看到的视觉元素，无论是圆圈、方块还是线条，都是一个被添加到图表中的字形。你可以为这些字形设置各种视觉属性（颜色、大小、透明度等）。Bokeh 内置了一套非常实用的交互工具，如平移(pan)、滚轮缩放(wheel\_zoom)、框选缩放(box\_zoom)等，默认集成在图表中。
-
-```{python}
-from bokeh.plotting import figure, output_notebook, show
-from bokeh.sampledata.iris import flowers
-from bokeh.models import HoverTool
-
-output_notebook()
-
-# 准备数据和颜色映射
-colormap = {'setosa': 'red', 'versicolor': 'green', 'virginica': 'blue'}
-flowers['colors'] = [colormap[x] for x in flowers['species']]
-
-# 创建一个 figure 对象，这是所有字形的容器
-# tools 参数可以自定义右侧的工具栏
-p = figure(title="Iris Morphology", height=400, width=600,
-           tools="pan,wheel_zoom,box_zoom,reset,save")
-
-# 添加一个圆形"字形"(glyph)渲染器，并直接映射 DataFrame 的列
-p.circle(x="petal_length",
-         y="petal_width",
-         color='colors',
-         fill_alpha=0.5,
-         size=12,
-         source=flowers) # 'source' 参数是 Bokeh 的推荐做法，便于数据管理和交互
-
-# 定制一个更丰富的悬停工具
-# tooltips 接受一个元组列表，(标签, @列名)
-hover = HoverTool(tooltips=[
-    ("Species", "@species"),
-    ("Petal Length", "@petal_length{0.0} cm"), # 可以进行格式化
-    ("Petal Width", "@petal_width{0.0} cm"),
-])
-p.add_tools(hover)
-
-# 定制坐标轴和标题样式
-p.xaxis.axis_label = "Petal Length"
-p.yaxis.axis_label = "Petal Width"
-p.title.text_font_size = '16pt'
-
-show(p)
-```
-
-
 ## 🤔 如何选择合适的工具？
 
 面对如此多的选择，关键在于理解你的核心需求。下面是一个更详细的决策指南：
