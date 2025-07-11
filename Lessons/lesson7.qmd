@@ -256,8 +256,8 @@ time_axis = np.linspace(0, T, num_steps + 1)
 
 # 图1：展示几条样本路径
 plt.figure(figsize=(10, 6))
-# 只画前10条路径，否则会很乱
-for i in range(10):
+# 只画前50条路径，否则会很乱
+for i in range(50):
     plt.plot(time_axis, paths[i, :])
 
 plt.title('Sample Brownian Motion Paths')

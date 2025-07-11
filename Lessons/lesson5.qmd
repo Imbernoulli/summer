@@ -253,8 +253,8 @@ import time # 引入时间库，用于设置延时
 base_url = 'http://books.toscrape.com/catalogue/'
 all_book_data = []
 
-# 循环爬取前5页
-for i in range(1, 6): # 从第1页到第5页
+# 循环爬取前3页
+for i in range(1, 4): # 从第1页到第3页
     # 构造每一页的完整URL
     url = f"{base_url}page-{i}.html"
     print(f"正在抓取页面: {url}")
