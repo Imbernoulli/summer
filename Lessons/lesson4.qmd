@@ -70,7 +70,7 @@ Git 的核心在于其三个主要区域的流转。理解了这个模型，你�
 
 下面这张图清晰地展示了文件在三个区域之间的流转过程：
 
-```mermaid
+```{mermaid}
 graph TD
     A["工作区<br>(Working Directory)"] -- "git add" --> B["暂存区<br>(Staging Area)"]
     B -- "git commit" --> C["本地仓库<br>(Local Repository)"]
@@ -126,7 +126,7 @@ graph TD
 
 #### **本地与远程关系图解**
 
-```mermaid
+```{mermaid}
 graph TD
     subgraph "Your Computer"
         A["本地仓库(Local Repo)"]
@@ -181,7 +181,7 @@ graph TD
 
 #### **分支与合并图解**
 
-```mermaid
+```{mermaid}
 gitGraph
    commit id: "Initial"
    branch feature-A
@@ -254,7 +254,7 @@ gitGraph
 
 ### **日常协作流程**
 
-```mermaid
+```{mermaid}
 %%{init: { 'logLevel': 'debug', 'theme': 'base', 'gitGraph': {'showBranches': true, 'showCommitLabel': true, 'mainBranchName': 'main'}} }%%
 gitGraph
     commit id: "初始化项目"
@@ -351,6 +351,109 @@ gitGraph
     e.  团队成员在 PR 上进行**讨论和代码审查 (Code Review)**。
     f.  一旦审查通过，项目维护者会在 GitHub 网站上点击**合并 (Merge Pull Request)** 按钮。
     g.  合并后，你可以安全地**删除**你的功能分支。
+
+### **实战：用 GitHub Pages 搭建你的个人主页**
+
+现在，你已经掌握了 Git 和 GitHub 的核心技能，是时候将它们付诸实践，创建一个所有开发者都梦寐以求的“技术名片”——你的个人网站。GitHub 提供了一项名为 **GitHub Pages** 的免费服务，可以让你轻松地将你的代码仓库变成一个公开的网站。
+
+#### **前端开发简介**
+
+网页是由三种核心技术构建的：
+
+  * **HTML (HyperText Markup Language)**: 定义了网页的**结构**和**内容**。比如，标题、段落、图片、链接等。
+  * **CSS (Cascading Style Sheets)**: 负责网页的**样式**和**外观**。比如，颜色、字体、布局、边距等。
+  * **JavaScript**: 赋予网页**交互性**和**动态功能**。比如，响应用户点击、表单验证、动画效果等。
+
+我们将创建一个只包含 HTML 和 CSS 的简单静态页面，并将其部署到 GitHub Pages。
+
+#### **搭建步骤**
+
+1.  **创建一个特殊的仓库**
+    登录 GitHub。点击右上角的“+”号，选择 "New repository"。这一步至关重要：
+
+      * **Repository name (仓库名称)** 必须是 `<你的GitHub用户名>.github.io`。例如，如果你的用户名是 `octocat`，那么仓库名必须是 `octocat.github.io`。
+      * **必须设置为 Public (公开)**。
+      * 可以勾选 "Add a README file" 来初始化仓库，这会使后续的克隆操作更简单。
+
+2.  **克隆仓库到本地**
+    进入你刚刚创建的仓库页面，点击绿色的 "\<\> Code" 按钮，复制 HTTPS URL。然后，在你的电脑终端中运行 `git clone`：
+
+    ```bash
+    # 将URL替换为你自己的仓库URL
+    git clone https://github.com/YourUsername/yourusername.github.io.git
+    ```
+
+3.  **创建你的主页文件**
+    使用 `cd` 命令进入刚刚克隆下来的文件夹：
+
+    ```bash
+    cd yourusername.github.io
+    ```
+
+    创建一个名为 `index.html` 的文件。这个文件名是特殊的，当别人访问你的网站时，GitHub Pages 会默认显示这个文件的内容。在 `index.html` 文件中写入以下基础 HTML 代码：
+
+    ```html
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>我的个人主页</title>
+        <style>
+            body { font-family: sans-serif; line-height: 1.6; margin: 40px; background-color: #f4f4f4; color: #333; }
+            .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+            h1 { color: #0366d6; }
+            a { color: #0366d6; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>欢迎来到我的世界！</h1>
+            <p>你好，我是 [你的名字]。这是我用 GitHub Pages 搭建的个人网站。</p>
+            <p>你可以在 <a href="https://github.com/YourUsername" target="_blank">这里</a> 找到我的 GitHub 主页，关注我的开源项目。</p>
+        </div>
+    </body>
+    </html>
+    ```
+
+    > **提示**: 记得将 `[你的名字]` 和 `YourUsername` 替换成你自己的信息。
+
+4.  **提交并推送到 GitHub**
+    现在，按照我们学过的标准 Git 流程，将你的新主页上传到 GitHub。
+
+    ```bash
+    # 1. 将所有新文件和修改添加到暂存区
+    git add .
+
+    # 2. 提交变更，并附上有意义的信息
+    git commit -m "Feat: Create initial homepage"
+
+    # 3. 将本地提交推送到远程仓库
+    git push origin main
+    ```
+
+5.  **在 GitHub Settings 中配置 Pages**
+    默认情况下，名为 `<username>.github.io` 的仓库会自动启用 GitHub Pages。但了解设置过程对所有项目都至关重要。
+
+    a.  在浏览器中打开你的 GitHub 仓库页面。
+    b.  点击仓库导航栏右侧的 **"Settings"** 标签。
+    c.  在左侧的菜单中，找到并点击 **"Pages"**。
+
+    d.  在 "Build and deployment" (构建与部署) 部分，你会看到 "Source" (源) 的选项。请确保它的设置为 **"Deploy from a branch"** (从分支部署)。
+
+    e.  在下方的 "Branch" (分支) 设置中：
+
+      * 选择你刚刚推送代码的分支，通常是 **`main`** (或者 `master`)。
+      * 文件夹选项保持默认的 **`/ (root)`**。
+      * 点击 **"Save"**。
+
+    f.  保存后，页面顶部会出现一个蓝色的提示框，告诉你 “Your site is live at `https://<你的用户名>.github.io`”。有时，GitHub 需要一两分钟来完成部署（这个过程被称为 Action）。你可以点击提示框中的链接查看你的网站。
+
+6.  **见证奇迹！**
+    访问 `https://<你的GitHub用户名>.github.io`，你应该就能看到你刚刚创建的、拥有简单样式的个人主页了！
+
+现在，你拥有了一个可以向全世界展示的个人网站。你可以继续学习 HTML 和 CSS 来美化它，或者添加你的项目作品集，让它成为你真正的在线简历。
 
 ### **总结**
 
