@@ -15,6 +15,9 @@ website:
         contents:
           - Lessons/lesson6.qmd
           - Lessons/lesson7.qmd
+      - section: 课程资源
+        contents:
+          - Lessons/byl.qmd
       - section: 计算机系相关资源
         contents:
           - text: "技能培训"
