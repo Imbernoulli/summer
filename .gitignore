@@ -145,3 +145,5 @@ checklink/cookies.txt
 
 
 /.quarto/
+
+*.py

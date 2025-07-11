@@ -89,59 +89,78 @@ title: "2: Python爬虫原理与实践"
 
 ```{python}
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString, Tag
 
-# Target URL
 url = 'https://lyubh.cn'
 
 try:
-    # Send GET request (note: in reality we're using provided content)
     response = requests.get(url)
     response.raise_for_status()
-    
-    # Parse HTML content
     soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # Extract basic information
+
+    # Name
     name = soup.find('h1').text.strip() if soup.find('h1') else 'Name not found'
-    
-    # Extract education and interests
-    intro_text = ''
+
+    # Introduction
     intro_section = soup.find('p')
-    if intro_section:
-        intro_text = intro_section.text.strip()
-    
-    # Extract news/publications
-    publications = []
+    intro_text = intro_section.text.strip() if intro_section else ''
+
+    # News
     news_items = []
-    
-    # Look for news section
-    news_section = soup.find(text="News").parent.parent if soup.find(text="News") else None
-    if news_section:
-        news_items_elements = news_section.find_all('li')
-        for item in news_items_elements:
-            news_items.append(item.text.strip())
-    
-    # Look for research section
-    research_section = soup.find(text="Research").parent.parent if soup.find(text="Research") else None
-    if research_section:
-        publication_elements = research_section.find_all('div', class_='publication')
-        for pub in publication_elements:
-            title_element = pub.find('h3')
-            if title_element:
-                publications.append(title_element.text.strip())
-    
-    # Print results
+    news_ul = soup.find('h2', id='News')
+    if news_ul:
+        news_ul = news_ul.find_next('ul')
+        if news_ul:
+            for li in news_ul.find_all('li'):
+                news_items.append(li.text.strip())
+
+    # Publications with full authors and venue
+    publications = []
+    for tr in soup.find_all('tr', class_='paper-row'):
+        h3 = tr.find('h3')
+        if h3:
+            title = h3.text.strip()
+
+            # 下面拼接所有作者节点（包括<b>、普通文本等），直到遇到<em>或者<p>为止
+            authors = []
+            node = h3.next_sibling
+            while node:
+                if isinstance(node, Tag) and node.name in ['em', 'p']:
+                    break
+                # 跳过换行等
+                if isinstance(node, NavigableString):
+                    t = node.strip()
+                    if t:
+                        authors.append(t)
+                elif isinstance(node, Tag):
+                    t = node.get_text(strip=True)
+                    if t:
+                        authors.append(t)
+                node = node.next_sibling
+
+            authors_str = ' '.join(authors).replace(' ,', ',').replace('  ', ' ').replace('\n', '').strip()
+            # venue
+            venue_elem = tr.find('em')
+            venue = venue_elem.text.strip() if venue_elem else ''
+            publications.append({
+                'title': title,
+                'authors': authors_str,
+                'venue': venue
+            })
+
+    # 输出
     print(f"Name: {name}")
     print(f"\nIntroduction: {intro_text}")
-    
+
     print("\nRecent News:")
-    for item in news_items[:3]:  # Print first 3 news items
+    for item in news_items[:3]:
         print(f"- {item}")
-    
+
     print("\nSelected Publications:")
-    for pub in publications[:3]:  # Print first 3 publications
-        print(f"- {pub}")
+    for i, pub in enumerate(publications[:3], 1):
+        print(f"{i}. {pub['title']}")
+        print(f"    Authors: {pub['authors']}")
+        print(f"    Venue: {pub['venue']}\n")
 
 except requests.exceptions.RequestException as e:
     print(f"Error: Could not connect to website {url}. Reason: {e}")
