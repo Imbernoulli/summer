@@ -236,7 +236,8 @@ for i in range(1, 6): # 从第1页到第5页
     time.sleep(1) 
 
 print(f"\n全部 {len(all_book_data)} 本书的信息抓取完毕！")
-# 在这里可以将 all_book_data 保存到文件
+
+print(all_book_data)
 ```
 
 ## 第四章：攻克动态网站（“动态爬”）
