@@ -1,5 +1,334 @@
 ---
-title: "5: From-scratch model"
+title: "4: 基于{Python}的科学计算"
 ---
 
-## TBD
+{Python}凭借其简洁的语法和强大的库生态系统，已成为科学计算和数据分析领域首选的编程语言之一。本文档将引导你从基础的数值计算开始，逐步深入到更复杂的科学计算领域，并辅含有可视化的代码示例来帮助理解。
+
+
+## 核心库：科学计算的基石
+
+{Python}的科学计算能力主要构建在几个核心库之上。掌握它们是进行高效科学计算的前提。
+
+  * **NumPy (Numerical {Python})**: 提供了多维数组对象（`ndarray`），以及对这些数组进行操作的各种函数。是几乎所有科学计算库的基础。
+  * **SciPy (Scientific {Python})**: 基于NumPy，提供了大量用于科学和工程计算的算法，如优化、积分、插值、信号处理、线性代数等。
+  * **Pandas**: 提供了高性能、易于使用的数据结构（如`DataFrame`）和数据分析工具，特别适合处理结构化数据。
+  * **Matplotlib**: 一个功能强大、灵活的绘图库，可以创建各种静态、动态、交互式的图表。
+
+
+## 一、NumPy: 高效的数值计算
+
+NumPy的核心是`ndarray`对象，它是一个n维数组，可以存储同类型的数据。与{Python}原生的列表相比，`ndarray`在数值计算上效率更高，内存占用也更少。
+
+### 1.1 创建数组
+
+你可以从{Python}列表或元组创建NumPy数组。
+
+```{python}
+import numpy as np
+
+# 从列表创建一维数组
+a = np.array([1, 2, 3, 4, 5])
+print(f"1D Array: {a}")
+print(f"Shape: {a.shape}")
+
+# 创建一个3x3的二维数组
+b = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+print("2D Array:\n", b)
+
+# 创建特定类型的数组
+c = np.zeros((2, 4))  # 2x4的全零数组
+d = np.ones((3, 3), dtype=np.int16) # 3x3的全一整数数组
+e = np.arange(0, 10, 2) # 从0到10，步长为2的数组
+f = np.linspace(0, 1, 5) # 从0到1，生成5个等间距的数
+```
+
+### 1.2 数组运算：向量化
+
+NumPy的强大之处在于其“向量化”运算。你可以在整个数组上执行操作，而无需编写显式的循环，这使得代码更简洁、执行速度更快。
+
+```{python}
+import numpy as np
+
+a = np.array([10, 20, 30, 40])
+b = np.array([1, 2, 3, 4])
+
+# 元素级运算
+c = a - b  # [ 9 18 27 36]
+d = a * b  # [ 10  40  90 160]
+e = a**2   # [100 400 900 1600]
+f = np.sin(a) # 对每个元素计算正弦值
+
+print(f"a - b = {c}")
+print(f"a * b = {d}")
+
+# 矩阵运算
+A = np.array([[1, 1], [0, 1]])
+B = np.array([[2, 0], [3, 4]])
+
+print("Element-wise product:\n", A * B)
+print("Matrix product (dot product):\n", A @ B) # 或者 np.dot(A, B)
+```
+
+### 1.3 索引和切片
+
+NumPy的索引和切片机制非常灵活，与{Python}列表类似，但功能更强大，支持多维操作。
+
+```{python}
+import numpy as np
+
+arr = np.arange(10) # [0 1 2 3 4 5 6 7 8 9]
+
+# 切片
+print(arr[2:5]) # [2 3 4]
+
+# 多维数组索引
+matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+print(f"Element at row 1, col 2: {matrix[1, 2]}") # 6
+
+# 切片多维数组
+print("First two rows:\n", matrix[:2, :])
+print("First column:\n", matrix[:, 0])
+```
+
+
+## 二、SciPy: 科学计算算法库
+
+如果说NumPy是基础的数据结构，那么SciPy就是建立在这个基础之上的算法工具箱。它包含了许多预先构建好、经过优化的函数来解决常见的科学计算问题。
+
+### 2.1 数值积分 (Numerical Integration)
+
+SciPy的`integrate`模块可以处理数值积分问题。例如，计算函数 $f(x) = e^{-x^2}$ 在 $[0, \infty)$ 上的积分。
+
+$$\int_{0}^{\infty} e^{-x^2} dx$$
+
+这个积分的解析解是 $\frac{\sqrt{\pi}}{2}$。
+
+```{python}
+import numpy as np
+from scipy.integrate import quad
+
+# 定义被积函数
+def integrand(x):
+    return np.exp(-x**2)
+
+# quad 函数返回两个值：积分结果和估计的误差
+result, error = quad(integrand, 0, np.inf)
+
+print(f"Numerical result: {result}")
+print(f"Analytical result: {np.sqrt(np.pi) / 2}")
+print(f"Estimated error: {error}")
+```
+
+### 2.2 优化 (Optimization)
+
+`scipy.optimize` 模块提供了一系列函数来寻找函数的最小值或根。例如，我们来寻找函数 $f(x) = (x-2)^2 + 3$ 的最小值。
+
+```{python}
+from scipy.optimize import minimize
+
+# 定义目标函数
+def objective_function(x):
+    return (x - 2)**2 + 3
+
+# 使用minimize函数寻找最小值，需要提供一个初始猜测值
+# 'BFGS' 是一种常用的优化算法
+result = minimize(objective_function, x0=0, method='BFGS')
+
+print(result)
+print(f"\nMinimum found at x = {result.x[0]}")
+```
+
+### 2.3 信号处理 (Signal Processing)
+
+SciPy的`signal`模块是处理信号的利器。例如，我们可以对一个含有噪声的信号进行滤波。
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import signal
+
+# 生成信号
+t = np.linspace(0, 1, 1000, endpoint=False)
+# 一个干净的5Hz正弦波
+clean_signal = np.sin(2 * np.pi * 5 * t)
+# 添加高斯白噪声
+noise = np.random.randn(len(t)) * 0.5
+noisy_signal = clean_signal + noise
+
+# 设计一个巴特沃斯低通滤波器
+b, a = signal.butter(4, 0.03, 'low') # 4阶，截止频率为0.03
+
+# 应用滤波器
+filtered_signal = signal.filtfilt(b, a, noisy_signal)
+
+# 可视化
+plt.figure(figsize=(12, 6))
+plt.plot(t, noisy_signal, label='Noisy Signal', alpha=0.7)
+plt.plot(t, filtered_signal, label='Filtered Signal', linewidth=2)
+plt.plot(t, clean_signal, label='Clean Signal', linestyle='--', color='black')
+plt.title('Signal Filtering Example')
+plt.xlabel('Time [s]')
+plt.ylabel('Amplitude')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+
+## 三、Pandas: 强大的数据处理
+
+Pandas是处理和分析结构化数据的标准库。它的核心数据结构是`Series`（一维）和`DataFrame`（二维），可以让你用直观的方式对数据进行切片、筛选、分组、聚合等操作。
+
+```{python}
+import pandas as pd
+
+# 创建一个DataFrame
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva'],
+    'Age': [25, 30, 35, 28, 22],
+    'City': ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
+    'Salary': [70000, 80000, 90000, 75000, 65000]
+}
+df = pd.DataFrame(data)
+
+print("Original DataFrame:")
+print(df)
+
+# 数据筛选
+print("\nPeople older than 30:")
+print(df[df['Age'] > 30])
+
+# 分组和聚合
+# 按城市计算平均薪水
+average_salary_by_city = df.groupby('City')['Salary'].mean()
+print("\nAverage salary by city:")
+print(average_salary_by_city)
+```
+
+
+## 四、Matplotlib: 数据可视化
+
+“一图胜千言”。Matplotlib是{Python}中最基础也最强大的绘图库，能够创建出版质量的图表。
+
+### 实例：泊松分布与正态分布
+
+当泊松分布的参数 $\lambda$ (表示单位时间/空间内事件发生的平均次数) 足够大时，其形状近似于正态分布。我们可以通过模拟和可视化来展示这一点。
+
+泊松分布的概率质量函数为：$P(X=k) = \frac{\lambda^k e^{-\lambda}}{k\!}$
+
+当 $\lambda \to \infty$ 时，它近似于一个均值为 $\mu=\lambda$、方差为 $\sigma^2=\lambda$ 的正态分布。
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import poisson, norm
+
+# 设置泊松分布的参数 lambda
+lambda_param = 30
+
+# 生成泊松分布的随机样本
+poisson_samples = poisson.rvs(mu=lambda_param, size=10000)
+
+# 正态分布的参数
+mu = lambda_param
+sigma = np.sqrt(lambda_param)
+
+# 创建一个用于绘制正态分布曲线的 x 轴范围
+x = np.arange(mu - 4*sigma, mu + 4*sigma, 0.1)
+# 计算正态分布的概率密度函数 (PDF)
+normal_pdf = norm.pdf(x, loc=mu, scale=sigma)
+
+# 可视化
+plt.figure(figsize=(10, 6))
+
+# 绘制泊松分布的直方图
+# `density=True` 使直方图的面积归一化，以便与PDF比较
+plt.hist(poisson_samples, bins=30, density=True, alpha=0.6, label=f'Poisson Samples (lambda={lambda_param})')
+
+# 绘制正态分布的PDF曲线
+plt.plot(x, normal_pdf, 'r-', lw=2, label=f'Normal Approx. (mu={mu}, sigma={sigma:.2f})')
+
+plt.title('Poisson Distribution Approaching Normal Distribution')
+plt.xlabel('Number of Events')
+plt.ylabel('Probability Density')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+```
+
+上图清晰地展示了，当 $\lambda=30$ 时，泊松分布的样本直方图（蓝色）与一个均值和方差都等于30的正态分布曲线（红色）非常吻合。这直观地验证了中心极限定理的一个特例。
+
+
+## 五、进阶话题：符号计算与机器学习
+
+### 5.1 SymPy: 符号计算
+
+与NumPy和SciPy进行数值计算不同，SymPy可以进行符号计算（代数运算）。这意味着你可以处理数学表达式，而不是数值。
+
+```{python}
+import sympy as sp
+
+# 定义符号
+x, y = sp.symbols('x y')
+
+# 创建表达式
+expr = (x + y)**2
+print(f"Original expression: {expr}")
+
+# 展开表达式
+expanded_expr = sp.expand(expr)
+print(f"Expanded expression: {expanded_expr}") # x**2 + 2*x*y + y**2
+
+# 对表达式求导
+derivative_expr = sp.diff(expanded_expr, x)
+print(f"Derivative with respect to x: {derivative_expr}") # 2*x + 2*y
+
+# 解方程 x**2 - 4 = 0
+solutions = sp.solve(x**2 - 4, x)
+print(f"Solutions for x**2 - 4 = 0 are: {solutions}") # [-2, 2]
+```
+
+### 5.2 Scikit-learn: 机器学习
+
+Scikit-learn是建立在NumPy, SciPy和Matplotlib之上的机器学习库，提供了大量易于使用的监督学习和无监督学习算法。
+
+这里是一个简单的线性回归示例。
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# 创建一些样本数据
+# X 必须是二维数组
+X = np.array([[1], [2], [3], [4], [5], [6]])
+y = np.array([1.5, 3.8, 6.5, 8.2, 11.5, 13.8])
+
+# 创建并训练模型
+model = LinearRegression()
+model.fit(X, y)
+
+# 预测
+X_new = np.array([[0], [7]])
+y_pred = model.predict(X_new)
+
+# 打印模型参数
+print(f"Intercept: {model.intercept_}") # 截距
+print(f"Coefficient: {model.coef_[0]}") # 斜率
+
+# 可视化结果
+plt.figure(figsize=(8, 6))
+plt.scatter(X, y, color='blue', label='Actual Data')
+plt.plot(X_new, y_pred, color='red', linewidth=2, label='Linear Fit')
+plt.title('Simple Linear Regression')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+## 结论
+
+{Python}通过其强大的科学计算库生态系统，为研究人员、工程师和数据科学家提供了一套完整、高效且易于上手的工具。从基础的数组操作到复杂的机器学习模型，你都可以在{Python}中找到解决方案。希望本文档能为你开启{Python}科学计算的大门。继续探索，不断实践，你将能利用{Python}解决更多有趣的实际问题。
