@@ -13,9 +13,9 @@ format:
     toc: true
 
 website:
-  title: "SEM Coding Summer 2025"
+  title: "Coding Summer 2025"
   site-url: https://Imbernoulli.github.io/summer/
-  description: "清华大学经管学院暑期代码能力提升培训"
+  description: "暑期代码能力提升培训"
   twitter-card: true
   open-graph: true
   reader-mode: true
