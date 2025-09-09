@@ -10,6 +10,6 @@ title: "2: 大语言模型形式化与非形式化推理"
 
 ## 讲义
 
-<div style="width: 100%; height: 1500px;">
-  <embed src="/www/LLMReasoning.pdf" type="application/pdf" width="100%" height="100%">
+<div style="width: 100%; height: 500px;">
+  <embed src="/www/LLMReasoning.pdf" type="application/pdf" width="100%" height="500px">
 </div>
