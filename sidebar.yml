@@ -13,7 +13,12 @@ website:
           - Lessons/lesson5.qmd
           - Lessons/lesson6.qmd
           - Lessons/lesson7.qmd
-      - section: 课程资源
+      - section: 计算机前沿专题
+        contents:
+          - Lessons/lesson8.qmd
+          - Lessons/lesson9.qmd
+          - Lessons/lesson10.qmd
+      - section: 数字化课程资源
         contents:
           - Lessons/byl.qmd
       - section: 计算机系相关资源

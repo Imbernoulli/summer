@@ -1,5 +1,7 @@
 ---
-title: "6: 基于大语言模型的自动化流程构建"
+title: "3: OM/OR分享"
 ---
 
-TBD
+<div style="width: 100%; height: 500px;">
+  <embed src="/www/OR.pdf" type="application/pdf" width="100%" height="100%">
+</div>
