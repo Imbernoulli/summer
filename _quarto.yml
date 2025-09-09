@@ -31,8 +31,6 @@ website:
         href: https://github.com/Imbernoulli/summer
   sidebar:
     style: "floating"
-  resources:
-    - "resources"
 
 metadata-files:
   - sidebar.yml
