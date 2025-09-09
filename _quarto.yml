@@ -32,7 +32,7 @@ website:
   sidebar:
     style: "floating"
   resources:
-    - "Resources"
+    - "resources"
 
 metadata-files:
   - sidebar.yml
