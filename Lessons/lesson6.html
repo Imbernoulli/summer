@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3: Python数据可视化 – Coding Summer 2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../Lessons/lesson7.html" rel="next">
+<link href="../Lessons/lesson5.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-b3ee1e8c853e66aea7633b9f21ac2043.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+</script>
+<script type="module">import "https://cdn.plot.ly/plotly-3.1.0.min"</script>
+
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="3: Python数据可视化 – Coding Summer 2025">
+<meta property="og:description" content="暑期代码能力提升培训">
+<meta property="og:image" content="http://sem-sast.cn/Lessons/lesson6_files/figure-html/cell-2-output-1.png">
+<meta property="og:site_name" content="Coding Summer 2025">
+<meta property="og:image:height" content="898">
+<meta property="og:image:width" content="1365">
+<meta name="twitter:title" content="3: Python数据可视化 – Coding Summer 2025">
+<meta name="twitter:description" content="暑期代码能力提升培训">
+<meta name="twitter:image" content="http://sem-sast.cn/Lessons/lesson6_files/figure-html/cell-2-output-1.png">
+<meta name="twitter:image-height" content="898">
+<meta name="twitter:image-width" content="1365">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Coding Summer 2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Imbernoulli/summer"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Lessons/lesson4.html">计算机实战应用</a></li><li class="breadcrumb-item"><a href="../Lessons/lesson6.html">3: Python数据可视化</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">计算机入门</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机工具简介</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: 计算机科学基础与程序语言</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: Python入门</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: Python实用进阶</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机实战应用</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: Git与GitHub的应用</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: Python爬虫原理与实践</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson6.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3: Python数据可视化</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4: 基于Python的科学计算</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机前沿专题</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: 量化金融</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: 大语言模型形式化与非形式化推理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: OM/OR分享</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">数字化课程资源</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/byl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">博弈论与机制设计</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机系相关资源</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://summer24.net9.org" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">技能培训</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://docs.net9.org" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">技能文档</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#为什么选择-python-进行数据可视化" id="toc-为什么选择-python-进行数据可视化" class="nav-link active" data-scroll-target="#为什么选择-python-进行数据可视化">🎨 为什么选择 Python 进行数据可视化？</a></li>
+  <li><a href="#matplotlib可视化的基石" id="toc-matplotlib可视化的基石" class="nav-link" data-scroll-target="#matplotlib可视化的基石">Matplotlib：可视化的基石</a>
+  <ul class="collapse">
+  <li><a href="#安装-matplotlib" id="toc-安装-matplotlib" class="nav-link" data-scroll-target="#安装-matplotlib">安装 Matplotlib</a></li>
+  <li><a href="#基础绘图解构一张图表" id="toc-基础绘图解构一张图表" class="nav-link" data-scroll-target="#基础绘图解构一张图表">基础绘图：解构一张图表</a></li>
+  </ul></li>
+  <li><a href="#seaborn更美观的统计图表" id="toc-seaborn更美观的统计图表" class="nav-link" data-scroll-target="#seaborn更美观的统计图表">📊 Seaborn：更美观的统计图表</a>
+  <ul class="collapse">
+  <li><a href="#安装-seaborn" id="toc-安装-seaborn" class="nav-link" data-scroll-target="#安装-seaborn">安装 Seaborn</a></li>
+  <li><a href="#常用统计图" id="toc-常用统计图" class="nav-link" data-scroll-target="#常用统计图">常用统计图</a></li>
+  </ul></li>
+  <li><a href="#plotly交互式图表的未来" id="toc-plotly交互式图表的未来" class="nav-link" data-scroll-target="#plotly交互式图表的未来">✨ Plotly：交互式图表的未来</a>
+  <ul class="collapse">
+  <li><a href="#安装-plotly" id="toc-安装-plotly" class="nav-link" data-scroll-target="#安装-plotly">安装 Plotly</a></li>
+  <li><a href="#创建交互式图表" id="toc-创建交互式图表" class="nav-link" data-scroll-target="#创建交互式图表">创建交互式图表</a></li>
+  </ul></li>
+  <li><a href="#如何选择合适的工具" id="toc-如何选择合适的工具" class="nav-link" data-scroll-target="#如何选择合适的工具">🤔 如何选择合适的工具？</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Imbernoulli/summer/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Lessons/lesson4.html">计算机实战应用</a></li><li class="breadcrumb-item"><a href="../Lessons/lesson6.html">3: Python数据可视化</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">3: Python数据可视化</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>数据可视化是数据科学中连接数据与决策的关键桥梁。它不仅仅是制作图表，更是一门将原始、复杂的数据集转化为富有洞察力的视觉故事的艺术和科学。通过图形化的方式，我们能够更直观地识别数据中的模式、发现隐藏的趋势、理解变量间的关系并快速定位异常值。在众多数据科学工具中，Python 凭借其简洁的语法和强大的库生态系统，已成为执行数据可视化任务的首选语言。本指南将系统地引导你，从掌握最基础的静态绘图开始，一步步进阶到能够构建复杂、动态的交互式可视化应用。</p>
+<section id="为什么选择-python-进行数据可视化" class="level2">
+<h2 class="anchored" data-anchor-id="为什么选择-python-进行数据可视化">🎨 为什么选择 Python 进行数据可视化？</h2>
+<p>Python 在数据科学领域的统治地位并非偶然，其在可视化方面的优势尤为突出：</p>
+<ul>
+<li><strong>易于学习与使用</strong>：相较于 R 或 Java 等其他语言，Python 的语法更接近自然语言，使得初学者可以快速上手，将主要精力集中在数据分析本身，而非复杂的编程语法上。</li>
+<li><strong>强大的库生态系统</strong>：Python 拥有一个无与伦比的开源库集合。
+<ul>
+<li><strong>Matplotlib</strong> 是这个生态的基石，提供底层的、全面的绘图控制。</li>
+<li><strong>Seaborn</strong> 在 Matplotlib 之上提供了更高级的统计绘图接口，让美观的图表唾手可得。</li>
+<li><strong>Plotly</strong> 和 <strong>Bokeh</strong> 则将可视化带入了现代 Web 时代，专注于交互性和动态展示。</li>
+</ul></li>
+<li><strong>无缝的社区支持</strong>：得益于其庞大的用户和开发者社区，几乎任何你能想到的可视化问题，都已经有了现成的教程、代码示例或解决方案。Stack Overflow、GitHub 和各类博客是学习路上的宝贵资源。</li>
+<li><strong>卓越的集成性</strong>：可视化通常是数据处理流程的最后一步。Python 的可视化库能与数据处理的“三驾马车”——<strong>Pandas (数据处理)</strong>、<strong>NumPy (数值计算)</strong> 和 <strong>Scikit-learn (机器学习)</strong>——无缝集成，形成一个从数据清洗、分析到可视化的流畅工作流。</li>
+</ul>
+</section>
+<section id="matplotlib可视化的基石" class="level2">
+<h2 class="anchored" data-anchor-id="matplotlib可视化的基石">Matplotlib：可视化的基石</h2>
+<p><strong>Matplotlib</strong> 是 Python 可视化世界的奠基者和核心。它诞生于 2003 年，其设计初衷是模仿 MATLAB 的绘图功能，因此它拥有一个非常成熟和稳定的 API。几乎所有 Python 中的静态图表，无论多么复杂，都可以用 Matplotlib 实现。学习 Matplotlib 不仅是学习一个库，更是理解图形如何被一层层构建起来的过程——从画布 (Figure) 到坐标系 (Axes)，再到线条、点、标签等每一个独立的元素。这种精细的控制力是它最大的优势，也是其略显复杂的根源。</p>
+<section id="安装-matplotlib" class="level3">
+<h3 class="anchored" data-anchor-id="安装-matplotlib">安装 Matplotlib</h3>
+<p>通过 pip 包管理器可以轻松安装：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install matplotlib</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="基础绘图解构一张图表" class="level3">
+<h3 class="anchored" data-anchor-id="基础绘图解构一张图表">基础绘图：解构一张图表</h3>
+<p>在 Matplotlib 中，推荐使用其面向对象的接口进行绘图，这能让你对图表的各个部分有更清晰的控制。一个基本的绘图流程如下：</p>
+<ol type="1">
+<li><strong>创建画布 (Figure) 和坐标系 (Axes)</strong>：<code>plt.subplots()</code> 是最常用的方法，它像是在画纸上为你准备好了一块准备作画的区域。</li>
+<li><strong>在坐标系上绘图</strong>：调用 <code>ax</code> 对象的方法（如 <code>ax.plot()</code>, <code>ax.scatter()</code>）来添加数据。</li>
+<li><strong>定制图表元素</strong>：通过 <code>ax</code> 的 <code>set_</code> 系列方法（如 <code>set_title()</code>, <code>set_xlabel()</code>）来添加标题、坐标轴标签等。</li>
+<li><strong>显示图形</strong>：最后调用 <code>plt.show()</code> 将最终结果渲染出来。</li>
+</ol>
+<section id="折线图-line-plot" class="level4">
+<h4 class="anchored" data-anchor-id="折线图-line-plot">1. 折线图 (Line Plot)</h4>
+<p>折线图是展示连续数据趋势最基础也最有效的工具，尤其适合于时间序列数据。</p>
+<div id="d27f6bd1" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 准备一组平滑的、有代表性的数据</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># np.linspace 在 0 到 10 之间生成 100 个等间距的点</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算每个 x 点对应的正弦值</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.sin(x)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 创建画布(fig)和坐标系(ax)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>)) <span class="co"># figsize可以控制图形的尺寸</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 在坐标系(ax)上绘制折线图</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 'label' 参数用于后续图例的生成</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y, label<span class="op">=</span><span class="st">'sin(x)'</span>, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 定制图表的标题和坐标轴标签，增加可读性</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Simple Sine Wave'</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'X-axis'</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Y-axis'</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># ax.grid(True, linestyle='--', alpha=0.6) # 添加网格线，使数值读取更容易</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>ax.legend() <span class="co"># 显示图例</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 显示最终的图形</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lesson6_files/figure-html/cell-2-output-1.png" width="683" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="散点图-scatter-plot" class="level4">
+<h4 class="anchored" data-anchor-id="散点图-scatter-plot">2. 散点图 (Scatter Plot)</h4>
+<p>散点图是探索两个数值变量之间是否存在关联的利器。每个点代表一个数据样本，其在 x-y 平面上的位置由两个变量的值决定。</p>
+<div id="8481000f" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 NumPy 生成两组随机数据来模拟两个变量</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>) <span class="co"># 设置随机种子以保证结果可复现</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.rand(<span class="dv">50</span>) <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.random.rand(<span class="dv">50</span>) <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 直接使用 plt 接口进行快速绘图，这对于简单图表更便捷</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>)) <span class="co"># 创建一个新画布</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, c<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>) <span class="co"># c是颜色, alpha是透明度, edgecolors是点的边缘颜色</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 添加标题和标签</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Basic Scatter Plot'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X Value'</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Y Value'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 显示图形</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lesson6_files/figure-html/cell-3-output-1.png" width="659" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="条形图-bar-chart" class="level4">
+<h4 class="anchored" data-anchor-id="条形图-bar-chart">3. 条形图 (Bar Chart)</h4>
+<p>当需要比较不同类别之间的数值大小时，条形图是最佳选择。它的高度或长度直观地表示了数值的大小。</p>
+<div id="58e8ab54" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 准备离散的类别和它们对应的数值</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'Group A'</span>, <span class="st">'Group B'</span>, <span class="st">'Group C'</span>, <span class="st">'Group D'</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> [<span class="dv">23</span>, <span class="dv">45</span>, <span class="dv">58</span>, <span class="dv">32</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.bar() 用于创建垂直条形图，plt.barh() 用于创建水平条形图</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.bar(categories, values, color<span class="op">=</span>[<span class="st">'#1f77b4'</span>, <span class="st">'#ff7f0e'</span>, <span class="st">'#2ca02c'</span>, <span class="st">'#d62728'</span>]) <span class="co"># 为每个条形指定不同颜色</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 添加标题和标签</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Categorical Bar Chart'</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Category'</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Value'</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 在每个条形图上方显示具体数值</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, value <span class="kw">in</span> <span class="bu">enumerate</span>(values):</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    plt.text(i, value <span class="op">+</span> <span class="dv">1</span>, <span class="bu">str</span>(value), ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 显示图形</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lesson6_files/figure-html/cell-4-output-1.png" width="659" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="直方图-histogram" class="level4">
+<h4 class="anchored" data-anchor-id="直方图-histogram">4. 直方图 (Histogram)</h4>
+<p>直方图是理解单个数值变量分布情况的核心工具。它将数值范围分割成若干个“箱子”(bins)，然后统计落入每个箱子的数据点数量。</p>
+<div id="edec849b" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 生成 1000 个服从标准正态分布的随机数</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.randn(<span class="dv">1000</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># bins 参数非常关键，它决定了分布的精细程度</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># edgecolor='black' 让每个条柱的边界更清晰</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.hist(data, bins<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">'skyblue'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 添加标题和标签</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Data Distribution Histogram'</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Value'</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 显示图形</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lesson6_files/figure-html/cell-5-output-1.png" width="667" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="seaborn更美观的统计图表" class="level2">
+<h2 class="anchored" data-anchor-id="seaborn更美观的统计图表">📊 Seaborn：更美观的统计图表</h2>
+<p><strong>Seaborn</strong> 是在 Matplotlib 基础上进行的一次华丽封装。它的出现解决了 Matplotlib 的两大痛点：复杂的参数设置和不够现代的默认样式。Seaborn 的核心理念是让统计绘图变得简单，它提供了大量专门为展示统计信息而设计的图表类型，并且能够直接识别和使用 Pandas DataFrame 的列名，极大地简化了数据准备的过程。你只需要一行代码，就能创建出在 Matplotlib 中可能需要十几行代码才能实现的复杂图表。</p>
+<section id="安装-seaborn" class="level3">
+<h3 class="anchored" data-anchor-id="安装-seaborn">安装 Seaborn</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install seaborn pandas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="常用统计图" class="level3">
+<h3 class="anchored" data-anchor-id="常用统计图">常用统计图</h3>
+<p>我们将使用 Seaborn 内置的 <code>tips</code> (餐厅小费) 数据集来展示其强大功能。这个数据集记录了顾客的账单总额、支付的小费、性别、是否吸烟等信息。</p>
+<div id="2ab770cf" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Seaborn 加载数据集非常方便</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>tips <span class="op">=</span> sns.load_dataset(<span class="st">"tips"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置 Seaborn 的美学风格</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">"whitegrid"</span>, palette<span class="op">=</span><span class="st">"muted"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="关系图-relational-plot" class="level4">
+<h4 class="anchored" data-anchor-id="关系图-relational-plot">1. 关系图 (Relational Plot)</h4>
+<p><code>scatterplot</code> 是 Seaborn 的明星函数之一。除了基本的 x-y 关系，它还能通过 <code>hue</code>, <code>style</code>, <code>size</code> 等参数，将多达五个维度的信息压缩到一张二维图表中，极大地提升了信息密度。</p>
+<div id="76095797" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>tips <span class="op">=</span> sns.load_dataset(<span class="st">"tips"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># hue: 按 'time' (晚餐/午餐) 对点进行着色</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># style: 按 'smoker' (是否吸烟) 改变点的形状</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># size: 按 'size' (用餐人数) 改变点的大小</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">"total_bill"</span>, y<span class="op">=</span><span class="st">"tip"</span>, hue<span class="op">=</span><span class="st">"time"</span>, style<span class="op">=</span><span class="st">"smoker"</span>, size<span class="op">=</span><span class="st">"size"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 添加一个更具信息量的标题</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Tip Amount vs. Total Bill by Time, Smoker Status, and Party Size'</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lesson6_files/figure-html/cell-7-output-1.png" width="815" height="531" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="分类图-categorical-plot---小提琴图-violin-plot" class="level4">
+<h4 class="anchored" data-anchor-id="分类图-categorical-plot---小提琴图-violin-plot">2. 分类图 (Categorical Plot) - 小提琴图 (Violin Plot)</h4>
+<p>当箱形图（Box Plot）不足以展示数据分布的细节时，小提琴图是绝佳的替代品。它将箱形图与核密度估计（KDE）图相结合，不仅展示了数据的四分位数，还通过外部的形状展示了数据的完整分布密度，尤其适合于比较多组数据的分布形态。</p>
+<div id="3fbf0204" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>tips <span class="op">=</span> sns.load_dataset(<span class="st">"tips"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># x: 类别轴 (星期几)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># y: 数值轴 (账单总额)</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># hue: 在每个类别内再按 'smoker' 进行二次分类</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># split=True: 将 hue 分类的两个小提琴合并到一起，便于比较</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>tips, x<span class="op">=</span><span class="st">"day"</span>, y<span class="op">=</span><span class="st">"total_bill"</span>, hue<span class="op">=</span><span class="st">"smoker"</span>, split<span class="op">=</span><span class="va">True</span>, inner<span class="op">=</span><span class="st">"quartile"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Total Bill Distribution by Day and Smoker Status'</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lesson6_files/figure-html/cell-8-output-1.png" width="816" height="530" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="热力图-heatmap" class="level4">
+<h4 class="anchored" data-anchor-id="热力图-heatmap">3. 热力图 (Heatmap)</h4>
+<p>热力图是一种将矩阵数据可视化的强大工具，它通过颜色的深浅来直观地表示数值的大小。它最经典的应用场景是展示变量间的相关性矩阵，让人一眼就能看出哪些变量是强相关的。</p>
+<div id="605519cf" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算 tips 数据集中数值列的相关性矩阵</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> tips.select_dtypes(include<span class="op">=</span>np.number)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="op">=</span> numeric_cols.corr()</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># annot=True: 在每个单元格中显示数值</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># fmt=".2f": 数值格式化为两位小数</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># cmap='coolwarm': 使用一个冷暖色调的色彩映射，正相关为暖色，负相关为冷色</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>sns.heatmap(correlation_matrix, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">".2f"</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Correlation Matrix of Tips Dataset'</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lesson6_files/figure-html/cell-9-output-1.png" width="610" height="510" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="配对图-pair-plot" class="level4">
+<h4 class="anchored" data-anchor-id="配对图-pair-plot">4. 配对图 (Pair Plot)</h4>
+<p><code>pairplot</code> 是探索性数据分析（EDA）的终极武器。它能快速生成数据集中所有数值变量两两之间的关系图矩阵。在矩阵的对角线上，是每个变量自身的分布直方图或核密度图；在非对角线的位置，是两个变量之间的散点图。这让你能够在一个宏观的视角下审视整个数据集的结构。</p>
+<div id="c09630a3" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 加载著名的鸢尾花数据集</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> sns.load_dataset(<span class="st">"iris"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># hue="species": 根据花的品种对所有图表进行着色，这使得不同类别间的差异一目了然</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># markers: 为不同品种指定不同的标记形状，增强区分度</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>sns.pairplot(iris, hue<span class="op">=</span><span class="st">"species"</span>, markers<span class="op">=</span>[<span class="st">"o"</span>, <span class="st">"s"</span>, <span class="st">"D"</span>])</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Pairwise Relationships in the Iris Dataset'</span>, y<span class="op">=</span><span class="fl">1.02</span>) <span class="co"># 添加总标题</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lesson6_files/figure-html/cell-10-output-1.png" width="1077" height="980" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="plotly交互式图表的未来" class="level2">
+<h2 class="anchored" data-anchor-id="plotly交互式图表的未来">✨ Plotly：交互式图表的未来</h2>
+<p>当静态图表无法满足你的探索需求时，<strong>Plotly</strong> 便登场了。Plotly 是一家科技公司，也是一个强大的 Python 库，其核心目标是创建具有丰富交互能力的、出版物级别的图表。用户可以缩放、平移、选择数据区域，以及通过鼠标悬停查看精确的数值。这极大地增强了数据探索的深度和广度。<code>Plotly Express</code> 作为其高级接口，秉承“用最少的代码做最多的事”的原则，让创建复杂的交互式图表变得前所未有的简单。</p>
+<section id="安装-plotly" class="level3">
+<h3 class="anchored" data-anchor-id="安装-plotly">安装 Plotly</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install plotly</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="创建交互式图表" class="level3">
+<h3 class="anchored" data-anchor-id="创建交互式图表">创建交互式图表</h3>
+<p>Plotly 生成的图表本质上是 JSON 数据结构，由 Plotly.js（一个 JavaScript 库）在浏览器中进行渲染。这意味着你可以轻松地将它们嵌入到网页、Jupyter Notebook、或者导出为独立的 HTML 文件。</p>
+<section id="交互式散点图" class="level4">
+<h4 class="anchored" data-anchor-id="交互式散点图">1. 交互式散点图</h4>
+<p>这个例子展示了 Plotly Express 如何仅用一行核心代码就创建一个信息丰富的交互式散点图。</p>
+<div id="efbcc6a4" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotly Express 内置了大量方便的数据集，包括著名的 Gapminder 数据</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>gapminder <span class="op">=</span> px.data.gapminder().query(<span class="st">"year==2007"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># x, y, color, size, hover_data 等参数都直接对应 DataFrame 的列名</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(gapminder,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                 x<span class="op">=</span><span class="st">"gdpPercap"</span>,       <span class="co"># x轴：人均GDP</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                 y<span class="op">=</span><span class="st">"lifeExp"</span>,         <span class="co"># y轴：预期寿命</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span><span class="st">"continent"</span>,   <span class="co"># 点的颜色：按大洲划分</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                 size<span class="op">=</span><span class="st">'pop'</span>,          <span class="co"># 点的大小：按人口划分</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                 hover_name<span class="op">=</span><span class="st">"country"</span>,<span class="co"># 鼠标悬停时显示的名称</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                 log_x<span class="op">=</span><span class="va">True</span>,          <span class="co"># x轴使用对数尺度，以便更好地展示GDP差异</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                 size_max<span class="op">=</span><span class="dv">60</span>)         <span class="co"># 控制点的最大尺寸</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title_text<span class="op">=</span><span class="st">'GDP per Capita vs. Life Expectancy (2007)'</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script type="text/javascript">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.1.0.min.js" integrity="sha256-Ei4740bWZhaUTQuD6q9yQlgVCMPBz6CZWhevDYPv93A=" crossorigin="anonymous"></script>                <div id="f0f61eca-c51d-4c8b-b680-fc7edebaec60" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("f0f61eca-c51d-4c8b-b680-fc7edebaec60")) {                    Plotly.newPlot(                        "f0f61eca-c51d-4c8b-b680-fc7edebaec60",                        [{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Asia\u003cbr\u003egdpPercap=%{x}\u003cbr\u003elifeExp=%{y}\u003cbr\u003epop=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Bahrain","Bangladesh","Cambodia","China","Hong Kong, China","India","Indonesia","Iran","Iraq","Israel","Japan","Jordan","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Malaysia","Mongolia","Myanmar","Nepal","Oman","Pakistan","Philippines","Saudi Arabia","Singapore","Sri Lanka","Syria","Taiwan","Thailand","Vietnam","West Bank and Gaza","Yemen, Rep."],"legendgroup":"Asia","marker":{"color":"#636efa","size":{"dtype":"i4","bdata":"A5rmAd3PCgDTqPcIkqLXANiBmU48g2oAq00vQngOUw0CxyMEdpyjATcQYgDEAZkHSV1cAF2OYwE2XewCVzsmAH7VOwAmvnoBD9srADzK2AKeAbkBIecwAFndFgqnum0FjiilATF5RQB\u002f8jYBO7gmAZacYQF13OADFAAVBZxQPQCf7FIB"},"sizemode":"area","sizeref":366300.86,"symbol":"circle"},"mode":"markers","name":"Asia","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"54R1iKR0jkDGpwAYAxndQPLPDOIDvZVAat\u002fcXx3HmkDRXRJnHV+zQHK\u002fQ1GfZeNAs193umsoo0CA7suZTamrQKmHaHTbqsZAbVUS2Q93sUBuowG80ezYQItUGFsE6t5A3XpND3ansUArajANQ+SYQBMZVvEIzdZASBtHrF8Z50B3hNOCh27EQFwgQfHTUchATsEaZ4svqEAAAAAAAICNQEjfpGlwDZFAmGn7VwzL1UCwrDQp5VukQLWpukf27KhAD0WBPrUl1UCiYpy\u002f5QTnQJ6xL9kwBK9ATIqPT4xYsECOHr+3kQvcQIOvr3VlIr1AkdJsHicTo0BqNLkYs6KnQP2FHjGK0aFA"},"xaxis":"x","y":{"dtype":"f8","bdata":"RIts5\u002fvpRUBxPQrXo+hSQIcW2c73A1BABoGVQ4vcTUAv3SQGgT1SQFpkO99PjVRA6iYxCKwsUECamZmZmalRQARWDi2yvVFA9ihcj8LFTUBI4XoUri9UQDvfT42XplRACtejcD0iUkBeukkMAtNQQB1aZDvfp1NAFIPAyqFlU0BkO99Pjf9RQIGVQ4tsj1JACKwcWmSzUEBGtvP91AhPQBSuR+F65E9AKVyPwvXoUkD0\u002fdR46V5QQHnpJjEI7FFAfT81XroxUkCR7Xw\u002fNf5TQNNNYhBYGVJA\u002ftR46SaJUkCamZmZmZlTQIGVQ4tsp1FADi2yne+PUkBeukkMAltSQNNNYhBYWU9A"},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Europe\u003cbr\u003egdpPercap=%{x}\u003cbr\u003elifeExp=%{y}\u003cbr\u003epop=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Albania","Austria","Belgium","Bosnia and Herzegovina","Bulgaria","Croatia","Czech Republic","Denmark","Finland","France","Germany","Greece","Hungary","Iceland","Ireland","Italy","Montenegro","Netherlands","Norway","Poland","Portugal","Romania","Serbia","Slovak Republic","Slovenia","Spain","Sweden","Switzerland","Turkey","United Kingdom"],"legendgroup":"Europe","marker":{"color":"#EF553B","size":{"dtype":"i4","bdata":"i\u002fA2AGcefQCikp4ABnZFAOq8bwAAkEQACBScANhvUwC87k8ADBGkA+RW6QRyXaMADOuXAGubBAAesz4AlUN3A8ByCgD12PwA1p1GAOG9SwKUZaIA2OdTAXnhmgBOH1MAnageAL8waQKwzYkAZUZzAHfLPQQuX58D"},"sizemode":"area","sizeref":366300.86,"symbol":"circle"},"mode":"markers","name":"Europe","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"YBQEjwcxt0BYyjLEz6PhQG+70FyTc+BA8nhafkwWvUDPMSB7ZdzEQBTGFoKcjcxAH7qgvlNM1kCxbVFmzTnhQPmgZ7PiNuBAduCcEYHB3UC+TX\u002f2l2rfQHjuPVya5NpAQni0cTyW0UALYwtBmarhQCxlGeJ\u002f3ONAvJaQD27m20BL58Oz8hLCQJbnwd299+FAVmXfFaYZ6ECjC+pb9g7OQFVNEHVpB9RA09nJ4DwcxUBbI4JxRB3DQGB2Tx6UPdJAcsRafBAq2UAwKqkTRCXcQP+ye\u002fJ3iOBAGH0FaU1Q4kCSCI1gI4XAQOPfZ1xoNuBA"},"xaxis":"x","y":{"dtype":"f8","bdata":"UI2XbhIbU0CTGARWDvVTQE5iEFg53FNASgwCK4e2UkC4HoXrUUBSQB1aZDvf71JAyXa+nxofU0Boke18P5VTQHnpJjEI1FNANV66SQwqVEBEi2zn+9lTQPT91Hjp3lNAFIPAyqFVUkCcxCCwcnBUQHE9CtejuFNAbef7qfEiVECYbhKDwKJSQFTjpZvE8FNABoGVQ4sMVEB56SYxCORSQIPAyqFFhlNAWDm0yHYeUkDjpZvEIIBSQN9PjZduqlJAJQaBlUN7U0BOYhBYOTxUQH9qvHSTOFRAwJ8aL91sVEB9PzVeuvFRQDMzMzMz21NA"},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Africa\u003cbr\u003egdpPercap=%{x}\u003cbr\u003elifeExp=%{y}\u003cbr\u003epop=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Algeria","Angola","Benin","Botswana","Burkina Faso","Burundi","Cameroon","Central African Republic","Chad","Comoros","Congo, Dem. Rep.","Congo, Rep.","Cote d'Ivoire","Djibouti","Egypt","Equatorial Guinea","Eritrea","Ethiopia","Gabon","Gambia","Ghana","Guinea","Guinea-Bissau","Kenya","Lesotho","Liberia","Libya","Madagascar","Malawi","Mali","Mauritania","Mauritius","Morocco","Mozambique","Namibia","Niger","Nigeria","Reunion","Rwanda","Sao Tome and Principe","Senegal","Sierra Leone","Somalia","South Africa","Sudan","Swaziland","Tanzania","Togo","Tunisia","Uganda","Zambia","Zimbabwe"],"legendgroup":"Africa","marker":{"color":"#00cc96","size":{"dtype":"i4","bdata":"4J\u002f8AXyFvQDqQ3sA2wIZALuZ2gBpB4AAJQYOAY6qQgBXO5wAMNkKACfS2QMi\u002fjkA4dwSAfaSBwBfvcgEIWkIAFneSgCPeo8EEzMWACfDGQD6BF0BpsqXACl2FgBBXh8C6bUeAFa8MACyHVwApnkkAedaywAzl7cAseUxAEIWEwD3FwMCKHAwAahbHwCRwsQAfGkMCI4tDACsM4cAmwsDAOUvuwAywl0ANSSLAIRanwLBVoUCCkoRAPj2RQLL\u002f1YAPs2cAN4avQHzOrMAZ9q7AA=="},"sizemode":"area","sizeref":366300.86,"symbol":"circle"},"mode":"markers","name":"Africa","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"ba0vEl5PuEClaVA0O72yQA5qv7UjhZZA26LMBu2MyEDb2y3JIQSTQKHhg40h4XpAFjWYhmHon0BkkSbeIRCGQOI\u002f3UBBoJpAEj5K2y7RjkA2yMlp1FhxQIwPs5cdYaxAWTFcHQAjmECsJ\u002fOP9kSgQKSK4lUuzbVAaJHtfAu9x0DPCMrI9AqEQJEHx9FxloVAIVnABD7LyUCOc5tw\u002f4WHQNRgGoZvvpRAcXkH0zt1jUCc8BKc2hmCQO3Vx0P\u002f3JZAFRqIZVOFmEB15h4SHuh5QMYzaOi\u002fjMdAMv\u002fomxRTkEBSoKqdzLqHQAqfrYNTSpBA5nXEIZssnEA1KQXdfmbFQI4ev7dZ2K1AvceZJny9iUC7YkZ4D8uyQEgHkEZqXYNA3lSkwuh3n0DdCfZfH\u002fa9QAWrjyy1+IpAZof4h735mEAPnZ5348GaQOgk73dT9IpABbhq6CDxjECGcw0z1BrCQCveyDzKVKRADW5rC3uhsUDhQh7B7U2RQKkf5XHCl4tAZMxdS+y0u0AXfnA+hYGQQEDc1avY3JNA2On2SFlbfUA="},"xaxis":"x","y":{"dtype":"f8","bdata":"JQaBlUMTUkAhsHJokV1FQHe+nxovXUxAd76fGi9dSUD2KFyPwiVKQArXo3A9ykhA16NwPQo3SUADK4cW2V5GQBfZzvdTU0lAfT81XrpJUEBCYOXQIjtHQPCnxks3qUtARIts5\u002fspSEBoke18P2VLQBSDwMqh1VFAJjEIrBzKSUCF61G4HgVNQPCnxks3eUpArkfhehReTEDTTWIQWLlNQIlBYOXQAk5AN4lBYOUATECNbOf7qTFHQK5H4XoUDktAsp3vp8ZLRUAQWDm0yNZGQLByaJHtfFJAZBBYObS4TUAQWDm0yCZIQLKd76fGO0tA0SLb+X4KUEAlBoGVQzNSQNEi2\u002fl+ylFA0SLb+X4KRUCJFtnO93NKQOXQItv5bkxAy6FFtvNtR0A\u002fNV66SRxTQOXQItv5HkdAbxKDwMphUEAOLbKd74dPQGQQWDm0SEVAMQisHFoUSEAIrBxaZKtIQLpJDAIrR01AWDm0yHbOQ0AZBFYOLUJKQPYoXI\u002fCNU1AUI2XbhJ7UkBMN4lBYMVJQP3UeOkmMUVAdZMYBFa+RUA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Americas\u003cbr\u003egdpPercap=%{x}\u003cbr\u003elifeExp=%{y}\u003cbr\u003epop=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Argentina","Bolivia","Brazil","Canada","Chile","Colombia","Costa Rica","Cuba","Dominican Republic","Ecuador","El Salvador","Guatemala","Haiti","Honduras","Jamaica","Mexico","Nicaragua","Panama","Paraguay","Peru","Puerto Rico","Trinidad and Tobago","United States","Uruguay","Venezuela"],"legendgroup":"Americas","marker":{"color":"#ab63fa","size":{"dtype":"i4","bdata":"Z\u002fVmArAliwAXVVMLPX79AUV8+ADe26IC\u002fBM\u002fAJs1rgDGNI4AIOXRACjkaQAA2b8AHr6BAHMxcgDkayoA26R6BlyZVgC9eDEAi7tlAMWKtQFbKDwAYB8QAOsH8xHImjQANgWOAQ=="},"sizemode":"area","sizeref":366300.86,"symbol":"circle"},"mode":"markers","name":"Americas","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"ICQLmLD1yECcwd8vRtytQGkAb4HmtMFAB7Ezhee74UCGONbF0bnJQPruVpaUXrtAqU2c3IfWwkCBs5QsDXrBQB5Av+9fibdA5fbLJ0PZukCuvOR\u002fWmC2QLQh\u002f8wMQrRAECIZcozGkkAInKVkqbirQOu12VjhmLxAQQ5KmMlkx0BSRIZVpHqlQHui68KXKMNA4KKTpdZMsECIf9jS5\u002fC8QKJ6a2At4NJAdF5jlyCW0UDr\u002fxzm9PjkQDCeQUO7ucRAW5TZIOdLxkA="},"xaxis":"x","y":{"dtype":"f8","bdata":"FK5H4XrUUkD6fmq8dGNQQClcj8L1GFJAbxKDwMopVEAIrBxaZKNTQDeJQWDlOFJANV66SQyyU0C28\u002f3UeJFTQNejcD0KD1JAVg4tsp2\u002fUkDVeOkmMfhRQH9qvHSTkFFAaJHtfD91TkDqJjEIrIxRQD81XrpJJFJAFK5H4XoMU0Coxks3iTlSQOx8PzVe4lJA46WbxCDwUUBt5\u002fup8dpRQDu0yHa+r1NAI9v5fmp0UUBzaJHtfI9TQH9qvHSTGFNAK4cW2c5vUkA="},"yaxis":"y","type":"scatter"},{"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003econtinent=Oceania\u003cbr\u003egdpPercap=%{x}\u003cbr\u003elifeExp=%{y}\u003cbr\u003epop=%{marker.size}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Australia","New Zealand"],"legendgroup":"Oceania","marker":{"color":"#FFA15A","size":{"dtype":"i4","bdata":"AM03ATvNPgA="},"sizemode":"area","sizeref":366300.86,"symbol":"circle"},"mode":"markers","name":"Oceania","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"54cRwmvQ4EAEHEKVQJjYQA=="},"xaxis":"x","y":{"dtype":"f8","bdata":"16NwPQpPVECTGARWDg1UQA=="},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"gdpPercap"},"type":"log"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"lifeExp"}},"legend":{"title":{"text":"continent"},"tracegroupgap":0,"itemsizing":"constant"},"title":{"text":"GDP per Capita vs. Life Expectancy (2007)"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('f0f61eca-c51d-4c8b-b680-fc7edebaec60');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+<section id="交互式地图choropleth-map" class="level4">
+<h4 class="anchored" data-anchor-id="交互式地图choropleth-map">2. 交互式地图（Choropleth Map）</h4>
+<p>地理空间可视化是 Plotly 的一大亮点。制作等值区域图（Choropleth Map）非常直观，你只需要提供地理位置编码（如国家代码）和对应的数值即可。</p>
+<div id="71c9491e" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 同样使用 Gapminder 数据，但这次是多年的数据</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>gapminder_all_years <span class="op">=</span> px.data.gapminder()</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># animation_frame: 指定按'year'列创建动画帧</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># animation_group: 指定'country'作为动画中保持一致的对象</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># color_continuous_scale: 指定连续颜色的主题</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># projection: 选择地图的投影方式</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.choropleth(gapminder_all_years,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>                    locations<span class="op">=</span><span class="st">"iso_alpha"</span>, <span class="co"># 使用 ISO Alpha-3 国家代码进行地理定位</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">"lifeExp"</span>,       <span class="co"># 区域的颜色深浅由预期寿命决定</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>                    hover_name<span class="op">=</span><span class="st">"country"</span>,  <span class="co"># 悬停名称</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                    animation_frame<span class="op">=</span><span class="st">"year"</span>,<span class="co"># 创建一个时间滑块动画</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span>px.colors.sequential.Plasma,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="st">"Global Life Expectancy Over Time"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script type="text/javascript">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.1.0.min.js" integrity="sha256-Ei4740bWZhaUTQuD6q9yQlgVCMPBz6CZWhevDYPv93A=" crossorigin="anonymous"></script>                <div id="fd8efc79-4acc-4a43-929b-f7898a07cc0f" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("fd8efc79-4acc-4a43-929b-f7898a07cc0f")) {                    Plotly.newPlot(                        "fd8efc79-4acc-4a43-929b-f7898a07cc0f",                        [{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1952\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"kxgEVg7NPEA9CtejcJ1LQGDl0CLbiUVApHA9CtcDPkCuR+F6FD5PQEjhehSuR1FAMzMzMzOzUEDUeOkmMXhJQMuhRbbzvUJAAAAAAAAAUUAGgZVDixxDQKJFtvP9NERAKVyPwvXoSkBWDi2ync9HQEw3iUFgdUlAzczMzMzMTUCamZmZmfk\u002fQIcW2c73g0NATDeJQWC1Q0Bt5\u002fup8UJDQAAAAAAAMFFAJQaBlUO7QUCyne+nxgtDQI\u002fC9ShcX0tAAAAAAAAARkD8qfHSTVJJQOxRuB6FW0RA\u002fKnx0k2SQ0CR7Xw\u002fNQ5FQO58PzVemkxAkxgEVg49REB7FK5H4ZpOQNrO91PjtU1ASOF6FK63UEBSuB6F67FRQA4tsp3vZ0FAEFg5tMj2RkAEVg4tsi1IQPyp8dJN8kRAqMZLN4mhRkAEVg4tsj1BQBJYObTI9kFARIts5\u002fsJQUAzMzMzM6NQQArXo3A92lBAqvHSTWKAQkAAAAAAAAA+QAAAAAAA4FBAUI2XbhKTRUDXo3A9CndQQG3n+6nxAkVAy6FFtvPNQEAAAAAAAEBAQCcxCKwcykJA2\u002fl+arz0REB7FK5H4XpOQFK4HoXrAVBAj8L1KFwfUkA7tMh2vq9CQJZDi2znu0JArBxaZDtvRkApXI\u002fC9ahGQArXo3A9ulBAKVyPwvVYUEBcj8L1KHxQQKRwPQrXQ01ApHA9CteDT0BOYhBYOZRFQMP1KFyPIkVAukkMAisHSUBEi2zn+7lHQLgehetRyEtAEFg5tMj2S0CNbOf7qRFFQD0K16NwPUNABoGVQ4tcRUC6SQwCK1dCQFTjpZvEIEJAJQaBlUM7SEBI4XoUrtdAQC\u002fdJAaBRURAke18PzV+SUCiRbbz\u002fWRJQKwcWmQ7H0VAokW28\u002f2UTUA7tMh2vm9FQPCnxks3ST9ARrbz\u002fdQoQkDNzMzMzNxEQGq8dJMYFEJAuB6F61EIUkApXI\u002fC9VhRQNR46SYxKEVARrbz\u002fdS4QkC28\u002f3UeClCQHsUrkfhKlJARIts5\u002fvJQkAshxbZzrdFQJzEILBymEtAUI2XbhJTT0D6fmq8dPNFQMdLN4lB4EdASOF6FK6nTkApXI\u002fC9ehNQFK4HoXrEVBA6SYxCKxcSkBmZmZmZoZOQAAAAAAAAERAPzVeukk8R0AAAAAAAPBDQN0kBoGVo0JAc2iR7Xz\u002fTEDb+X5qvFQ+QKabxCCwMk5A16NwPQoXUEAUrkfhemRQQHe+nxovfUBA\u002fdR46SaBRkBcj8L1KDxQQJZDi2zny0xA4XoUrkdRQ0BqvHSTGLREQNejcD0K91FASOF6FK5nUUAbL90kBvFGQAAAAAAAQE1A7FG4HoWbREAGgZVDi2xJQD81XrpJTENAzczMzMyMTUDNzMzMzExGQHsUrkfhykVAd76fGi\u002f9Q0DsUbgehUtRQFyPwvUoHFFABoGVQ4uEUEAlBoGVQ4tLQNv5fmq8NERAFK5H4XqURUCgGi\u002fdJEZAQL6fGi\u002fdBEVAfT81Xro5SEA="},"type":"choropleth"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"geo":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"center":{}},"coloraxis":{"colorbar":{"title":{"text":"lifeExp"}},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"legend":{"tracegroupgap":0},"title":{"text":"Global Life Expectancy Over Time"},"updatemenus":[{"buttons":[{"args":[null,{"frame":{"duration":500,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":500,"easing":"linear"}}],"label":"&#9654;","method":"animate"},{"args":[[null],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"&#9724;","method":"animate"}],"direction":"left","pad":{"r":10,"t":70},"showactive":false,"type":"buttons","x":0.1,"xanchor":"right","y":0,"yanchor":"top"}],"sliders":[{"active":0,"currentvalue":{"prefix":"year="},"len":0.9,"pad":{"b":10,"t":60},"steps":[{"args":[["1952"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1952","method":"animate"},{"args":[["1957"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1957","method":"animate"},{"args":[["1962"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1962","method":"animate"},{"args":[["1967"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1967","method":"animate"},{"args":[["1972"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1972","method":"animate"},{"args":[["1977"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1977","method":"animate"},{"args":[["1982"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1982","method":"animate"},{"args":[["1987"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1987","method":"animate"},{"args":[["1992"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1992","method":"animate"},{"args":[["1997"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"1997","method":"animate"},{"args":[["2002"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"2002","method":"animate"},{"args":[["2007"],{"frame":{"duration":0,"redraw":true},"mode":"immediate","fromcurrent":true,"transition":{"duration":0,"easing":"linear"}}],"label":"2007","method":"animate"}],"x":0.1,"xanchor":"left","y":0,"yanchor":"top"}]},                        {"responsive": true}                    ).then(function(){
+                            Plotly.addFrames('fd8efc79-4acc-4a43-929b-f7898a07cc0f', [{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1952\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"kxgEVg7NPEA9CtejcJ1LQGDl0CLbiUVApHA9CtcDPkCuR+F6FD5PQEjhehSuR1FAMzMzMzOzUEDUeOkmMXhJQMuhRbbzvUJAAAAAAAAAUUAGgZVDixxDQKJFtvP9NERAKVyPwvXoSkBWDi2ync9HQEw3iUFgdUlAzczMzMzMTUCamZmZmfk\u002fQIcW2c73g0NATDeJQWC1Q0Bt5\u002fup8UJDQAAAAAAAMFFAJQaBlUO7QUCyne+nxgtDQI\u002fC9ShcX0tAAAAAAAAARkD8qfHSTVJJQOxRuB6FW0RA\u002fKnx0k2SQ0CR7Xw\u002fNQ5FQO58PzVemkxAkxgEVg49REB7FK5H4ZpOQNrO91PjtU1ASOF6FK63UEBSuB6F67FRQA4tsp3vZ0FAEFg5tMj2RkAEVg4tsi1IQPyp8dJN8kRAqMZLN4mhRkAEVg4tsj1BQBJYObTI9kFARIts5\u002fsJQUAzMzMzM6NQQArXo3A92lBAqvHSTWKAQkAAAAAAAAA+QAAAAAAA4FBAUI2XbhKTRUDXo3A9CndQQG3n+6nxAkVAy6FFtvPNQEAAAAAAAEBAQCcxCKwcykJA2\u002fl+arz0REB7FK5H4XpOQFK4HoXrAVBAj8L1KFwfUkA7tMh2vq9CQJZDi2znu0JArBxaZDtvRkApXI\u002fC9ahGQArXo3A9ulBAKVyPwvVYUEBcj8L1KHxQQKRwPQrXQ01ApHA9CteDT0BOYhBYOZRFQMP1KFyPIkVAukkMAisHSUBEi2zn+7lHQLgehetRyEtAEFg5tMj2S0CNbOf7qRFFQD0K16NwPUNABoGVQ4tcRUC6SQwCK1dCQFTjpZvEIEJAJQaBlUM7SEBI4XoUrtdAQC\u002fdJAaBRURAke18PzV+SUCiRbbz\u002fWRJQKwcWmQ7H0VAokW28\u002f2UTUA7tMh2vm9FQPCnxks3ST9ARrbz\u002fdQoQkDNzMzMzNxEQGq8dJMYFEJAuB6F61EIUkApXI\u002fC9VhRQNR46SYxKEVARrbz\u002fdS4QkC28\u002f3UeClCQHsUrkfhKlJARIts5\u002fvJQkAshxbZzrdFQJzEILBymEtAUI2XbhJTT0D6fmq8dPNFQMdLN4lB4EdASOF6FK6nTkApXI\u002fC9ehNQFK4HoXrEVBA6SYxCKxcSkBmZmZmZoZOQAAAAAAAAERAPzVeukk8R0AAAAAAAPBDQN0kBoGVo0JAc2iR7Xz\u002fTEDb+X5qvFQ+QKabxCCwMk5A16NwPQoXUEAUrkfhemRQQHe+nxovfUBA\u002fdR46SaBRkBcj8L1KDxQQJZDi2zny0xA4XoUrkdRQ0BqvHSTGLREQNejcD0K91FASOF6FK5nUUAbL90kBvFGQAAAAAAAQE1A7FG4HoWbREAGgZVDi2xJQD81XrpJTENAzczMzMyMTUDNzMzMzExGQHsUrkfhykVAd76fGi\u002f9Q0DsUbgehUtRQFyPwvUoHFFABoGVQ4uEUEAlBoGVQ4tLQNv5fmq8NERAFK5H4XqURUCgGi\u002fdJEZAQL6fGi\u002fdBEVAfT81Xro5SEA="},"type":"choropleth"}],"name":"1952"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1957\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"okW28\u002f1UPkCkcD0K16NNQEjhehSu10ZAObTIdr7\u002fP0Coxks3iRlQQIXrUbgelVFAH4XrUbjeUEDRItv5fupKQAaBlUOLrENAj8L1KFxPUUDn+6nx0i1EQFK4HoXr8URAmpmZmZk5TUDJdr6fGs9IQBSuR+F6pEpA16NwPQqnUECHFtnO93NBQE5iEFg5RERAAyuHFtmuREAQWDm0yDZEQD0K16NwfVFACKwcWmS7QkBU46WbxPBDQLbz\u002fdR4CUxA9Wc\u002fUkRGSUDJdr6fGo9LQHsUrkfhOkVA+n5qvHRTREAQWDm0yIZGQBfZzvdTA05AeekmMQg8RUDhehSuRzFQQJqZmZmZKU9AUrgehetBUUCkcD0K1\u002fNRQESLbOf7qUJARIts5\u002fvpSEAhsHJoka1JQEa28\u002f3UOEZAKVyPwvVISEDp+6nx0v1BQLx0kxgEBkNATDeJQWBVQkCPwvUoXN9QQOxRuB6FO1FAHVpkO99\u002fQ0C4HoXrUQhAQGZmZmZmRlFAwcqhRbZjRkDXo3A9CvdQQBkEVg4tEkZAgZVDi2xHQUA830+Nl75AQAwCK4cWWURAhetRuB5VRkAAAAAAADBQQArXo3A9mlBArkfhehReUkAdWmQ73x9EQC\u002fdJAaB9UNAukkMAiuXR0AOLbKd7zdIQJqZmZmZOVFA9ihcj8L1UECkcD0K1\u002fNQQK5H4XoUTk9AAAAAAABgUEASg8DKodVGQCyHFtnOV0ZA7nw\u002fNV4KS0C6SQwCK1dKQE5iEFg5BE1AO99PjZe+TUC8dJMYBIZGQJHtfD81vkNAokW28\u002f2kRkAfhetRuG5DQNEi2\u002fl+mkJAkxgEVg4NSkCc76fGS6dBQCUGgZVDK0VACKwcWmQLTUC4HoXrUZhLQDu0yHa+n0ZA001iEFi5TkCgGi\u002fdJLZGQMHKoUW240BApHA9CtfzRECxcmiR7ZxGQCuHFtnO10JAj8L1KFw\u002fUkBxPQrXo5BRQJ7vp8ZLt0ZABoGVQ4tMQ0Atsp3vp+ZCQFyPwvUoXFJACtejcD0KRECe76fGS8dGQH0\u002fNV66mU1ADgIrhxaZT0CNbOf7qSFHQJhuEoPAqklA4XoUrkdxUEDhehSuR8FOQMP1KFyPIlFA7FG4HoWLS0BmZmZmZgZQQAAAAAAAwERAKVyPwvV4SEDJdr6fGm9FQCcxCKwcqkNASOF6FK7XTkBSuB6F65E\u002fQPT91Hjplk9AzczMzMzcUEBmZmZmZvZQQJMYBFYOfUFArkfhehT+R0AK16NwPapQQO58PzVeuk5AHVpkO9\u002fPQ0CDwMqhRbZFQI\u002fC9ShcH1JApHA9CtejUUAxCKwcWiRIQDMzMzMzM09A6SYxCKx8RUBxPQrXo9BKQLTIdr6fmkRAZmZmZmbmTkDNzMzMzIxHQCYxCKwcCkhADgIrhxZJRUB7FK5H4ZpRQI\u002fC9ShcX1FAiUFg5dDCUEBqvHSTGPRMQKjGSzeJcUVA2s73U+PVRkBcj8L1KPxAQGDl0CLbCUZAeekmMQg8SUA="},"type":"choropleth"}],"name":"1957"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1962\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"rBxaZDv\u002fP0AUrkfhejRQQBBYObTIJkhAAAAAAAAAQUAMAiuHFklQQOxRuB6Fu1FAw\u002fUoXI9iUUCgGi\u002fdJHZMQM\u002f3U+Olm0RAAAAAAACQUUDJdr6fGk9FQBBYObTItkVA16NwPQr3TkDD9Shcj8JJQIXrUbge1UtAcT0K16NgUUDVeOkmMehCQPYoXI\u002fCBUVAhetRuB61RUD8qfHSTVJFQDMzMzMz01FAzczMzMy8Q0DP91PjpdtEQIPAyqFF9kxA48KBkCxARkBYObTIdu5MQLKd76fGO0ZAVg4tsp0PRUBI4XoUrjdIQLKd76fGa09A16NwPQp3RkC4HoXrUchQQDq0yHa+T1BAmpmZmZl5UUBmZmZmZhZSQGQQWDm02ENAmG4Sg8C6SkBSuB6F61FLQOXQItv5fkdAnu+nxksnSkCuR+F6FL5CQE5iEFg5FERAZDvfT40HREAAAAAAADBRQHE9CtejoFFAO99PjZc+RECmm8QgsPJAQDMzMzMzk1FAYOXQIts5R0BxPQrXo2BRQCYxCKwcekdAqvHSTWLgQUBYObTIdj5BQOxRuB6Fy0VAaJHtfD8FSECamZmZmelQQD0K16Nw\u002fVBA7FG4HoVrUkA9CtejcM1FQPyp8dJNQkVAmpmZmZmpSEDRItv5frpJQMP1KFyPklFAKVyPwvVYUUCPwvUoXE9RQNejcD0KZ1BAH4XrUbguUUDlpZvEIBBIQLbz\u002fdR4+UdAiRbZzvdTTEBMN4lBYKVLQFyPwvUoPE5AeekmMQgMT0BWDi2ynd9HQMdLN4lBQERAgZVDi2znR0AGgZVDi2xEQBSuR+F6NENAdZMYBFbeS0ArhxbZzndCQDu0yHa+H0ZAc2iR7XwfTkCDwMqhRSZNQOWlm8QgIEhAd76fGi\u002fdT0CDwMqhRfZHQPhT46WbFEJA5\u002fup8dKNRkDFILByaDFIQPyp8dJNskNAH4XrUbhOUkCPwvUoXM9RQDeJQWDlUEhAdZMYBFa+Q0CuR+F6FK5DQK5H4XoUXlJAhetRuB6VRUD2KFyPwtVHQH9qvHST6E5AyXa+nxoXUEA\u002fNV66SYxIQDeJQWDlYEtAKVyPwvXoUEApXI\u002fC9RhQQEjhehSuZ1FAaJHtfD\u002fVTEAzMzMzM7NQQAAAAAAAgEVA\u002fKnx0k3ySUCiRbbz\u002ffRGQCYxCKwcukRARIts5\u002fshUEAZBFYOLWJAQFCNl24Sc1BAhetRuB6VUUCamZmZmUlRQCGwcmiRfUJAfT81Xrr5SEBcj8L1KGxRQH9qvHSTGE9Aj8L1KFxvREDl0CLb+X5GQEjhehSuV1JAFK5H4XrUUUDXo3A9CidJQM3MzMzMTFBAc2iR7XwfRkAshxbZzgdMQLx0kxgE9kVAmpmZmZk5UEAmMQisHMpIQAaBlUOLDEpAeekmMQisRkBxPQrXo7BRQD0K16NwjVFA1XjpJjEQUUDD9Shcj2JOQFg5tMh2rkZAx0s3iUEQSEDXo3A9CpdBQG3n+6nxAkdA5\u002fup8dItSkA="},"type":"choropleth"}],"name":"1962"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1967\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"w\u002fUoXI8CQUCuR+F6FI5QQGq8dJMYtElArkfhehT+QUB\u002farx0k2hQQGZmZmZmxlFAKVyPwvWIUUCgGi\u002fdJPZNQESLbOf7uUVAXI\u002fC9Si8UUDhehSuR3FGQGq8dJMYhEZAw\u002fUoXI8yUECgGi\u002fdJKZKQDeJQWDl0ExAexSuR+GaUUDwp8ZLN1lEQKAaL90kxkVAhetRuB61RkCDwMqhRWZGQLgehetRCFJAd76fGi+9RECxcmiR7cxFQG3n+6nxQk5A\u002f+xHisgwTUAlBoGVQ\u002ftNQCPb+X5qPEdAukkMAisHRkCF61G4HgVKQEFg5dAiW1BAzczMzMysR0AAAAAAACBRQMP1KFyPElFAuB6F61GYUUA9CtejcD1SQLbz\u002fdR4CUVA5aWbxCBgTEAQWDm0yFZMQC\u002fdJAaBpUhAPQrXo3DtS0B1kxgEVn5DQNR46SYxGEVAH4XrUbgORUCF61G4HnVRQDMzMzMz41FABoGVQ4tMRkAEVg4tsu1BQDMzMzMzs1FA8KfGSzcJSEAAAAAAAMBRQDdeukkMAklA8KfGSzeZQkDl0CLb+b5BQMl2vp8aH0dAg8DKoUV2SUAAAAAAAIBRQAAAAAAAYFFAH4XrUbhuUkBkEFg5tJhHQAisHFpk+0ZAeekmMQg8SkCYbhKDwDpLQIXrUbgexVFAAAAAAACwUUCkcD0K18NRQHE9Ctej4FBA7FG4HoXbUUCNl24Sg9BJQMHKoUW2U0lAf2q8dJP4TUDP91PjpdtMQA4tsp3vJ1BAj8L1KFzvT0Dl0CLb+T5IQPhT46WbxERAkxgEVg4dSUBU46WbxHBFQHWTGARWvkNAc2iR7XyvTUB1kxgEVj5DQKJFtvP9JEdAnu+nxkvHTkCuR+F6FA5OQKrx0k1ioElACKwcWmTLUEB7FK5H4SpJQFg5tMh2DkNAjZduEoOwSEAxCKwcWpRJQCPb+X5qvERAFK5H4Xp0UkDhehSuR+FRQP3UeOkm8UlAyXa+nxoPRECF61G4HoVEQIXrUbgehVJAWDm0yHZ+R0BmZmZmZuZIQAaBlUOLBFBAv58aL908UEApXI\u002fC9bhJQPyp8dJNMkxA16NwPQpnUUBmZmZmZqZQQGZmZmZmxlFATDeJQWBFTkAzMzMzM7NQQM3MzMzMDEZAZmZmZmY2S0AX2c73U\u002fNIQPLSTWIQyEVA0SLb+X66UEBYObTIdg5BQAaBlUOL\u002fFBAH4XrUbi+UUDsUbgehUtRQJMYBFYOfUNALbKd76f2SUBcj8L1KNxRQBsv3SQGEVBA5\u002fup8dJtRUAbL90kBlFHQArXo3A9ilJA4XoUrkcxUkCkcD0K19NKQAAAAAAA4FBAN4lBYOXgRkAUrkfheiRNQN9PjZduYkdAmpmZmZlZUEAQWDm0yAZKQGC6SQwCK0tASgwCK4cGSEDXo3A9CtdRQHE9CtejsFFAy6FFtvMdUUBaZDvfT71PQCUGgZVD60dAVOOlm8TQSUDLoUW2831CQPyp8dJN4kdAj8L1KFz\u002fSkA="},"type":"choropleth"}],"name":"1967"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1972\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"JQaBlUMLQkBcj8L1KOxQQPyp8dJNQktAEFg5tMj2QkBcj8L1KMRQQOxRuB6F+1FAuB6F61GoUUBmZmZmZqZPQMdLN4lBoEZAXI\u002fC9SjcUUBvEoPAyoFHQAisHFpkW0dAzczMzMzcUEBQjZduEgNMQI2XbhKDwE1AmpmZmZm5UUDP91PjpctFQJ7vp8ZLB0ZAf2q8dJMoRECDwMqhRYZHQLgehetROFJA0SLb+X66RUBGtvP91MhGQJzEILByuE9AARO4dTePT0A7tMh2vs9OQEa28\u002f3UeEhAO99PjZf+RkBqvHSTGHRLQHSTGARW9lBASgwCK4fmSEDXo3A9CmdRQIPAyqFFrlFAw\u002fUoXI+SUUCuR+F6FF5SQAMrhxbZLkZAVOOlm8TQTUDazvdT42VNQKjGSzeJkUlA0SLb+X4aTUA1XrpJDEJEQBkEVg4tEkZAUrgehevBRUBI4XoUrrdRQLgehetRGFJAuB6F61FYSECBlUOLbCdDQAAAAAAAwFFAAAAAAADwSED2KFyPwhVSQFg5tMh23kpAsp3vp8ZrQ0CR7Xw\u002fNT5CQEw3iUFgBUhA\u002fdR46SbxSkAAAAAAAABSQHE9CtejcFFAPQrXo3CdUkAX2c73U1NJQESLbOf7mUhAy6FFtvOdS0CamZmZmXlMQFK4HoXr0VFAuB6F61HoUUBcj8L1KAxSQAAAAAAAQFFAexSuR+FaUkDdJAaBlUNMQGQ730+Nx0pA5\u002fup8dL9T0B1kxgEVk5PQCGwcmiR7VBAbef7qfFaUEAZBFYOLeJIQDvfT42XTkVAbef7qfFiSkCxcmiR7WxGQDdeukkM4kRA4XoUrkeBT0CTGARWDv1DQA4tsp3vN0hARrbz\u002fdR4T0CR7Xw\u002fNS5PQI2XbhKD4EpAZBBYObSoUUB1kxgEVm5KQESLbOf7KURAKVyPwvWISkDl0CLb+e5KQD81XrpJ\u002fEVAAAAAAABwUkApXI\u002fC9fhRQBfZzvdTk0tA2c73U+NFREAOAiuHFmlFQPYoXI\u002fClVJA\u002fKnx0k0SSkD0\u002fdR46fZJQOj7qfHSjVBAXI\u002fC9Sh0UEDTTWIQWLlLQLgehetRCE1AZmZmZma2UUBxPQrXo1BRQArXo3A9ClJAqMZLN4kRUEA9CtejcE1RQM3MzMzMTEZAPQrXo3A9TEDFILByaPFKQLgehetR6EZAzczMzMwsUUAzMzMzM7NBQNNNYhBYYVFAZmZmZmaWUUAUrkfhenRRQAaBlUOLfERADgIrhxbZSkCkcD0K10NSQKabxCCwQlBAtMh2vp+KRkAtsp3vp8ZIQK5H4XoUrlJAUrgehetxUkDazvdT46VMQClcj8L1WFFAj8L1KFzPR0CkcD0K1zNOQP3UeOkm4UhAmpmZmZl5UECTGARWDs1LQHE9CtejgExAN166SQyCSUBxPQrXowBSQPYoXI\u002fC1VFAUI2XbhIrUUAhsHJokW1QQI2XbhKDIElAarx0kxhETEAGgZVDi+xDQARWDi2yDUlA4XoUrkfRS0A="},"type":"choropleth"}],"name":"1972"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1977\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"8tJNYhA4Q0DsUbgehTtRQG8Sg8DKAU1A5\u002fup8dK9Q0ARWDm0yB5RQI\u002fC9ShcX1JAexSuR+EKUkDLoUW282VQQKAaL90kdkdAMzMzMzMzUkC4HoXrUZhIQG3n+6nxAklA16NwPQp3UUBGtvP91KhNQDvfT42Xvk5ApHA9CtezUUCoxks3iRFHQBSuR+F69EZAuB6F61E4P0A9CtejcK1IQD0K16NwjVJAMzMzMzNjR0AbL90kBrFHQBbZzvdTw1BAsrrVc9L7T0BCYOXQIutPQNR46SYxeElA9P3UeOnmR0AAAAAAANBLQAAAAAAAsFFAHVpkO98vSkApXI\u002fC9ahRQKjGSzeJKVJAPQrXo3CtUUBcj8L1KKxSQN9PjZduQkdAvp8aL93kTkBI4XoUrqdOQEa28\u002f3UqEpADgIrhxZZTEBQjZduEgNFQBSuR+F6REZA4XoUrkdBRkDhehSuRyFSQIXrUbgedVJAhetRuB5lSkCyne+nxutEQAAAAAAAIFJAVOOlm8TgSUDsUbgehWtSQMHKoUW2A0xAqMZLN4lhREDsUbgehbtCQKAaL90k9khA+n5qvHSzTEBmZmZmZmZSQM3MzMzMfFFA16NwPQoHU0C0yHa+nxpLQGDl0CLbWUpAYOXQItvZTEC+nxov3TROQFK4HoXrAVJApHA9CtdDUkAfhetRuF5SQNejcD0Kh1FAuB6F61HYUkD91HjpJpFOQKRwPQrXE0xAGARWDi3KUEAbL90kBjFQQMuhRbbzVVFAdJMYBFaGUEC0yHa+nxpKQG8Sg8DK4UVAf2q8dJO4TEBU46WbxHBHQBkEVg4t4kVAqvHSTWJQUEAIrBxaZNtEQJMYBFYObUlA7FG4HoU7UEA1XrpJDEJQQAMrhxbZvktATmIQWDlEUkA9CtejcN1LQI\u002fC9ShcP0VAZDvfT40HTEAOLbKd7zdMQDu0yHa+X0dAj8L1KFzPUkCuR+F6FA5SQFyPwvUovExAaJHtfD+lREBvEoPAykFGQEjhehSu11JA5dAi2\u002fmuTEAv3SQGgQVLQN0kBoGVK1FAPN9PjZeWUEDwp8ZLNzlNQEjhehSuB05AexSuR+GqUUAK16NwPZpRQFyPwvUoXFJAarx0kxjEUEA9CtejcF1RQAAAAAAAgEZAZmZmZmZGTUC4HoXrUVhNQI2XbhKDcEhAMzMzMzOTUUC+nxov3WRCQHsUrkfhslFAzczMzMycUUCuR+F6FL5RQOkmMQis\u002fERA+n5qvHTDS0ApXI\u002fC9ZhSQNv5fmq8fFBAZmZmZmbmR0Db+X5qvERKQFyPwvUo3FJAKVyPwvXYUkApXI\u002fC9ZhOQPYoXI\u002fCpVFAEoPAyqH1SECsHFpkOz9PQKjGSzeJcUpAMzMzMzMTUUBCYOXQIutNQDeJQWDlwE1AzczMzMwsSUBxPQrXozBSQLgehetRWFJAEVg5tMheUUB3vp8aL91QQG8Sg8DK4UtAUrgehethTkBmZmZmZhZGQMUgsHJosUlAg8DKoUXWTEA="},"type":"choropleth"}],"name":"1977"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1982\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"WmQ730\u002ftQ0B7FK5H4ZpRQMl2vp8ar05Af2q8dJP4Q0A\u002fNV66SXxRQI\u002fC9Shcr1JA7FG4HoVLUkAW2c73U0NRQP3UeOkmAUlA7FG4HoV7UkDByqFFtnNJQMuhRbbz7UpAXI\u002fC9SisUUDLoUW2871OQGC6SQwCq09AhetRuB7FUUBWDi2ynQ9IQD81XrpJvEdA0SLb+X56SUBgukkMAntKQHE9Ctej8FJA9ihcj8IlSEAZBFYOLcJIQFyPwvUopFFAmpmZmZlhUEBvEoPAyqlQQIGVQ4tsd0pAMQisHFrkR0ApXI\u002fC9VhMQM3MzMzMXFJA5\u002fup8dL9SkA9CtejcJ1RQNnO91PjbVJAPQrXo3C9UUC4HoXrUahSQA4tsp3vZ0hAkxgEVg7dT0DZzvdT4xVQQFTjpZvEAExAWmQ7309NTEDb+X5qvNRFQFK4HoXr8UVAaJHtfD91RkAzMzMzM6NSQClcj8L1uFJA1HjpJjFITEAK16NwPcpGQDMzMzMzc1JArBxaZDvfSkCPwvUoXM9SQKjGSzeJEU1AN166SQxyRUBg5dAi26lDQGC6SQwCu0lAMQisHFp0TkDNzMzMzNxSQClcj8L1WFFAj8L1KFw\u002fU0A\u002fNV66SUxMQDEIrBxaFExAj8L1KFzPTUC+nxov3QRPQGZmZmZmRlJAzczMzMycUkAfhetRuL5SQD0K16NwzVFA16NwPQpHU0A730+Nl95PQDdeukkMYk1AZmZmZmZGUUAdWmQ738dQQLKd76fG01FA9P3UeOm+UEBEi2zn+4lLQJMYBFYObUZApHA9CtcTT0B56SYxCHxIQBkEVg4t0kZAAAAAAAAAUUBoke18P\u002fVFQOkmMQiszEpAL90kBoGtUEBSuB6F69lQQDvfT42XvkxAWDm0yHaGUkAzMzMzM9NNQPYoXI\u002fCZUVAukkMAisHTUCWQ4ts53tNQHnpJjEIzEhAMzMzMzMDU0D2KFyPwnVSQKAaL90kpk1ABoGVQ4tMRUB9PzVeuulGQK5H4XoU\u002flJAd76fGi9dT0BOYhBYORRMQJHtfD81nlFADi2yne+3UECJFtnO97NOQNEi2\u002fl+Ck9AFK5H4XrUUUDhehSuRzFSQAAAAAAAcFJAcT0K16N4UUAK16NwPWpRQJZDi2znG0dAsXJoke0sTkCoxks3iYFPQI2XbhKDMEpA7Xw\u002fNV6KUUApXI\u002fC9ThDQHE9Ctej8FFAMzMzMzOzUUB56SYxCMRRQArXo3A9ekVA+FPjpZsUTUAzMzMzMxNTQJzEILByMFFAJQaBlUMrSUAshxbZzsdLQHsUrkfhGlNAPQrXo3ANU0D2KFyPwiVQQArXo3A9ClJA5\u002fup8dJNSUCR7Xw\u002fNSZQQD81XrpJvEtAaJHtfD81UUBQjZduEgNQQPhT46WbhE5A6SYxCKzsSEDD9Shcj4JSQJqZmZmZqVJA7FG4HoWzUUDP91PjpSNRQJzEILByaE1ARIts5\u002fsZUEBYObTIdo5IQA4CK4cW6UlAWDm0yHYuTkA="},"type":"choropleth"}],"name":"1982"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1987\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"8KfGSzdpREAAAAAAAABSQEFg5dAic1BAhxbZzvfzQ0Coxks3ibFRQBSuR+F6FFNAXI\u002fC9Si8UkAAAAAAALBRQEa28\u002f3UaEpAZmZmZmbWUkBCYOXQIitKQOWlm8QgoExAKVyPwvXIUUBWDi2ync9PQIXrUbgeTVBA9ihcj8LVUUCe76fGS8dIQGC6SQwCG0hAokW28\u002f30SkCuR+F6FH5LQNejcD0KN1NArkfhehQ+SUBKDAIrh4ZJQHNoke18H1JAqMZLN4nRUED+1HjpJvFQQEoMAiuHdktA2\u002fl+ary0R0Bcj8L1KLxMQOOlm8QgsFJApHA9CtdTS0DhehSuR+FRQEBg5dAii1JAhetRuB7lUUAzMzMzM7NSQIXrUbgeBUlAbef7qfGCUEARWDm0yM5QQLx0kxgE5k1AwcqhRbaTT0CiRbbz\u002fdRGQESLbOf7OUdAZDvfT41XR0CF61G4HrVSQPYoXI\u002fCFVNAuB6F61EYTkBSuB6F66FIQJHtfD81tlJAWmQ730\u002fdS0B7FK5H4SpTQGq8dJMYZE5ALbKd76fGRkCPwvUoXJ9EQMUgsHJo0UpAc2iR7XwfUEDNzMzMzAxTQIXrUbgeZVFAH4XrUbhOU0AQWDm0yEZNQKjGSzeJEU5AhetRuB6FT0CJQWDl0EJQQNejcD0Kl1JAZmZmZmbmUkB7FK5H4RpTQOF6FK5H8VFAexSuR+GqU0BWDi2ynXdQQAisHFpkq01AwyCwcmipUUCkcD0K13NRQEBg5dAii1JAJQaBlUP7UEDXo3A9CpdMQPp+arx0A0dA5dAi2\u002fmOUEDNzMzMzKxIQNEi2\u002fl+ukdAAAAAAABgUUA730+Nly5HQMP1KFyPEkxAj8L1KFwvUUAdWmQ7319RQCPb+X5qHE5Aj8L1KFy3UkAtsp3vp1ZPQJHtfD81bkVACKwcWmQrTUB7FK5H4WpOQNv5fmq8REpAhetRuB41U0AUrkfhepRSQBsv3SQGAU9A16NwPQpHRkDFILByaHFHQClcj8L1+FJA5dAi2\u002fnuUECPwvUoXB9NQLbz\u002fdR44VFA1XjpJjHYUEB\u002farx0kwhQQIxs5\u002fupCVBAH4XrUbi+UUCkcD0K14NSQLgehetRqFJA30+Nl276UUBSuB6F62FRQMP1KFyPAkZAd76fGi\u002fdTkB7FK5H4ZJQQN9PjZdu4ktAy6FFtvPNUUBU46WbxABEQKRwPQrXY1JAhetRuB7FUUAAAAAAABBSQOWlm8QgQEZAmG4Sg8BqTkCamZmZmTlTQGMQWDm0QFFArBxaZDvfSUAQWDm0yNZMQFyPwvUoTFNACtejcD1aU0B0kxgEVr5QQJqZmZmZWVJAFK5H4XrESUBMN4lBYIVQQJzEILByeExAaJHtfD9lUUDvp8ZLN7lQQOf7qfHSjU9A\u002fdR46SbBSUCcxCCwcsBSQOF6FK5HwVJAmG4Sg8D6UUBcj8L1KIxRQClcj8L1aE9Abef7qfHCUEC8dJMYBHZKQA4CK4cWaUlAsXJoke0sT0A="},"type":"choropleth"}],"name":"1987"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1992\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"g8DKoUXWREB3vp8aL+VRQFYOLbKd71BAiUFg5dBSREBkO99PjfdRQKRwPQrXY1NAw\u002fUoXI8CU0BYObTIdiZSQPyp8dJNAkxAPQrXo3AdU0ASg8DKofVKQNEi2\u002fl++k1ACKwcWmQLUkCPwvUoXF9PQM\u002f3U+Olw1BAXI\u002fC9SjMUUDhehSuRyFJQJHtfD81XkZAEFg5tMjmS0DUeOkmMShLQM3MzMzMfFNAppvEILCySEDpJjEIrNxJQPLSTWIQiFJAXI\u002fC9SgsUUBt5\u002fup8RpRQNR46SYx+ExAoBov3STGRkCBlUOLbDdMQBSDwMqh7VJAEoPAyqEFSkB9PzVeuiFSQNEi2\u002fl+mlJAmpmZmZkZUkCF61G4HtVSQFpkO99PzUlAaJHtfD8dUUCsHFpkO2dRQIPAyqFF1k9AUI2XbhKzUED2KFyPwsVHQAMrhxbZ\u002fkhAz\u002fdT46ULSEDNzMzMzOxSQD0K16NwXVNAAyuHFtmuTkDfT42XblJKQBSuR+F6BFNA5aWbxCDATEBSuB6F60FTQDu0yHa+r09AfT81XrpJSEA3XrpJDKJFQAisHFpki0tAqMZLN4mZUEBYObTIdmZTQHsUrkfhSlFA4XoUrkexU0AGgZVDixxOQLpJDAIrV09Ac2iR7XxvUEBgukkMArtNQNnO91Pj3VJA7FG4HoU7U0Bcj8L1KFxTQBsv3SQG8VFA16NwPQrXU0ApXI\u002fC9QBRQBSuR+F6pE1APN9PjZd+UUBWDi2ynQ9SQFyPwvUozFJAppvEILBSUUBI4XoUrtdNQC2yne+nZkRAuB6F61EwUUAIrBxaZBtKQPYoXI\u002fCtUhAMQisHFqsUUCNbOf7qTFIQLTIdr6fKk1ASOF6FK5vUUCF61G4Ht1RQKabxCCwok5ApHA9CtfbUkD+1HjpJllQQDEIrBxaJEZAKVyPwvWoTUAdWmQ73\u002f9OQJMYBFYO3UtAexSuR+FaU0CF61G4HhVTQMuhRbbzdVBAN166SQyyR0Aj2\u002fl+arxHQBSuR+F6VFNA+FPjpZvMUUAlBoGVQ2tOQCGwcmiRHVJAZmZmZmYOUUBaZDvfT51QQFpkO99PnVBAj8L1KFy\u002fUUDXo3A9CrdSQPyp8dJNelJAj8L1KFxnUkDXo3A9CldRQNNNYhBYmTdA5dAi2\u002fleT0D+1HjpJjFRQA4CK4cWGU1AFwRWDi3qUUC0yHa+nypDQN9PjZdu8lJAuB6F61HYUUApXI\u002fC9WhSQE5iEFg51ENAjWzn+6nxTkAUrkfhemRTQMVLN4lBmFFAukkMAivHSkDpJjEIrDxNQArXo3A9ilNAUrgeheuBU0AOLbKd709RQHE9CtejkFJAuB6F61E4SUBQjZduEtNQQCyHFtnOB01AukkMAit3UUDy0k1iEIBRQNNNYhBYiVBAmpmZmZlpSEB7FK5H4RpTQPYoXI\u002fCBVNA46WbxCAwUkCamZmZmclRQO18PzVe6lBAy6FFtvNtUUDpJjEIrMxLQM3MzMzMDEdAx0s3iUEwTkA="},"type":"choropleth"}],"name":"1992"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=1997\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"jWzn+6nhREDNzMzMzDxSQH0\u002fNV66SVFAJQaBlUN7RECamZmZmVFSQIXrUbgetVNAcT0K16NgU0AzMzMzM3tSQNv5fmq8tE1AUrgehethU0D6fmq8dGNLQGZmZmZmBk9AVg4tsp1PUkC6SQwCK0dKQEa28\u002f3UWFFAFK5H4XqUUUC28\u002f3UeClJQH0\u002fNV66qUZAMQisHFpETEC28\u002f3UeBlKQNejcD0Kp1NAnMQgsHIIR0DTTWIQWMlJQE5iEFg59FJAJQaBlUObUUB56SYxCJRRQBSuR+F6VE5AQmDl0CJLRUBCYOXQIntKQHE9CtejUFNAAyuHFtn+R0DsUbgehWtSQI1s5\u002fupCVNAcT0K16OAUkDXo3A9CgdTQGq8dJMYlEpAaJHtfD99UUCHFtnO9xNSQNnO91PjzVBACtejcD1iUUCPwvUoXB9IQKrx0k1isEpA+n5qvHSzSEC4HoXrUUhTQClcj8L1qFNAYLpJDAI7TkCR7Xw\u002fNe5LQPYoXI\u002fCVVNAukkMAitHTUBWDi2ynXdTQPhT46WblFBACtejcD26SUA7tMh2vm9GQNrO91PjVUxAGARWDi3qUEAAAAAAAABUQMP1KFyPwlFAzczMzMy8U0BSuB6F6+FOQLTIdr6fglBAppvEILACUUAshxbZzmdNQCuHFtnOB1NA7qfGSzeRU0AUrkfherRTQFTjpZvEEFJAXI\u002fC9SgsVEDEILByaHFRQGq8dJMYNEtASgwCK4fuUEDDILByaKlSQESLbOf7CVNAKVyPwvWQUUCBlUOLbMdLQD81XrpJHEVA7FG4HoXjUUB3vp8aL31LQI\u002fC9Shcv0dAeekmMQj8UUDdJAaBlfNIQNejcD0KN05AyXa+nxqvUUB7FK5H4WpSQAAAAAAA0E9AFK5H4XrcUkAK16NwPepQQHnpJjEILEdARIts5\u002fspTkAxCKwcWnRNQEoMAiuHtk1AUrgeheuBU0AzMzMzM2NTQCUGgZVDG1FA8tJNYhCoSUAIrBxaZLtHQBSuR+F6lFNADi2yne8fUkBkEFg5tOhOQKwcWmQ7b1JAmpmZmZlZUUBjEFg5tBhRQGq8dJMYJFFAAAAAAAAwUkCuR+F6FP5SQKabxCCwulJAwyCwcmixUkCuR+F6FG5RQEJg5dAiC0JAukkMAiunT0AnMQisHKJRQA4tsp3vF05AAiuHFtkOUkCJQWDl0PJDQCcxCKwcSlNAPQrXo3AtUkC4HoXrUchSQPYoXI\u002fC5UVAke18PzUeTkDhehSuR7FTQGiR7Xw\u002fnVFAO7TIdr6vS0CiRbbz\u002fSRLQClcj8L12FNASOF6FK7XU0B9PzVeuuFRQAAAAAAA0FJAz\u002fdT46U7SEDTTWIQWOFQQFK4HoXrMU1A9ihcj8JdUUCDwMqhRf5RQD0K16NwNVFARIts5\u002ftJRkDLoUW2801TQKRwPQrXM1NAg8DKoUWOUkDTTWIQWAlSQF66SQwCq1FAoBov3STGUUDD9ShcjwJNQFg5tMh2HkRAZDvfT41nR0A="},"type":"choropleth"}],"name":"1997"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=2002\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"jZduEoMQRUCNbOf7qelSQFYOLbKdv1FAqvHSTWKARED2KFyPwpVSQEjhehSuF1RAH4XrUbi+U0B7FK5H4bJSQI1s5\u002fupAU9AFK5H4XqUU0CJFtnO9zNLQBsv3SQG8U9A9ihcj8KFUkD91HjpJlFHQKrx0k1iwFFAKVyPwvUIUkAzMzMzM1NJQK5H4XoUrkdAx0s3iUFgTEAhsHJoke1IQOF6FK5H8VNAgZVDi2ynRUAzMzMzM0NJQNejcD0Kd1NAbxKDwMoBUkDP91PjpetRQOkmMQisfE9Az\u002fdT46V7RkBcj8L1KHxKQB1aZDvfh1NA0SLb+X5qR0Dy0k1iELhSQCcxCKwcSlNAcT0K16PgUkDsUbgehUtTQDu0yHa+r0pAke18PzW2UUBQjZduEotSQN0kBoGVc1FA5dAi2\u002fmuUUAGgZVDi6xIQB+F61G4nktAzczMzMxcSUBI4XoUrpdTQPYoXI\u002fC5VNAxSCwcmhhTEBoke18PwVNQHsUrkfhqlNARIts5\u002fs5TUCq8dJNYpBTQDzfT42XPlFASgwCK4fWSkCNl24Sg8BGQKjGSzeJEU1AXI\u002fC9SgkUUBI4XoUrl9UQPYoXI\u002fCJVJAAAAAAAAgVECNl24Sg3BPQBODwMqhJVFAv58aL91cUUDazvdT44VMQCcxCKwcclNABoGVQ4vsU0CPwvUoXA9UQF66SQwCA1JAAAAAAACAVEBGtvP91NBRQOXQItv5fklA7Xw\u002fNV6qUEB7FK5H4UJTQGDl0CLbOVNAbxKDwMrBUUCWQ4ts50tGQKrx0k1i4EVAukkMAisvUkD4U+Olm6RMQP3UeOkmgUZAiUFg5dBCUkBkEFg5tOhJQFYOLbKdH09AkxgEVg79UUB9PzVeurlSQCcxCKwcQlBAElg5tMh+UkCPwvUoXGdRQBfZzvdTA0ZATmIQWDn0TUBaZDvfT71JQOxRuB6Fq05AUrgeheuhU0DXo3A9CsdTQC\u002fdJAaBtVFAc2iR7Xw\u002fS0Dn+6nx0k1HQDMzMzMzw1NAMQisHFqMUkCuR+F6FM5PQCGwcmiRrVJAuB6F61GwUUBEi2zn+3lRQAisHFpkk1FAexSuR+GqUkDD9Shcj1JTQG8Sg8DKcVNAVg4tsp3vUkD4U+Olm9RRQL6fGi\u002fdtEVAIbByaJEVUEDy0k1iEOhRQM3MzMzMzE5AFIPAyqFNUkCoxks3iYFEQOF6FK5HsVNAMzMzMzNzUkAK16NwPSpTQCyHFtnO90ZAH4XrUbiuSkBSuB6F6\u002fFTQFyPwvUotFFArBxaZDsvTECsHFpkO+9FQMP1KFyPAlRASOF6FK4nVEAIrBxaZENSQI\u002fC9ShcP1NAF9nO91PTSEBqvHSTGCRRQCyHFtnOx0xAWDm0yHY+UUCmm8QgsEJSQK5H4XoUtlFA8tJNYhDoR0CgGi\u002fdJJ5TQKRwPQrXU1NAz\u002fdT46XTUkAbL90kBjFSQAwCK4cWQVJASOF6FK4XUkCBlUOLbCdOQGQQWDm0mENAO99PjZf+Q0A="},"type":"choropleth"}],"name":"2002"},{"data":[{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eyear=2007\u003cbr\u003eiso_alpha=%{location}\u003cbr\u003elifeExp=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Afghanistan","Albania","Algeria","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Benin","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Dem. Rep.","Congo, Rep.","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Czech Republic","Denmark","Djibouti","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Ethiopia","Finland","France","Gabon","Gambia","Germany","Ghana","Greece","Guatemala","Guinea","Guinea-Bissau","Haiti","Honduras","Hong Kong, China","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kenya","Korea, Dem. Rep.","Korea, Rep.","Kuwait","Lebanon","Lesotho","Liberia","Libya","Madagascar","Malawi","Malaysia","Mali","Mauritania","Mauritius","Mexico","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Reunion","Romania","Rwanda","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore","Slovak Republic","Slovenia","Somalia","South Africa","Spain","Sri Lanka","Sudan","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Uganda","United Kingdom","United States","Uruguay","Venezuela","Vietnam","West Bank and Gaza","Yemen, Rep.","Zambia","Zimbabwe"],"locations":["AFG","ALB","DZA","AGO","ARG","AUS","AUT","BHR","BGD","BEL","BEN","BOL","BIH","BWA","BRA","BGR","BFA","BDI","KHM","CMR","CAN","CAF","TCD","CHL","CHN","COL","COM","COD","COG","CRI","CIV","HRV","CUB","CZE","DNK","DJI","DOM","ECU","EGY","SLV","GNQ","ERI","ETH","FIN","FRA","GAB","GMB","DEU","GHA","GRC","GTM","GIN","GNB","HTI","HND","HKG","HUN","ISL","IND","IDN","IRN","IRQ","IRL","ISR","ITA","JAM","JPN","JOR","KEN","KOR","KOR","KWT","LBN","LSO","LBR","LBY","MDG","MWI","MYS","MLI","MRT","MUS","MEX","MNG","MNE","MAR","MOZ","MMR","NAM","NPL","NLD","NZL","NIC","NER","NGA","NOR","OMN","PAK","PAN","PRY","PER","PHL","POL","PRT","PRI","REU","ROU","RWA","STP","SAU","SEN","SRB","SLE","SGP","SVK","SVN","SOM","ZAF","ESP","LKA","SDN","SWZ","SWE","CHE","SYR","TWN","TZA","THA","TGO","TTO","TUN","TUR","UGA","GBR","USA","URY","VEN","VNM","PSE","YEM","ZMB","ZWE"],"name":"","z":{"dtype":"f8","bdata":"RIts5\u002fvpRUBQjZduEhtTQCUGgZVDE1JAIbByaJFdRUAUrkfhetRSQNejcD0KT1RAkxgEVg71U0BxPQrXo+hSQIcW2c73A1BATmIQWDncU0B3vp8aL11MQPp+arx0Y1BASgwCK4e2UkB3vp8aL11JQClcj8L1GFJAuB6F61FAUkD2KFyPwiVKQArXo3A9ykhABoGVQ4vcTUDXo3A9CjdJQG8Sg8DKKVRAAyuHFtleRkAX2c73U1NJQAisHFpko1NAL90kBoE9UkA3iUFg5ThSQH0\u002fNV66SVBAQmDl0CI7R0Dwp8ZLN6lLQDVeukkMslNARIts5\u002fspSEAdWmQ73+9SQLbz\u002fdR4kVNAyXa+nxofU0Boke18P5VTQGiR7Xw\u002fZUtA16NwPQoPUkBWDi2ynb9SQBSDwMqh1VFA1XjpJjH4UUAmMQisHMpJQIXrUbgeBU1A8KfGSzd5SkB56SYxCNRTQDVeukkMKlRArkfhehReTEDTTWIQWLlNQESLbOf72VNAiUFg5dACTkD0\u002fdR46d5TQH9qvHSTkFFAN4lBYOUATECNbOf7qTFHQGiR7Xw\u002fdU5A6iYxCKyMUUBaZDvfT41UQBSDwMqhVVJAnMQgsHJwVEDqJjEIrCxQQJqZmZmZqVFABFYOLbK9UUD2KFyPwsVNQHE9CtejuFNASOF6FK4vVEBt5\u002fup8SJUQD81XrpJJFJAO99PjZemVEAK16NwPSJSQK5H4XoUDktAXrpJDALTUEAdWmQ736dTQBSDwMqhZVNAZDvfT43\u002fUUCyne+nxktFQBBYObTI1kZAsHJoke18UkBkEFg5tLhNQBBYObTIJkhAgZVDi2yPUkCyne+nxjtLQNEi2\u002fl+ClBAJQaBlUMzUkAUrkfhegxTQAisHFpks1BAmG4Sg8CiUkDRItv5fspRQNEi2\u002fl+CkVARrbz\u002fdQIT0CJFtnO93NKQBSuR+F65E9AVOOlm8TwU0CTGARWDg1UQKjGSzeJOVJA5dAi2\u002fluTEDLoUW2821HQAaBlUOLDFRAKVyPwvXoUkD0\u002fdR46V5QQOx8PzVe4lJA46WbxCDwUUBt5\u002fup8dpRQHnpJjEI7FFAeekmMQjkUkCDwMqhRYZTQDu0yHa+r1NAPzVeukkcU0BYObTIdh5SQOXQItv5HkdAbxKDwMphUEB9PzVeujFSQA4tsp3vh09A46WbxCCAUkBkEFg5tEhFQJHtfD81\u002flNA30+Nl26qUkAlBoGVQ3tTQDEIrBxaFEhACKwcWmSrSEBOYhBYOTxUQNNNYhBYGVJAukkMAitHTUBYObTIds5DQH9qvHSTOFRAwJ8aL91sVED+1HjpJolSQJqZmZmZmVNAGQRWDi1CSkCBlUOLbKdRQPYoXI\u002fCNU1AI9v5fmp0UUBQjZduEntSQH0\u002fNV668VFATDeJQWDFSUAzMzMzM9tTQHNoke18j1NAf2q8dJMYU0ArhxbZzm9SQA4tsp3vj1JAXrpJDAJbUkDTTWIQWFlPQP3UeOkmMUVAdZMYBFa+RUA="},"type":"choropleth"}],"name":"2007"}]);
+                        }).then(function(){
+                            
+var gd = document.getElementById('fd8efc79-4acc-4a43-929b-f7898a07cc0f');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+<section id="d-散点图" class="level4">
+<h4 class="anchored" data-anchor-id="d-散点图">3. 3D 散点图</h4>
+<p>Plotly 让 3D 可视化变得触手可及。你可以通过鼠标拖拽来自由地旋转、缩放和平移 3D 场景，从任何角度观察数据的空间分布。</p>
+<div id="43378feb" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 加载鸢尾花数据集</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> px.data.iris()</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建一个 3D 散点图，探索三个花瓣/花萼特征之间的关系</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter_3d(iris,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                    x<span class="op">=</span><span class="st">'sepal_length'</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                    y<span class="op">=</span><span class="st">'sepal_width'</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                    z<span class="op">=</span><span class="st">'petal_width'</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">'species'</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                    symbol<span class="op">=</span><span class="st">'species'</span>,  <span class="co"># 为不同种类使用不同形状的标记</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="st">"3D View of Iris Dataset Features"</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>fig.update_layout(margin<span class="op">=</span><span class="bu">dict</span>(l<span class="op">=</span><span class="dv">0</span>, r<span class="op">=</span><span class="dv">0</span>, b<span class="op">=</span><span class="dv">0</span>, t<span class="op">=</span><span class="dv">40</span>)) <span class="co"># 调整边距以更好地展示</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script type="text/javascript">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.1.0.min.js" integrity="sha256-Ei4740bWZhaUTQuD6q9yQlgVCMPBz6CZWhevDYPv93A=" crossorigin="anonymous"></script>                <div id="729c2766-e5fb-4cc2-8cad-4b0bd5d78518" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("729c2766-e5fb-4cc2-8cad-4b0bd5d78518")) {                    Plotly.newPlot(                        "729c2766-e5fb-4cc2-8cad-4b0bd5d78518",                        [{"hovertemplate":"species=setosa\u003cbr\u003esepal_length=%{x}\u003cbr\u003esepal_width=%{y}\u003cbr\u003epetal_width=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"setosa","marker":{"color":"#636efa","symbol":"circle"},"mode":"markers","name":"setosa","scene":"scene","showlegend":true,"x":{"dtype":"f8","bdata":"ZmZmZmZmFECamZmZmZkTQM3MzMzMzBJAZmZmZmZmEkAAAAAAAAAUQJqZmZmZmRVAZmZmZmZmEkAAAAAAAAAUQJqZmZmZmRFAmpmZmZmZE0CamZmZmZkVQDMzMzMzMxNAMzMzMzMzE0AzMzMzMzMRQDMzMzMzMxdAzczMzMzMFkCamZmZmZkVQGZmZmZmZhRAzczMzMzMFkBmZmZmZmYUQJqZmZmZmRVAZmZmZmZmFEBmZmZmZmYSQGZmZmZmZhRAMzMzMzMzE0AAAAAAAAAUQAAAAAAAABRAzczMzMzMFEDNzMzMzMwUQM3MzMzMzBJAMzMzMzMzE0CamZmZmZkVQM3MzMzMzBRAAAAAAAAAFkCamZmZmZkTQAAAAAAAABRAAAAAAAAAFkCamZmZmZkTQJqZmZmZmRFAZmZmZmZmFEAAAAAAAAAUQAAAAAAAABJAmpmZmZmZEUAAAAAAAAAUQGZmZmZmZhRAMzMzMzMzE0BmZmZmZmYUQGZmZmZmZhJAMzMzMzMzFUAAAAAAAAAUQA=="},"y":{"dtype":"f8","bdata":"AAAAAAAADEAAAAAAAAAIQJqZmZmZmQlAzczMzMzMCEDNzMzMzMwMQDMzMzMzMw9AMzMzMzMzC0AzMzMzMzMLQDMzMzMzMwdAzczMzMzMCECamZmZmZkNQDMzMzMzMwtAAAAAAAAACEAAAAAAAAAIQAAAAAAAABBAmpmZmZmZEUAzMzMzMzMPQAAAAAAAAAxAZmZmZmZmDkBmZmZmZmYOQDMzMzMzMwtAmpmZmZmZDUDNzMzMzMwMQGZmZmZmZgpAMzMzMzMzC0AAAAAAAAAIQDMzMzMzMwtAAAAAAAAADEAzMzMzMzMLQJqZmZmZmQlAzczMzMzMCEAzMzMzMzMLQGZmZmZmZhBAzczMzMzMEEDNzMzMzMwIQJqZmZmZmQlAAAAAAAAADEDNzMzMzMwIQAAAAAAAAAhAMzMzMzMzC0AAAAAAAAAMQGZmZmZmZgJAmpmZmZmZCUAAAAAAAAAMQGZmZmZmZg5AAAAAAAAACEBmZmZmZmYOQJqZmZmZmQlAmpmZmZmZDUBmZmZmZmYKQA=="},"z":{"dtype":"f8","bdata":"mpmZmZmZyT+amZmZmZnJP5qZmZmZmck\u002fmpmZmZmZyT+amZmZmZnJP5qZmZmZmdk\u002fMzMzMzMz0z+amZmZmZnJP5qZmZmZmck\u002fmpmZmZmZuT+amZmZmZnJP5qZmZmZmck\u002fmpmZmZmZuT+amZmZmZm5P5qZmZmZmck\u002fmpmZmZmZ2T+amZmZmZnZPzMzMzMzM9M\u002fMzMzMzMz0z8zMzMzMzPTP5qZmZmZmck\u002fmpmZmZmZ2T+amZmZmZnJPwAAAAAAAOA\u002fmpmZmZmZyT+amZmZmZnJP5qZmZmZmdk\u002fmpmZmZmZyT+amZmZmZnJP5qZmZmZmck\u002fmpmZmZmZyT+amZmZmZnZP5qZmZmZmbk\u002fmpmZmZmZyT+amZmZmZm5P5qZmZmZmck\u002fmpmZmZmZyT+amZmZmZm5P5qZmZmZmck\u002fmpmZmZmZyT8zMzMzMzPTPzMzMzMzM9M\u002fmpmZmZmZyT8zMzMzMzPjP5qZmZmZmdk\u002fMzMzMzMz0z+amZmZmZnJP5qZmZmZmck\u002fmpmZmZmZyT+amZmZmZnJPw=="},"type":"scatter3d"},{"hovertemplate":"species=versicolor\u003cbr\u003esepal_length=%{x}\u003cbr\u003esepal_width=%{y}\u003cbr\u003epetal_width=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"versicolor","marker":{"color":"#EF553B","symbol":"diamond"},"mode":"markers","name":"versicolor","scene":"scene","showlegend":true,"x":{"dtype":"f8","bdata":"AAAAAAAAHECamZmZmZkZQJqZmZmZmRtAAAAAAAAAFkAAAAAAAAAaQM3MzMzMzBZAMzMzMzMzGUCamZmZmZkTQGZmZmZmZhpAzczMzMzMFEAAAAAAAAAUQJqZmZmZmRdAAAAAAAAAGEBmZmZmZmYYQGZmZmZmZhZAzczMzMzMGkBmZmZmZmYWQDMzMzMzMxdAzczMzMzMGEBmZmZmZmYWQJqZmZmZmRdAZmZmZmZmGEAzMzMzMzMZQGZmZmZmZhhAmpmZmZmZGUBmZmZmZmYaQDMzMzMzMxtAzczMzMzMGkAAAAAAAAAYQM3MzMzMzBZAAAAAAAAAFkAAAAAAAAAWQDMzMzMzMxdAAAAAAAAAGECamZmZmZkVQAAAAAAAABhAzczMzMzMGkAzMzMzMzMZQGZmZmZmZhZAAAAAAAAAFkAAAAAAAAAWQGZmZmZmZhhAMzMzMzMzF0AAAAAAAAAUQGZmZmZmZhZAzczMzMzMFkDNzMzMzMwWQM3MzMzMzBhAZmZmZmZmFEDNzMzMzMwWQA=="},"y":{"dtype":"f8","bdata":"mpmZmZmZCUCamZmZmZkJQM3MzMzMzAhAZmZmZmZmAkBmZmZmZmYGQGZmZmZmZgZAZmZmZmZmCkAzMzMzMzMDQDMzMzMzMwdAmpmZmZmZBUAAAAAAAAAAQAAAAAAAAAhAmpmZmZmZAUAzMzMzMzMHQDMzMzMzMwdAzczMzMzMCEAAAAAAAAAIQJqZmZmZmQVAmpmZmZmZAUAAAAAAAAAEQJqZmZmZmQlAZmZmZmZmBkAAAAAAAAAEQGZmZmZmZgZAMzMzMzMzB0AAAAAAAAAIQGZmZmZmZgZAAAAAAAAACEAzMzMzMzMHQM3MzMzMzARAMzMzMzMzA0AzMzMzMzMDQJqZmZmZmQVAmpmZmZmZBUAAAAAAAAAIQDMzMzMzMwtAzczMzMzMCEBmZmZmZmYCQAAAAAAAAAhAAAAAAAAABEDNzMzMzMwEQAAAAAAAAAhAzczMzMzMBEBmZmZmZmYCQJqZmZmZmQVAAAAAAAAACEAzMzMzMzMHQDMzMzMzMwdAAAAAAAAABEBmZmZmZmYGQA=="},"z":{"dtype":"f8","bdata":"ZmZmZmZm9j8AAAAAAAD4PwAAAAAAAPg\u002fzczMzMzM9D8AAAAAAAD4P83MzMzMzPQ\u002fmpmZmZmZ+T8AAAAAAADwP83MzMzMzPQ\u002fZmZmZmZm9j8AAAAAAADwPwAAAAAAAPg\u002fAAAAAAAA8D9mZmZmZmb2P83MzMzMzPQ\u002fZmZmZmZm9j8AAAAAAAD4PwAAAAAAAPA\u002fAAAAAAAA+D+amZmZmZnxP83MzMzMzPw\u002fzczMzMzM9D8AAAAAAAD4PzMzMzMzM\u002fM\u002fzczMzMzM9D9mZmZmZmb2P2ZmZmZmZvY\u002fMzMzMzMz+z8AAAAAAAD4PwAAAAAAAPA\u002fmpmZmZmZ8T8AAAAAAADwPzMzMzMzM\u002fM\u002fmpmZmZmZ+T8AAAAAAAD4P5qZmZmZmfk\u002fAAAAAAAA+D\u002fNzMzMzMz0P83MzMzMzPQ\u002fzczMzMzM9D8zMzMzMzPzP2ZmZmZmZvY\u002fMzMzMzMz8z8AAAAAAADwP83MzMzMzPQ\u002fMzMzMzMz8z\u002fNzMzMzMz0P83MzMzMzPQ\u002fmpmZmZmZ8T\u002fNzMzMzMz0Pw=="},"type":"scatter3d"},{"hovertemplate":"species=virginica\u003cbr\u003esepal_length=%{x}\u003cbr\u003esepal_width=%{y}\u003cbr\u003epetal_width=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"virginica","marker":{"color":"#00cc96","symbol":"square"},"mode":"markers","name":"virginica","scene":"scene","showlegend":true,"x":{"dtype":"f8","bdata":"MzMzMzMzGUAzMzMzMzMXQGZmZmZmZhxAMzMzMzMzGUAAAAAAAAAaQGZmZmZmZh5AmpmZmZmZE0AzMzMzMzMdQM3MzMzMzBpAzczMzMzMHEAAAAAAAAAaQJqZmZmZmRlAMzMzMzMzG0DNzMzMzMwWQDMzMzMzMxdAmpmZmZmZGUAAAAAAAAAaQM3MzMzMzB5AzczMzMzMHkAAAAAAAAAYQJqZmZmZmRtAZmZmZmZmFkDNzMzMzMweQDMzMzMzMxlAzczMzMzMGkDNzMzMzMwcQM3MzMzMzBhAZmZmZmZmGECamZmZmZkZQM3MzMzMzBxAmpmZmZmZHUCamZmZmZkfQJqZmZmZmRlAMzMzMzMzGUBmZmZmZmYYQM3MzMzMzB5AMzMzMzMzGUCamZmZmZkZQAAAAAAAABhAmpmZmZmZG0DNzMzMzMwaQJqZmZmZmRtAMzMzMzMzF0AzMzMzMzMbQM3MzMzMzBpAzczMzMzMGkAzMzMzMzMZQAAAAAAAABpAzczMzMzMGECamZmZmZkXQA=="},"y":{"dtype":"f8","bdata":"ZmZmZmZmCkCamZmZmZkFQAAAAAAAAAhAMzMzMzMzB0AAAAAAAAAIQAAAAAAAAAhAAAAAAAAABEAzMzMzMzMHQAAAAAAAAARAzczMzMzMDECamZmZmZkJQJqZmZmZmQVAAAAAAAAACEAAAAAAAAAEQGZmZmZmZgZAmpmZmZmZCUAAAAAAAAAIQGZmZmZmZg5AzczMzMzMBECamZmZmZkBQJqZmZmZmQlAZmZmZmZmBkBmZmZmZmYGQJqZmZmZmQVAZmZmZmZmCkCamZmZmZkJQGZmZmZmZgZAAAAAAAAACEBmZmZmZmYGQAAAAAAAAAhAZmZmZmZmBkBmZmZmZmYOQGZmZmZmZgZAZmZmZmZmBkDNzMzMzMwEQAAAAAAAAAhAMzMzMzMzC0DNzMzMzMwIQAAAAAAAAAhAzczMzMzMCEDNzMzMzMwIQM3MzMzMzAhAmpmZmZmZBUCamZmZmZkJQGZmZmZmZgpAAAAAAAAACEAAAAAAAAAEQAAAAAAAAAhAMzMzMzMzC0AAAAAAAAAIQA=="},"z":{"dtype":"f8","bdata":"AAAAAAAABEBmZmZmZmb+P83MzMzMzABAzczMzMzM\u002fD+amZmZmZkBQM3MzMzMzABAMzMzMzMz+z\u002fNzMzMzMz8P83MzMzMzPw\u002fAAAAAAAABEAAAAAAAAAAQGZmZmZmZv4\u002fzczMzMzMAEAAAAAAAAAAQDMzMzMzMwNAZmZmZmZmAkDNzMzMzMz8P5qZmZmZmQFAZmZmZmZmAkAAAAAAAAD4P2ZmZmZmZgJAAAAAAAAAAEAAAAAAAAAAQM3MzMzMzPw\u002fzczMzMzMAEDNzMzMzMz8P83MzMzMzPw\u002fzczMzMzM\u002fD\u002fNzMzMzMwAQJqZmZmZmfk\u002fZmZmZmZm\u002fj8AAAAAAAAAQJqZmZmZmQFAAAAAAAAA+D9mZmZmZmb2P2ZmZmZmZgJAMzMzMzMzA0DNzMzMzMz8P83MzMzMzPw\u002fzczMzMzMAEAzMzMzMzMDQGZmZmZmZgJAZmZmZmZm\u002fj9mZmZmZmYCQAAAAAAAAARAZmZmZmZmAkBmZmZmZmb+PwAAAAAAAABAZmZmZmZmAkDNzMzMzMz8Pw=="},"type":"scatter3d"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"scene":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"xaxis":{"title":{"text":"sepal_length"}},"yaxis":{"title":{"text":"sepal_width"}},"zaxis":{"title":{"text":"petal_width"}}},"legend":{"title":{"text":"species"},"tracegroupgap":0},"title":{"text":"3D View of Iris Dataset Features"},"margin":{"l":0,"r":0,"b":0,"t":40}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('729c2766-e5fb-4cc2-8cad-4b0bd5d78518');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="如何选择合适的工具" class="level2">
+<h2 class="anchored" data-anchor-id="如何选择合适的工具">🤔 如何选择合适的工具？</h2>
+<p>面对如此多的选择，关键在于理解你的核心需求。下面是一个更详细的决策指南：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">库</th>
+<th style="text-align: left;">主要优点</th>
+<th style="text-align: left;">最佳使用场景</th>
+<th style="text-align: left;">不太适合的场景</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Matplotlib</strong></td>
+<td style="text-align: left;"><strong>极致控制力</strong>：可定制图表的每一个细节。稳定、成熟，是学术出版的首选。</td>
+<td style="text-align: left;">1. 需要精确布局和标注的<strong>学术论文</strong>图表。&lt;br&gt;2. 创建全新的、非标准的图表类型。&lt;br&gt;3. 作为其他库（如 Seaborn）的底层进行微调。</td>
+<td style="text-align: left;">1. 快速制作交互式图表。&lt;br&gt;2. 简单的探索性数据分析（代码相对繁琐）。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Seaborn</strong></td>
+<td style="text-align: left;"><strong>统计之美</strong>：API 简洁优雅，专为统计分析设计。与 Pandas 结合极佳，默认样式美观。</td>
+<td style="text-align: left;">1. <strong>探索性数据分析 (EDA)</strong>，快速洞察数据分布和关系。&lt;br&gt;2. 展示变量间的统计相关性（如相关性热图、回归图）。</td>
+<td style="text-align: left;">1. 高度定制化的非统计类图表。&lt;br&gt;2. 构建复杂的交互式仪表盘。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Plotly</strong></td>
+<td style="text-align: left;"><strong>现代交互</strong>：图表美观、交互体验流畅。支持 3D、动画和地理图，易于分享 (HTML)。</td>
+<td style="text-align: left;">1. <strong>商业智能 (BI) 报告</strong>和在线演示。&lt;br&gt;2. 创建需要用户交互探索的 Web 图表。&lt;br&gt;3. 制作引人注目的动画和 3D 可视化。</td>
+<td style="text-align: left;">1. 对性能要求极高的超大规模数据集实时渲染。&lt;br&gt;2. 简单的静态图表（可能有些大材小用）。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Bokeh</strong></td>
+<td style="text-align: left;"><strong>应用构建</strong>：专为 Web 设计，可构建复杂的<strong>数据应用</strong>。支持流数据，交互逻辑强大。</td>
+<td style="text-align: left;">1. 构建<strong>复杂的仪表盘</strong>，包含图表联动、下拉菜单、滑块等控件。&lt;br&gt;2. 需要实时更新数据的<strong>流数据监控</strong>应用。</td>
+<td style="text-align: left;">1. 静态图表的制作（不如 Matplotlib/Seaborn 直接）。&lt;br&gt;2. 对非 Web 输出（如 PDF, PNG）有高质量要求时。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>经验法则</strong>：</p>
+<ol type="1">
+<li><strong>日常探索与分析</strong>：你的起点应该是 <strong>Seaborn</strong>。它能用最少的代码满足你 80% 的统计绘图需求。当需要交互时，无缝切换到 <strong>Plotly Express</strong>。</li>
+<li><strong>发表论文或书籍</strong>：使用 <strong>Seaborn</strong> 或 <strong>Plotly</strong> 进行初步绘图，然后用 <strong>Matplotlib</strong> 对字体、分辨率、布局等细节进行最后的精修，以满足出版要求。</li>
+<li><strong>构建交互式 Web 应用</strong>：如果你的目标是一个独立的、可交互的网页或仪表盘，<strong>Plotly</strong> 和 <strong>Bokeh</strong> 是你的不二之选。Plotly 在单图表的华丽度和易用性上略有优势，而 Bokeh 在构建多组件联动的复杂应用时提供了更强的灵活性。</li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/sem-sast\.cn");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../Lessons/lesson5.html" class="pagination-link" aria-label="2: Python爬虫原理与实践">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">2: Python爬虫原理与实践</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../Lessons/lesson7.html" class="pagination-link" aria-label="4: 基于Python的科学计算">
+        <span class="nav-page-text">4: 基于Python的科学计算</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Imbernoulli/summer/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

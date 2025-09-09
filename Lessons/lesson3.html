@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3: Python实用进阶 – Coding Summer 2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../Lessons/lesson4.html" rel="next">
+<link href="../Lessons/lesson2.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-b3ee1e8c853e66aea7633b9f21ac2043.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="3: Python实用进阶 – Coding Summer 2025">
+<meta property="og:description" content="暑期代码能力提升培训">
+<meta property="og:site_name" content="Coding Summer 2025">
+<meta name="twitter:title" content="3: Python实用进阶 – Coding Summer 2025">
+<meta name="twitter:description" content="暑期代码能力提升培训">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Coding Summer 2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Imbernoulli/summer"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Lessons/lesson1.html">计算机工具简介</a></li><li class="breadcrumb-item"><a href="../Lessons/lesson3.html">3: Python实用进阶</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">计算机入门</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机工具简介</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: 计算机科学基础与程序语言</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: Python入门</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3: Python实用进阶</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机实战应用</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: Git与GitHub的应用</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: Python爬虫原理与实践</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: Python数据可视化</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4: 基于Python的科学计算</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机前沿专题</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: 量化金融</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: 大语言模型形式化与非形式化推理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: OM/OR分享</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">数字化课程资源</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/byl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">博弈论与机制设计</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机系相关资源</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://summer24.net9.org" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">技能培训</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://docs.net9.org" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">技能文档</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#进阶心法拥抱命令行" id="toc-进阶心法拥抱命令行" class="nav-link active" data-scroll-target="#进阶心法拥抱命令行">进阶心法：拥抱命令行</a>
+  <ul class="collapse">
+  <li><a href="#为什么要坚持使用命令行" id="toc-为什么要坚持使用命令行" class="nav-link" data-scroll-target="#为什么要坚持使用命令行">为什么要坚持使用命令行？</a></li>
+  </ul></li>
+  <li><a href="#在命令行中处理参数" id="toc-在命令行中处理参数" class="nav-link" data-scroll-target="#在命令行中处理参数">在命令行中处理参数</a>
+  <ul class="collapse">
+  <li><a href="#方式一使用-sys.argv入门" id="toc-方式一使用-sys.argv入门" class="nav-link" data-scroll-target="#方式一使用-sys.argv入门">方式一：使用 sys.argv（入门）</a></li>
+  <li><a href="#方式二使用-argparse进阶推荐" id="toc-方式二使用-argparse进阶推荐" class="nav-link" data-scroll-target="#方式二使用-argparse进阶推荐">方式二：使用 argparse（进阶推荐）</a></li>
+  </ul></li>
+  <li><a href="#使用-pdb-进行命令行调试" id="toc-使用-pdb-进行命令行调试" class="nav-link" data-scroll-target="#使用-pdb-进行命令行调试">使用 pdb 进行命令行调试</a>
+  <ul class="collapse">
+  <li><a href="#如何启动-pdb" id="toc-如何启动-pdb" class="nav-link" data-scroll-target="#如何启动-pdb">如何启动 pdb？</a></li>
+  <li><a href="#pdb-实战演练" id="toc-pdb-实战演练" class="nav-link" data-scroll-target="#pdb-实战演练">pdb 实战演练</a></li>
+  </ul></li>
+  <li><a href="#pdb-常用核心命令" id="toc-pdb-常用核心命令" class="nav-link" data-scroll-target="#pdb-常用核心命令">pdb 常用核心命令</a>
+  <ul class="collapse">
+  <li><a href="#用这些命令找出-buggy_calculator.py-的问题" id="toc-用这些命令找出-buggy_calculator.py-的问题" class="nav-link" data-scroll-target="#用这些命令找出-buggy_calculator.py-的问题">用这些命令找出 <code>buggy_calculator.py</code> 的问题</a></li>
+  </ul></li>
+  <li><a href="#pip-conda命令行下的包管理" id="toc-pip-conda命令行下的包管理" class="nav-link" data-scroll-target="#pip-conda命令行下的包管理">pip &amp; conda：命令行下的包管理</a>
+  <ul class="collapse">
+  <li><a href="#pippython-的官方包管理工具" id="toc-pippython-的官方包管理工具" class="nav-link" data-scroll-target="#pippython-的官方包管理工具">pip：Python 的官方包管理工具</a></li>
+  <li><a href="#conda强大的多语言环境和包管理器" id="toc-conda强大的多语言环境和包管理器" class="nav-link" data-scroll-target="#conda强大的多语言环境和包管理器">conda：强大的多语言环境和包管理器</a></li>
+  </ul></li>
+  <li><a href="#总结" id="toc-总结" class="nav-link" data-scroll-target="#总结">总结</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Imbernoulli/summer/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Lessons/lesson1.html">计算机工具简介</a></li><li class="breadcrumb-item"><a href="../Lessons/lesson3.html">3: Python实用进阶</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">3: Python实用进阶</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="进阶心法拥抱命令行" class="level2">
+<h2 class="anchored" data-anchor-id="进阶心法拥抱命令行">进阶心法：拥抱命令行</h2>
+<p>当你熟练使用 VS Code 或 PyCharm 这样的 IDE 时，你会发现它们侧边栏上有一个绿色的“运行”按钮，以及强大的图形化调试（Debug）工具。这些功能非常高效，但我强烈建议你先“封印”它们。</p>
+<section id="为什么要坚持使用命令行" class="level3">
+<h3 class="anchored" data-anchor-id="为什么要坚持使用命令行">为什么要坚持使用命令行？</h3>
+<ul>
+<li><p><strong>理解程序的真实运行环境</strong><br>
+你的 Python 代码最终是在操作系统中的一个进程里执行的，而不是在 IDE 的“魔法盒子”里。命令行就是这个真实环境最直接的交互窗口。理解 <code>python your_script.py</code> 这行命令的背后意义，比点击一个按钮要重要得多。它告诉你：“我正在调用 Python 解释器，让它来执行这个脚本文件。”</p></li>
+<li><p><strong>掌握处理参数的能力</strong><br>
+真实世界的程序很少是“一键运行”就完事的。它们通常需要接收外部传入的参数来改变行为。例如，一个处理文件的脚本需要知道要处理哪个文件；一个数据转换工具需要知道输出格式是什么。这些参数都是通过命令行传入的。如果你只用 IDE 的运行按钮，你将失去练习这项核心技能的机会。</p></li>
+<li><p><strong>学习更本质的调试方法</strong><br>
+图形化的 Debugger 非常强大，但它也隐藏了许多底层细节。<code>pdb</code> 是 Python 内置的命令行调试工具。学会使用它，意味着你可以在任何地方进行调试，哪怕是在一个没有图形界面的服务器上。这种能力是专业开发者必备的。它能让你更深刻地理解代码的执行流程、作用域和调用栈。</p></li>
+</ul>
+<p>当你真正理解了命令行的工作方式后，再回头去使用 IDE 的便捷功能，你就会明白那些按钮背后到底发生了什么，从而更好地驾驭这些工具，而不是成为它们的“囚徒”。</p>
+</section>
+</section>
+<section id="在命令行中处理参数" class="level2">
+<h2 class="anchored" data-anchor-id="在命令行中处理参数">在命令行中处理参数</h2>
+<p>让我们的脚本变得更实用！一个能接收参数的程序才算得上是一个真正的“工具”。</p>
+<section id="方式一使用-sys.argv入门" class="level3">
+<h3 class="anchored" data-anchor-id="方式一使用-sys.argv入门">方式一：使用 sys.argv（入门）</h3>
+<p>Python 的 <code>sys</code> 模块提供了一个名为 <code>argv</code> 的列表，它可以捕获所有从命令行传入的参数。</p>
+<ul>
+<li><code>sys.argv</code> 是一个列表（list）。</li>
+<li>列表的第一个元素 <code>sys.argv[0]</code> 永远是脚本文件自己的名字。</li>
+<li>从 <code>sys.argv[1]</code> 开始，依次是用户传入的参数。</li>
+</ul>
+<section id="示例greet_user.py" class="level4">
+<h4 class="anchored" data-anchor-id="示例greet_user.py">示例：greet_user.py</h4>
+<div id="e5663bad" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># greet_user.py</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 检查用户是否传入了足够多的参数</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sys.argv[0] 是脚本名 'greet_user.py'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sys.argv[1] 是我们期望的第一个参数</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"你好，</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">！欢迎来到命令行世界。"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"错误：请输入你的名字作为参数！"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"用法: python greet_user.py [你的名字]"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 让我们看看 sys.argv 到底是什么</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="er">\</span><span class="ss"> Debug Info"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"sys.argv 的内容是: </span><span class="sc">{</span>sys<span class="sc">.</span>argv<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"总共有 </span><span class="sc">{</span><span class="bu">len</span>(sys.argv)<span class="sc">}</span><span class="ss"> 个元素。"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>你好，-f！欢迎来到命令行世界。
+\ Debug Info
+sys.argv 的内容是: ['/home/runner/.local/lib/python3.12/site-packages/ipykernel_launcher.py', '-f', '/tmp/tmptmwsljmo.json', '--HistoryManager.hist_file=:memory:']
+总共有 4 个元素。</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:15: SyntaxWarning:
+
+invalid escape sequence '\ '
+
+&lt;&gt;:15: SyntaxWarning:
+
+invalid escape sequence '\ '
+
+/tmp/ipykernel_2380/4007309989.py:15: SyntaxWarning:
+
+invalid escape sequence '\ '
+</code></pre>
+</div>
+</div>
+</section>
+<section id="在命令行中运行它" class="level4">
+<h4 class="anchored" data-anchor-id="在命令行中运行它">在命令行中运行它：</h4>
+<p><strong>不带参数运行：</strong></p>
+<pre class="{bash}"><code>python greet_user.py</code></pre>
+<p>输出：</p>
+<pre><code>错误：请输入你的名字作为参数！
+用法: python greet_user.py [你的名字]
+ Debug Info
+sys.argv 的内容是: ['greet_user.py']
+总共有 1 个元素。</code></pre>
+<p><strong>带一个参数运行：</strong></p>
+<pre class="{bash}"><code>python greet_user.py 张三</code></pre>
+<p>输出：</p>
+<pre><code>你好，张三！欢迎来到命令行世界。
+ Debug Info
+sys.argv 的内容是: ['greet_user.py', '张三']
+总共有 2 个元素。</code></pre>
+<p><strong>带多个参数运行：</strong></p>
+<pre class="{bash}"><code>python greet_user.py "张三" "来自北京"</code></pre>
+<p>如果你传入的参数包含空格，请用引号把它包起来。<code>sys.argv</code> 会把每个用空格隔开的单元（或引号包起来的整体）当作一个独立的参数。</p>
+<blockquote class="blockquote">
+<p>对于简单的脚本，<code>sys.argv</code> 足够好用。但当参数变得复杂时（例如需要处理 <code>-f</code>, <code>--file</code> 这样的选项），我们通常会使用更强大的 <code>argparse</code> 模块，你可以在学完基础后自行探索。</p>
+</blockquote>
+</section>
+</section>
+<section id="方式二使用-argparse进阶推荐" class="level3">
+<h3 class="anchored" data-anchor-id="方式二使用-argparse进阶推荐">方式二：使用 argparse（进阶推荐）</h3>
+<p>有些脚本需要处理更多参数：选项、类型、默认值、帮助信息……这时候，推荐用 Python 标准库中的 <a href="https://docs.python.org/zh-cn/3/library/argparse.html"><code>argparse</code></a>。</p>
+<section id="什么是-argparse" class="level4">
+<h4 class="anchored" data-anchor-id="什么是-argparse">什么是 argparse？</h4>
+<p><code>argparse</code> 能帮你自动解析命令行参数，自动生成帮助说明，还能支持多种参数类型、可选项、布尔开关等，非常适合写稍微复杂一点的命令行工具。</p>
+</section>
+<section id="示例greet_user_argparse.py" class="level4">
+<h4 class="anchored" data-anchor-id="示例greet_user_argparse.py">示例：greet_user_argparse.py</h4>
+<div id="c4510ef5" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> argparse.ArgumentParser(description<span class="op">=</span><span class="st">"欢迎使用命令行问候脚本"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>parser.add_argument(<span class="st">'name'</span>, <span class="bu">help</span><span class="op">=</span><span class="st">'你的名字'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>parser.add_argument(<span class="st">'--city'</span>, <span class="st">'-c'</span>, <span class="bu">help</span><span class="op">=</span><span class="st">'你来自的城市'</span>, default<span class="op">=</span><span class="st">'未知'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>args <span class="op">=</span> parser.parse_args()</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"你好，</span><span class="sc">{</span>args<span class="sc">.</span>name<span class="sc">}</span><span class="ss">！来自 </span><span class="sc">{</span>args<span class="sc">.</span>city<span class="sc">}</span><span class="ss">。欢迎来到命令行世界。"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="运行效果" class="level4">
+<h4 class="anchored" data-anchor-id="运行效果">运行效果：</h4>
+<p><strong>查看帮助：</strong></p>
+<pre class="{bash}"><code>python greet_user_argparse.py --help</code></pre>
+<p>输出：</p>
+<pre><code>usage: greet_user_argparse.py [-h] [--city CITY] name
+
+欢迎使用命令行问候脚本
+
+positional arguments:
+  name           你的名字
+
+options:
+  -h, --help     show this help message and exit
+  --city CITY, -c CITY
+                 你来自的城市</code></pre>
+<p><strong>带参数运行：</strong></p>
+<pre class="{bash}"><code>python greet_user_argparse.py 张三</code></pre>
+<p>输出：</p>
+<pre><code>你好，张三！来自 未知。欢迎来到命令行世界。</code></pre>
+<p><strong>带全部参数运行：</strong></p>
+<pre class="{bash}"><code>python greet_user_argparse.py 张三 --city 北京</code></pre>
+<p>输出：</p>
+<pre><code>你好，张三！来自 北京。欢迎来到命令行世界。</code></pre>
+</section>
+<section id="为什么推荐-argparse" class="level4">
+<h4 class="anchored" data-anchor-id="为什么推荐-argparse">为什么推荐 argparse？</h4>
+<ul>
+<li>自动生成友好的帮助信息（<code>-h</code>/<code>--help</code>）</li>
+<li>支持位置参数、可选参数、类型检查、默认值等</li>
+<li>错误提示更友好</li>
+<li>写复杂命令行工具几乎必备</li>
+</ul>
+<blockquote class="blockquote">
+<p>建议：写任何对外开放的小工具，都推荐用 argparse 提升专业度和可维护性！</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="使用-pdb-进行命令行调试" class="level2">
+<h2 class="anchored" data-anchor-id="使用-pdb-进行命令行调试">使用 pdb 进行命令行调试</h2>
+<p>当你的代码出错了，或者你想观察代码的执行过程，<code>print()</code> 是最简单的调试方法，但它不够灵活。这时，<code>pdb</code> 就该登场了。</p>
+<p><code>pdb</code> 允许你在程序的任意位置设置一个“断点”，然后逐行执行代码，检查变量，让你像侦探一样剖析程序的每一步。</p>
+<section id="如何启动-pdb" class="level3">
+<h3 class="anchored" data-anchor-id="如何启动-pdb">如何启动 pdb？</h3>
+<p>你只需要在你想要暂停的地方，加入下面这两行代码：</p>
+<div id="7c58781d" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pdb</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>pdb.set_trace()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>这就像在你的代码里设置了一个检查站。当程序运行到这里时，它会自动停下来，并给你一个 <code>(Pdb)</code> 的交互式提示符。</p>
+</section>
+<section id="pdb-实战演练" class="level3">
+<h3 class="anchored" data-anchor-id="pdb-实战演练">pdb 实战演练</h3>
+<p>让我们来调试一个有问题的函数。创建一个文件 <code>buggy_calculator.py</code>：</p>
+<div id="9b874eeb" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pdb</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_sum(data_list):</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> data_list:</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 我们怀疑这里可能出问题，所以设置一个断点</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        pdb.set_trace() </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        total <span class="op">+=</span> item</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> total</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="st">"3"</span>, <span class="dv">4</span>, <span class="dv">5</span>] <span class="co"># 列表中混入了一个字符串</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> calculate_sum(numbers)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"计算结果是: </span><span class="sc">{</span>result<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="在命令行运行这个脚本" class="level4">
+<h4 class="anchored" data-anchor-id="在命令行运行这个脚本">在命令行运行这个脚本：</h4>
+<pre class="{bash}"><code>python buggy_calculator.py</code></pre>
+<p>当程序执行到 <code>pdb.set_trace()</code> 时，它会暂停，你的终端会显示类似这样的信息：</p>
+<pre><code>&gt; /path/to/your/buggy_calculator.py(8)calculate_sum()
+-&gt; total += item
+(Pdb)</code></pre>
+<p>你进入了 pdb 的调试环境！你可以输入不同的命令来控制和检查程序。</p>
+</section>
+</section>
+</section>
+<section id="pdb-常用核心命令" class="level2">
+<h2 class="anchored" data-anchor-id="pdb-常用核心命令">pdb 常用核心命令</h2>
+<p>记住下面几个命令，你就能解决 80% 的问题：</p>
+<ul>
+<li><code>l</code> (list): 查看当前代码及上下文。它会显示你正停在哪一行，以及周围的代码。</li>
+<li><code>n</code> (next): 执行下一行代码。如果下一行是函数调用，它会直接执行完整个函数，不会进入函数内部。</li>
+<li><code>s</code> (step): 执行下一行代码。如果下一行是函数调用，它会进入该函数内部，让你逐行调试函数里的代码。</li>
+<li><code>c</code> (continue): 继续执行代码，直到遇到下一个断点或者程序结束。</li>
+<li><code>p &lt;变量名&gt;</code> (print): 打印一个变量的当前值。例如，输入 <code>p total</code> 或 <code>p item</code>。</li>
+<li><code>q</code> (quit): 退出调试并终止程序。</li>
+</ul>
+<section id="用这些命令找出-buggy_calculator.py-的问题" class="level3">
+<h3 class="anchored" data-anchor-id="用这些命令找出-buggy_calculator.py-的问题">用这些命令找出 <code>buggy_calculator.py</code> 的问题</h3>
+<p>程序停在了 <code>total += item</code> 这一行。我们先用 <code>l</code> 看一下代码：</p>
+<pre><code>(Pdb) l
+  3     def calculate_sum(data_list):
+  4         total = 0
+  5         for item in data_list:
+  6             # 我们怀疑这里可能出问题，所以设置一个断点
+  7             import pdb; pdb.set_trace()
+  8  -&gt;         total += item
+  9         return total
+ 10
+ 11     numbers = [1, 2, "3", 4, 5] # 列表中混入了一个字符串
+ 12     result = calculate_sum(numbers)</code></pre>
+<p>我们想知道 <code>total</code> 和 <code>item</code> 当前的值。使用 <code>p</code> 命令：</p>
+<pre><code>(Pdb) p total
+0
+(Pdb) p item
+1</code></pre>
+<p>第一次循环没问题。我们让程序继续执行，进入下一次循环。输入 <code>c</code>：</p>
+<pre><code>(Pdb) c</code></pre>
+<p>程序会再次在断点处停下。再次检查变量：</p>
+<pre><code>(Pdb) p total
+1
+(Pdb) p item
+2</code></pre>
+<p>第二次循环也没问题。再次输入 <code>c</code>，进入第三次循环：</p>
+<pre><code>(Pdb) c</code></pre>
+<p>再次检查变量：</p>
+<pre><code>(Pdb) p total
+3
+(Pdb) p item
+'3'</code></pre>
+<p>啊哈！问题找到了！<code>total</code> 是整数 3，但 <code>item</code> 是字符串 <code>'3'</code>。整数和字符串不能直接用 <code>+</code> 相加，这会导致 <code>TypeError</code>。</p>
+<p>我们已经找到了 bug 的根源。现在输入 <code>q</code> 退出调试。</p>
+<pre><code>(Pdb) q</code></pre>
+<p>现在你知道了，问题在于 <code>numbers</code> 列表中的数据类型不统一。<code>pdb</code> 让你像用显微镜一样精确地定位了问题所在。</p>
+</section>
+</section>
+<section id="pip-conda命令行下的包管理" class="level2">
+<h2 class="anchored" data-anchor-id="pip-conda命令行下的包管理">pip &amp; conda：命令行下的包管理</h2>
+<p>除了运行和调试脚本，命令行还有一项超级重要的用途——<strong>管理 Python 包和环境</strong>。</p>
+<section id="pippython-的官方包管理工具" class="level3">
+<h3 class="anchored" data-anchor-id="pippython-的官方包管理工具">pip：Python 的官方包管理工具</h3>
+<ul>
+<li><p><strong>安装第三方库：</strong></p>
+<pre class="{bash}"><code>pip install requests</code></pre></li>
+<li><p><strong>查看已安装的包：</strong></p>
+<pre class="{bash}"><code>pip list</code></pre></li>
+<li><p><strong>升级包：</strong></p>
+<pre class="{bash}"><code>pip install --upgrade numpy</code></pre></li>
+<li><p><strong>卸载包：</strong></p>
+<pre class="{bash}"><code>pip uninstall requests</code></pre></li>
+<li><p><strong>指定安装版本：</strong></p>
+<pre class="{bash}"><code>pip install pandas==2.0.3</code></pre></li>
+<li><p><strong>导出依赖列表：</strong></p>
+<pre class="{bash}"><code>pip freeze &gt; requirements.txt</code></pre></li>
+<li><p><strong>根据依赖列表安装：</strong></p>
+<pre class="{bash}"><code>pip install -r requirements.txt</code></pre></li>
+</ul>
+<blockquote class="blockquote">
+<p>pip 是最常用的 Python 包管理工具，适合绝大部分纯 Python 包的安装。</p>
+</blockquote>
+</section>
+<section id="conda强大的多语言环境和包管理器" class="level3">
+<h3 class="anchored" data-anchor-id="conda强大的多语言环境和包管理器">conda：强大的多语言环境和包管理器</h3>
+<p>如果你用的是 Anaconda/Miniconda，或者需要管理依赖复杂、含有大量 C/C++ 库的包（如数据科学、机器学习领域常用的 numpy、pandas、scipy、pytorch 等），建议用 conda！</p>
+<ul>
+<li><p><strong>创建新环境：</strong></p>
+<pre class="{bash}"><code>conda create -n myenv python=3.10</code></pre></li>
+<li><p><strong>激活环境：</strong></p>
+<pre class="{bash}"><code>conda activate myenv</code></pre></li>
+<li><p><strong>安装包：</strong></p>
+<pre class="{bash}"><code>conda install numpy pandas matplotlib</code></pre></li>
+<li><p><strong>列出所有环境：</strong></p>
+<pre class="{bash}"><code>conda env list</code></pre></li>
+<li><p><strong>导出环境配置：</strong></p>
+<pre class="{bash}"><code>conda env export &gt; environment.yml</code></pre></li>
+<li><p><strong>根据配置文件还原环境：</strong></p>
+<pre class="{bash}"><code>conda env create -f environment.yml</code></pre></li>
+<li><p><strong>删除环境：</strong></p>
+<pre class="{bash}"><code>conda remove -n myenv --all</code></pre></li>
+</ul>
+<blockquote class="blockquote">
+<p>conda 不仅能管理 Python 包，还能管理 R、Java、C/C++ 等语言的依赖，适合需要跨语言和复杂依赖的项目。</p>
+</blockquote>
+</section>
+</section>
+<section id="总结" class="level2">
+<h2 class="anchored" data-anchor-id="总结">总结</h2>
+<p>掌握命令行运行、参数传递、调试（pdb）、包管理（pip/conda），是从“会写 Python 代码”到“会用 Python 解决问题”的关键一步。这个过程也许比点击按钮更“麻烦”，但它会赋予你对程序更深刻的理解和更强的控制力。</p>
+<p>现在，去尝试修改 <code>buggy_calculator.py</code>，修复那个 bug，然后再次用命令行运行它吧！并试着用 <code>pip</code> 或 <code>conda</code> 安装你需要的包，用命令行一步步成长为真正的开发者！</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/sem-sast\.cn");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../Lessons/lesson2.html" class="pagination-link" aria-label="2: Python入门">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">2: Python入门</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../Lessons/lesson4.html" class="pagination-link" aria-label="1: Git与GitHub的应用">
+        <span class="nav-page-text">1: Git与GitHub的应用</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Imbernoulli/summer/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

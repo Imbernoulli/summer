@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1: Git与GitHub的应用 – Coding Summer 2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../Lessons/lesson5.html" rel="next">
+<link href="../Lessons/lesson3.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-b3ee1e8c853e66aea7633b9f21ac2043.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="1: Git与GitHub的应用 – Coding Summer 2025">
+<meta property="og:description" content="暑期代码能力提升培训">
+<meta property="og:site_name" content="Coding Summer 2025">
+<meta name="twitter:title" content="1: Git与GitHub的应用 – Coding Summer 2025">
+<meta name="twitter:description" content="暑期代码能力提升培训">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Coding Summer 2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Imbernoulli/summer"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Lessons/lesson4.html">计算机实战应用</a></li><li class="breadcrumb-item"><a href="../Lessons/lesson4.html">1: Git与GitHub的应用</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">计算机入门</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机工具简介</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: 计算机科学基础与程序语言</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: Python入门</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: Python实用进阶</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机实战应用</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1: Git与GitHub的应用</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: Python爬虫原理与实践</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: Python数据可视化</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4: 基于Python的科学计算</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机前沿专题</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: 量化金融</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: 大语言模型形式化与非形式化推理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: OM/OR分享</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">数字化课程资源</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/byl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">博弈论与机制设计</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机系相关资源</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://summer24.net9.org" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">技能培训</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://docs.net9.org" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">技能文档</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#git-与-github-入门指南" id="toc-git-与-github-入门指南" class="nav-link active" data-scroll-target="#git-与-github-入门指南">Git 与 GitHub 入门指南</a>
+  <ul class="collapse">
+  <li><a href="#为什么需要版本控制" id="toc-为什么需要版本控制" class="nav-link" data-scroll-target="#为什么需要版本控制"><strong>为什么需要版本控制？</strong></a></li>
+  <li><a href="#安装与初次配置" id="toc-安装与初次配置" class="nav-link" data-scroll-target="#安装与初次配置"><strong>安装与初次配置</strong></a></li>
+  <li><a href="#git-核心工作流与本地操作" id="toc-git-核心工作流与本地操作" class="nav-link" data-scroll-target="#git-核心工作流与本地操作"><strong>Git 核心工作流与本地操作</strong></a></li>
+  <li><a href="#连接-github走向世界" id="toc-连接-github走向世界" class="nav-link" data-scroll-target="#连接-github走向世界"><strong>连接 GitHub，走向世界</strong></a></li>
+  <li><a href="#分支安全开发的平行宇宙" id="toc-分支安全开发的平行宇宙" class="nav-link" data-scroll-target="#分支安全开发的平行宇宙"><strong>分支——安全开发的“平行宇宙”</strong></a></li>
+  <li><a href="#日常协作流程" id="toc-日常协作流程" class="nav-link" data-scroll-target="#日常协作流程"><strong>日常协作流程</strong></a></li>
+  <li><a href="#实战用-github-pages-搭建你的个人主页" id="toc-实战用-github-pages-搭建你的个人主页" class="nav-link" data-scroll-target="#实战用-github-pages-搭建你的个人主页"><strong>实战：用 GitHub Pages 搭建你的个人主页</strong></a></li>
+  <li><a href="#总结" id="toc-总结" class="nav-link" data-scroll-target="#总结"><strong>总结</strong></a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Imbernoulli/summer/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Lessons/lesson4.html">计算机实战应用</a></li><li class="breadcrumb-item"><a href="../Lessons/lesson4.html">1: Git与GitHub的应用</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">1: Git与GitHub的应用</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="git-与-github-入门指南" class="level2">
+<h2 class="anchored" data-anchor-id="git-与-github-入门指南">Git 与 GitHub 入门指南</h2>
+<p>欢迎来到版本控制的世界！本指南将带你深入了解 Git 和 GitHub，从基本概念到日常协作流程，并使用图表让复杂的概念变得一目了然。无论你是编程新手还是想系统学习的开发者，这篇教程都将是你的得力助手。</p>
+<section id="为什么需要版本控制" class="level3">
+<h3 class="anchored" data-anchor-id="为什么需要版本控制"><strong>为什么需要版本控制？</strong></h3>
+<p>想象一下你正在进行一个复杂的项目，无论是写代码、写论文还是设计作品。你一定会遇到以下问题：</p>
+<ul>
+<li><strong>混乱的文件管理</strong>：<code>项目_v1.zip</code>, <code>项目_v2_final.zip</code>, <code>项目_final_final_我发誓是最终版.zip</code>… 这种方式既原始又低效。</li>
+<li><strong>无法追溯的错误</strong>：你今天写的代码导致整个项目无法运行，但你不记得昨天做了哪些修改，想恢复到之前的版本变得异常困难。</li>
+<li><strong>协作冲突</strong>：你和你的同伴修改了同一个文件，当你们试图合并工作时，一个人的修改覆盖了另一个人的，造成了“代码冲突”的噩梦。</li>
+</ul>
+<p><strong>版本控制系统 (Version Control System, VCS)</strong> 正是为解决这些问题而生的。</p>
+<p><strong>Git</strong> 是当今最流行、最强大的<strong>分布式版本控制系统</strong>。它就像一个精密的时光机和协作中心，能够：</p>
+<ol type="1">
+<li><strong>记录每一次变更</strong>：对文件的每一次增、删、改，Git 都会拍下一张“快照”(snapshot)。</li>
+<li><strong>随时回溯历史</strong>：你可以轻松地将整个项目恢复到过去的任意一个“快照”状态。</li>
+<li><strong>支持并行开发</strong>：通过“分支”功能，团队成员可以在不互相干扰的独立空间里开发新功能。</li>
+<li><strong>高效解决冲突</strong>：当不同人的修改发生冲突时，Git 提供了工具来帮助你清晰地合并它们。</li>
+</ol>
+<p><strong>GitHub</strong> 又是什么呢？ 它是一个基于云的<strong>代码托管平台</strong>。如果说 Git 是你本地的“时光机”，那 GitHub 就是这个“时光机”的云端枢纽和社交网络。它提供了：</p>
+<ul>
+<li><strong>远程仓库</strong>：一个安全的地方来存储你的代码和所有版本历史。</li>
+<li><strong>协作工具</strong>：强大的 Pull Request、Code Review 和 Issue Tracking 功能，让团队协作变得前所未有的高效。</li>
+<li><strong>个人名片</strong>：一个展示你技术实力的平台，你的 GitHub 主页就是程序员最好的简历。</li>
+</ul>
+<p><strong>总结：Git 是工具，负责版本控制；GitHub 是平台，负责代码托管与协作。</strong></p>
+</section>
+<section id="安装与初次配置" class="level3">
+<h3 class="anchored" data-anchor-id="安装与初次配置"><strong>安装与初次配置</strong></h3>
+<section id="安装-git" class="level4">
+<h4 class="anchored" data-anchor-id="安装-git">1. 安装 Git</h4>
+<ul>
+<li><strong>Windows</strong>: 访问 <a href="https://git-scm.com/download/win">git-scm.com/download/win</a> 下载安装包。安装时，建议一路使用默认选项，它会自动安装 <code>Git Bash</code>，一个在 Windows 上模拟 Linux 命令行的强大工具。</li>
+<li><strong>macOS</strong>:
+<ul>
+<li>最简单的方式是安装 Xcode Command Line Tools。打开“终端”(Terminal) 并输入 <code>xcode-select --install</code>。</li>
+<li>或者使用 <a href="https://brew.sh/">Homebrew</a> (推荐) 安装：<code>brew install git</code>。</li>
+</ul></li>
+<li><strong>Linux (Debian/Ubuntu)</strong>: 打开终端并输入 <code>sudo apt-get install git</code>。</li>
+</ul>
+<p>安装后，打开终端 (或 Git Bash) 输入 <code>git --version</code>，如果看到版本号，说明安装成功。</p>
+</section>
+<section id="配置你的身份" class="level4">
+<h4 class="anchored" data-anchor-id="配置你的身份">2. 配置你的身份</h4>
+<p>安装 Git 后，第一件事就是设置你的用户名和邮箱。这个身份信息会附加到你的每一次“提交”(commit) 上，让别人知道是谁做的修改。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置你的 GitHub 用户名</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your GitHub Username"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置你的 GitHub 注册邮箱</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your.email@example.com"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>--global</code> 标志表示这是全局配置，你电脑上所有的 Git 项目都会默认使用这个配置。</p>
+</section>
+</section>
+<section id="git-核心工作流与本地操作" class="level3">
+<h3 class="anchored" data-anchor-id="git-核心工作流与本地操作"><strong>Git 核心工作流与本地操作</strong></h3>
+<p>Git 的核心在于其三个主要区域的流转。理解了这个模型，你就理解了 Git 的一半。</p>
+<ol type="1">
+<li><strong>工作区 (Working Directory)</strong>: 你在电脑上能直接看到和编辑的项目文件夹。</li>
+<li><strong>暂存区 (Staging Area/Index)</strong>: 一个虚拟的区域，用于临时存放你<strong>希望包含在下一次提交中</strong>的变更。它像一个购物车的概念，你可以把修改好的东西一件件放进去，最后统一“结账”。</li>
+<li><strong>本地仓库 (Local Repository)</strong>: <code>.git</code> 隐藏文件夹，存放了项目所有的版本历史“快照”。一旦变更被提交到这里，它就永久地记录下来了。</li>
+</ol>
+<section id="工作流图解" class="level4">
+<h4 class="anchored" data-anchor-id="工作流图解"><strong>工作流图解</strong></h4>
+<p>下面这张图清晰地展示了文件在三个区域之间的流转过程：</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A["工作区&lt;br&gt;(Working Directory)"] -- "git add" --&gt; B["暂存区&lt;br&gt;(Staging Area)"]
+    B -- "git commit" --&gt; C["本地仓库&lt;br&gt;(Local Repository)"]
+    C -- "git checkout" --&gt; A
+    A -- "编辑文件&lt;br&gt;(Edit files)" --&gt; A
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="实战演练你的第一个仓库" class="level4">
+<h4 class="anchored" data-anchor-id="实战演练你的第一个仓库"><strong>实战演练：你的第一个仓库</strong></h4>
+<ol type="1">
+<li><p><strong>初始化仓库 (<code>git init</code>)</strong></p>
+<ul>
+<li>在电脑上创建一个新文件夹，例如 <code>git-project</code>。</li>
+<li>通过终端进入该文件夹：<code>cd path/to/git-project</code>。</li>
+<li>执行初始化命令： <code>bash     git init</code> 这个命令会在当前目录下创建一个名为 <code>.git</code> 的子目录，你的本地仓库就此诞生。</li>
+</ul></li>
+<li><p><strong>检查状态 (<code>git status</code>)</strong> <code>git status</code> 是你最应该频繁使用的命令。它会告诉你当前仓库的状态：哪些文件被修改了？哪些文件在暂存区？</p></li>
+<li><p><strong>创建文件并添加到暂存区 (<code>git add</code>)</strong></p>
+<ul>
+<li><p>在 <code>git-project</code> 文件夹中创建一个 <code>README.md</code> 文件，并写入 “Hello, Git!”。</p></li>
+<li><p>现在运行 <code>git status</code>，你会看到 <code>README.md</code> 出现在 “Untracked files” (未跟踪文件) 列表中。</p></li>
+<li><p>使用 <code>git add</code> 命令来跟踪这个文件，并将其变更放入暂存区。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 添加指定文件到暂存区</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add README.md</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 如果想添加所有已修改或新增的文件，使用点号</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># git add .</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>再次运行 <code>git status</code>，你会看到 <code>README.md</code> 现在处于 “Changes to be committed” (待提交的变更) 列表中。</p></li>
+</ul></li>
+<li><p><strong>提交变更到仓库 (<code>git commit</code>)</strong> 当暂存区里的内容准备就绪后，就可以使用 <code>git commit</code> 将它们“拍摄快照”并存入本地仓库。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -m 参数允许你直接在命令行提供提交信息</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Initial commit: Create README.md"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>编写好的 Commit Message 至关重要！</strong> 它应该简洁明了地描述本次提交的目的。一个好的习惯是使用 “动词+宾语” 的格式，例如 “Fix: user login bug” 或 “Feat: add user profile page”。</p></li>
+<li><p><strong>查看提交历史 (<code>git log</code>)</strong> 想回顾你走过的路吗？<code>git log</code> 会按时间倒序列出所有的提交记录，包括哈希值 (唯一ID)、作者、日期和提交信息。</p></li>
+</ol>
+</section>
+</section>
+<section id="连接-github走向世界" class="level3">
+<h3 class="anchored" data-anchor-id="连接-github走向世界"><strong>连接 GitHub，走向世界</strong></h3>
+<p>现在，你的项目只存在于你的电脑上。让我们把它推送到 GitHub，实现云端备份和远程协作。</p>
+<section id="本地与远程关系图解" class="level4">
+<h4 class="anchored" data-anchor-id="本地与远程关系图解"><strong>本地与远程关系图解</strong></h4>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    subgraph "Your Computer"
+        A["本地仓库(Local Repo)"]
+    end
+
+    subgraph "GitHub Cloud"
+        B["远程仓库(Remote Repo)"]
+    end
+
+    A -- "git push" --&gt; B
+    B -- "git pull / git clone" --&gt; A
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="操作步骤" class="level4">
+<h4 class="anchored" data-anchor-id="操作步骤"><strong>操作步骤</strong></h4>
+<ol type="1">
+<li><p><strong>在 GitHub 创建远程仓库</strong></p>
+<ul>
+<li>登录 GitHub，点击右上角 “+” -&gt; “New repository”。</li>
+<li>填写仓库名称 (建议与本地文件夹同名，如 <code>git-project</code>)。</li>
+<li>保持 “Public” (公开) 或选择 “Private” (私有)。</li>
+<li><strong>非常重要</strong>：<strong>不要</strong>勾选任何 “Initialize this repository with…” 的选项，因为我们已经有了一个本地仓库。</li>
+<li>点击 “Create repository”。</li>
+</ul></li>
+<li><p><strong>关联本地与远程 (<code>git remote add</code>)</strong> 创建后，GitHub 会提供一个 URL。复制这个 HTTPS 或 SSH 格式的 URL。回到你的终端，运行：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 将 '你的仓库URL' 替换成你刚刚复制的地址</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin 你的仓库URL</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>git remote add</code>：添加一个远程仓库的引用。</li>
+<li><code>origin</code>：是这个远程仓库的默认别名，你也可以取别的名字，但 <code>origin</code> 是约定俗成的。</li>
+</ul></li>
+<li><p><strong>推送本地变更 (<code>git push</code>)</strong> 最后，将你本地 <code>main</code> 分支上的所有提交推送到远程仓库 <code>origin</code>。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>push</code>：推送动作。</li>
+<li><code>-u</code> (或 <code>--set-upstream</code>)：建立本地 <code>main</code> 分支与远程 <code>origin/main</code> 分支的联系。这个参数<strong>只需要在第一次推送时使用</strong>。之后，你只需要简单地运行 <code>git push</code>。</li>
+<li><code>origin</code>：远程仓库的别名。</li>
+<li><code>main</code>：你要推送的本地分支名。</li>
+</ul>
+<p>现在，刷新你的 GitHub 仓库页面，代码已经成功上传！</p></li>
+</ol>
+</section>
+</section>
+<section id="分支安全开发的平行宇宙" class="level3">
+<h3 class="anchored" data-anchor-id="分支安全开发的平行宇宙"><strong>分支——安全开发的“平行宇宙”</strong></h3>
+<p>分支 (Branch) 是 Git 最强大的功能之一。它允许你从主线 (通常是 <code>main</code> 分支) 创建一个独立的副本，在新功能开发、Bug 修复等工作中，你可以在这个副本上自由地实验，而不会影响到主线的稳定性。</p>
+<section id="分支与合并图解" class="level4">
+<h4 class="anchored" data-anchor-id="分支与合并图解"><strong>分支与合并图解</strong></h4>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">gitGraph
+   commit id: "Initial"
+   branch feature-A
+   checkout feature-A
+   commit id: "Add button"
+   commit id: "Style button"
+   checkout main
+   merge feature-A
+   commit id: "Release v1.0"
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>上图展示了：</p>
+<ol type="1">
+<li>从 <code>main</code> 分支创建了一个 <code>feature-A</code> 分支。</li>
+<li>在 <code>feature-A</code> 上进行了两次提交 (开发新功能)。</li>
+<li>开发完成后，切换回 <code>main</code> 分支。</li>
+<li>将 <code>feature-A</code> 分支上的所有工作合并 (merge) 回 <code>main</code> 分支。</li>
+</ol>
+</section>
+<section id="分支常用命令" class="level4">
+<h4 class="anchored" data-anchor-id="分支常用命令"><strong>分支常用命令</strong></h4>
+<ul>
+<li><p><strong>查看所有分支</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>星号 <code>*</code> 标记的是你当前所在的分支。</p></li>
+<li><p><strong>创建新分支</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="op">&lt;</span>分支名<span class="op">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 例如: git branch new-feature</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>切换分支</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="op">&lt;</span>分支名<span class="op">&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 例如: git checkout new-feature</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>创建并立即切换到新分支 (常用)</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> <span class="op">&lt;</span>新分支名<span class="op">&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 例如: git checkout -b another-feature</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>合并分支</strong>: 首先，切换到你希望接纳变更的分支 (目标分支)，通常是 <code>main</code>。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>然后，执行合并命令，将其他分支的变更合并进来。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge <span class="op">&lt;</span>要合并的分支名<span class="op">&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 例如: git merge new-feature</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>删除分支</strong>: 当一个分支的工作已经合并完成，通常会将其删除以保持仓库整洁。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> <span class="op">&lt;</span>分支名<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul>
+</section>
+</section>
+<section id="日常协作流程" class="level3">
+<h3 class="anchored" data-anchor-id="日常协作流程"><strong>日常协作流程</strong></h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">%%{init: { 'logLevel': 'debug', 'theme': 'base', 'gitGraph': {'showBranches': true, 'showCommitLabel': true, 'mainBranchName': 'main'}} }%%
+gitGraph
+    commit id: "初始化项目"
+    branch develop
+    checkout develop
+    commit id: "开发环境配置"
+    
+    %% --- 功能A开发 ---
+    branch feat/user-login
+    checkout feat/user-login
+    commit id: "实现UI界面"
+    commit id: "完成后端API对接"
+    
+    %% --- 在功能A开发的同时，主干发现紧急bug ---
+    checkout main
+    branch hotfix/bug-payment-api
+    checkout hotfix/bug-payment-api
+    commit id: "紧急修复支付掉单Bug"
+    checkout main
+    merge hotfix/bug-payment-api tag: "v1.0.1"
+    
+    %% --- 紧急修复也需要合并到develop分支 ---
+    checkout develop
+    merge main id: "同步紧急修复"
+    
+    %% --- 功能A开发完成，合并回develop ---
+    checkout develop
+    merge feat/user-login id: "合并用户登录功能"
+    
+    %% --- 功能B开始开发 ---
+    branch feat/data-report
+    checkout feat/data-report
+    commit id: "设计报表模型"
+    commit id: "完成报表前端"
+    checkout develop
+    
+    %% --- 功能C也开始开发 ---
+    branch feat/performance-opt
+    checkout feat/performance-opt
+    commit id: "优化数据库查询"
+    
+    %% --- 功能B开发完成，合并回develop ---
+    checkout develop
+    merge feat/data-report id: "合并数据报表功能"
+    
+    %% --- 功能C开发完成，合并回develop ---
+    checkout develop
+    merge feat/performance-opt id: "合并性能优化"
+    
+    %% --- 准备发布新版本 ---
+    branch release/v1.1.0
+    checkout release/v1.1.0
+    commit id: "版本文档和最终测试"
+    
+    %% --- 正式发布：合并到main并打上标签 ---
+    checkout main
+    merge release/v1.1.0 tag: "v1.1.0"
+    
+    %% --- 将发布分支的修改也合并回develop ---
+    checkout develop
+    merge release/v1.1.0 id: "同步发布版本v1.1.0的修改"
+
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>在真实的项目中，你通常会从一个已经存在的项目开始工作。</p>
+<ol type="1">
+<li><p><strong>克隆远程仓库 (<code>git clone</code>)</strong> 要获取 GitHub 上的项目到你的本地，使用 <code>git clone</code>。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 替换为项目的URL</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/some-user/some-project.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>这个命令会自动创建项目文件夹，初始化 <code>.git</code> 仓库，并自动设置好远程别名 <code>origin</code>，还会将项目的所有数据都拉取下来。</p></li>
+<li><p><strong>保持本地更新 (<code>git pull</code>)</strong> 在你开始一天的工作前，或者在准备开发新功能前，务必从远程仓库拉取最新的变更，确保你的本地版本是最新的。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 如果已经设置了上游分支，可以直接用 git pull</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>git pull</code> 实际上是 <code>git fetch</code> (从远程拉取最新数据) 和 <code>git merge</code> (将远程分支合并到本地) 的一个快捷命令。</p></li>
+<li><p><strong>GitHub Flow：一个标准的协作模型</strong> 这是一个被广泛采用的、简单高效的协作流程：</p>
+<ol type="a">
+<li>从 <code>main</code> 分支创建一个描述性命名的<strong>新分支</strong> (<code>git checkout -b fix-login-bug</code>)。</li>
+<li>在新分支上进行<strong>编码和提交</strong>。</li>
+<li>将你的新分支<strong>推送</strong>到 GitHub (<code>git push origin fix-login-bug</code>)。</li>
+<li>在 GitHub 上，为你的分支创建一个 <strong>Pull Request (PR)</strong>。PR 是一个请求，请求项目维护者审查你的代码，并将其合并到 <code>main</code> 分支。</li>
+<li>团队成员在 PR 上进行<strong>讨论和代码审查 (Code Review)</strong>。</li>
+<li>一旦审查通过，项目维护者会在 GitHub 网站上点击<strong>合并 (Merge Pull Request)</strong> 按钮。</li>
+<li>合并后，你可以安全地<strong>删除</strong>你的功能分支。</li>
+</ol></li>
+</ol>
+</section>
+<section id="实战用-github-pages-搭建你的个人主页" class="level3">
+<h3 class="anchored" data-anchor-id="实战用-github-pages-搭建你的个人主页"><strong>实战：用 GitHub Pages 搭建你的个人主页</strong></h3>
+<p>现在，你已经掌握了 Git 和 GitHub 的核心技能，是时候将它们付诸实践，创建一个所有开发者都梦寐以求的“技术名片”——你的个人网站。GitHub 提供了一项名为 <strong>GitHub Pages</strong> 的免费服务，可以让你轻松地将你的代码仓库变成一个公开的网站。</p>
+<section id="前端开发简介" class="level4">
+<h4 class="anchored" data-anchor-id="前端开发简介"><strong>前端开发简介</strong></h4>
+<p>网页是由三种核心技术构建的：</p>
+<ul>
+<li><strong>HTML (HyperText Markup Language)</strong>: 定义了网页的<strong>结构</strong>和<strong>内容</strong>。比如，标题、段落、图片、链接等。</li>
+<li><strong>CSS (Cascading Style Sheets)</strong>: 负责网页的<strong>样式</strong>和<strong>外观</strong>。比如，颜色、字体、布局、边距等。</li>
+<li><strong>JavaScript</strong>: 赋予网页<strong>交互性</strong>和<strong>动态功能</strong>。比如，响应用户点击、表单验证、动画效果等。</li>
+</ul>
+<p>我们将创建一个只包含 HTML 和 CSS 的简单静态页面，并将其部署到 GitHub Pages。</p>
+</section>
+<section id="搭建步骤" class="level4">
+<h4 class="anchored" data-anchor-id="搭建步骤"><strong>搭建步骤</strong></h4>
+<ol type="1">
+<li><p><strong>创建一个特殊的仓库</strong> 登录 GitHub。点击右上角的“+”号，选择 “New repository”。这一步至关重要：</p>
+<ul>
+<li><strong>Repository name (仓库名称)</strong> 必须是 <code>&lt;你的GitHub用户名&gt;.github.io</code>。例如，如果你的用户名是 <code>octocat</code>，那么仓库名必须是 <code>octocat.github.io</code>。</li>
+<li><strong>必须设置为 Public (公开)</strong>。</li>
+<li>可以勾选 “Add a README file” 来初始化仓库，这会使后续的克隆操作更简单。</li>
+</ul></li>
+<li><p><strong>克隆仓库到本地</strong> 进入你刚刚创建的仓库页面，点击绿色的 “&lt;&gt; Code” 按钮，复制 HTTPS URL。然后，在你的电脑终端中运行 <code>git clone</code>：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 将URL替换为你自己的仓库URL</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YourUsername/yourusername.github.io.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>创建你的主页文件</strong> 使用 <code>cd</code> 命令进入刚刚克隆下来的文件夹：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> yourusername.github.io</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>创建一个名为 <code>index.html</code> 的文件。这个文件名是特殊的，当别人访问你的网站时，GitHub Pages 会默认显示这个文件的内容。在 <code>index.html</code> 文件中写入以下基础 HTML 代码：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">"zh-CN"</span><span class="dt">&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">"UTF-8"</span><span class="dt">&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">"viewport"</span><span class="ot"> content</span><span class="op">=</span><span class="st">"width=device-width, initial-scale=1.0"</span><span class="dt">&gt;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>我的个人主页<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        body { <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">sans-serif</span><span class="op">;</span> <span class="kw">line-height</span><span class="ch">:</span> <span class="dv">1.6</span><span class="op">;</span> <span class="kw">margin</span><span class="ch">:</span> <span class="dv">40</span><span class="dt">px</span><span class="op">;</span> <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f4f4f4</span><span class="op">;</span> <span class="kw">color</span><span class="ch">:</span> <span class="cn">#333</span><span class="op">;</span> }</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">.container</span> { <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">800</span><span class="dt">px</span><span class="op">;</span> <span class="kw">margin</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span> <span class="kw">background</span><span class="ch">:</span> <span class="cn">#fff</span><span class="op">;</span> <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span> <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span> <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">10</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span> }</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        h1 { <span class="kw">color</span><span class="ch">:</span> <span class="cn">#0366d6</span><span class="op">;</span> }</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        a { <span class="kw">color</span><span class="ch">:</span> <span class="cn">#0366d6</span><span class="op">;</span> <span class="kw">text-decoration</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span> }</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        a<span class="in">:hover</span> { <span class="kw">text-decoration</span><span class="ch">:</span> <span class="dv">underline</span><span class="op">;</span> }</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"container"</span><span class="dt">&gt;</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>欢迎来到我的世界！<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>你好，我是 [你的名字]。这是我用 GitHub Pages 搭建的个人网站。<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>你可以在 <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://github.com/YourUsername"</span><span class="ot"> target</span><span class="op">=</span><span class="st">"_blank"</span><span class="dt">&gt;</span>这里<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> 找到我的 GitHub 主页，关注我的开源项目。<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>提示</strong>: 记得将 <code>[你的名字]</code> 和 <code>YourUsername</code> 替换成你自己的信息。</p>
+</blockquote></li>
+<li><p><strong>提交并推送到 GitHub</strong> 现在，按照我们学过的标准 Git 流程，将你的新主页上传到 GitHub。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 将所有新文件和修改添加到暂存区</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 提交变更，并附上有意义的信息</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Feat: Create initial homepage"</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 将本地提交推送到远程仓库</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>在 GitHub Settings 中配置 Pages</strong> 默认情况下，名为 <code>&lt;username&gt;.github.io</code> 的仓库会自动启用 GitHub Pages。但了解设置过程对所有项目都至关重要。</p>
+<ol type="a">
+<li><p>在浏览器中打开你的 GitHub 仓库页面。</p></li>
+<li><p>点击仓库导航栏右侧的 <strong>“Settings”</strong> 标签。</p></li>
+<li><p>在左侧的菜单中，找到并点击 <strong>“Pages”</strong>。</p></li>
+<li><p>在 “Build and deployment” (构建与部署) 部分，你会看到 “Source” (源) 的选项。请确保它的设置为 <strong>“Deploy from a branch”</strong> (从分支部署)。</p></li>
+<li><p>在下方的 “Branch” (分支) 设置中：</p></li>
+</ol>
+<ul>
+<li>选择你刚刚推送代码的分支，通常是 <strong><code>main</code></strong> (或者 <code>master</code>)。</li>
+<li>文件夹选项保持默认的 <strong><code>/ (root)</code></strong>。</li>
+<li>点击 <strong>“Save”</strong>。</li>
+</ul>
+<ol start="6" type="a">
+<li>保存后，页面顶部会出现一个蓝色的提示框，告诉你 “Your site is live at <code>https://&lt;你的用户名&gt;.github.io</code>”。有时，GitHub 需要一两分钟来完成部署（这个过程被称为 Action）。你可以点击提示框中的链接查看你的网站。</li>
+</ol></li>
+<li><p><strong>见证奇迹！</strong> 访问 <code>https://&lt;你的GitHub用户名&gt;.github.io</code>，你应该就能看到你刚刚创建的、拥有简单样式的个人主页了！</p></li>
+</ol>
+<p>现在，你拥有了一个可以向全世界展示的个人网站。你可以继续学习 HTML 和 CSS 来美化它，或者添加你的项目作品集，让它成为你真正的在线简历。</p>
+</section>
+</section>
+<section id="总结" class="level3">
+<h3 class="anchored" data-anchor-id="总结"><strong>总结</strong></h3>
+<p>恭喜你完成了这份详细的指南！现在你应该对 Git 和 GitHub 有了扎实的理解。</p>
+<ul>
+<li><strong>核心理念</strong>：版本控制是为了追踪历史和促进协作。</li>
+<li><strong>本地三区</strong>：工作区 -&gt; <code>git add</code> -&gt; 暂存区 -&gt; <code>git commit</code> -&gt; 本地仓库。</li>
+<li><strong>远程交互</strong>：<code>git clone</code> 开始，<code>git pull</code> 更新，<code>git push</code> 分享。</li>
+<li><strong>分支是关键</strong>：始终在独立的分支上工作，通过 Pull Request 合并，以保证 <code>main</code> 分支的稳定。</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/sem-sast\.cn");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../Lessons/lesson3.html" class="pagination-link" aria-label="3: Python实用进阶">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">3: Python实用进阶</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../Lessons/lesson5.html" class="pagination-link" aria-label="2: Python爬虫原理与实践">
+        <span class="nav-page-text">2: Python爬虫原理与实践</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Imbernoulli/summer/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

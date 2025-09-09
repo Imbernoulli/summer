@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2: Python爬虫原理与实践 – Coding Summer 2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../Lessons/lesson6.html" rel="next">
+<link href="../Lessons/lesson4.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-b3ee1e8c853e66aea7633b9f21ac2043.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="2: Python爬虫原理与实践 – Coding Summer 2025">
+<meta property="og:description" content="暑期代码能力提升培训">
+<meta property="og:site_name" content="Coding Summer 2025">
+<meta name="twitter:title" content="2: Python爬虫原理与实践 – Coding Summer 2025">
+<meta name="twitter:description" content="暑期代码能力提升培训">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Coding Summer 2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Imbernoulli/summer"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Lessons/lesson4.html">计算机实战应用</a></li><li class="breadcrumb-item"><a href="../Lessons/lesson5.html">2: Python爬虫原理与实践</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">计算机入门</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机工具简介</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: 计算机科学基础与程序语言</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: Python入门</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: Python实用进阶</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机实战应用</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: Git与GitHub的应用</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson5.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2: Python爬虫原理与实践</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: Python数据可视化</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4: 基于Python的科学计算</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机前沿专题</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1: 量化金融</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2: 大语言模型形式化与非形式化推理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/lesson10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3: OM/OR分享</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">数字化课程资源</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Lessons/byl.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">博弈论与机制设计</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">计算机系相关资源</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://summer24.net9.org" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">技能培训</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://docs.net9.org" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">技能文档</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#第一章爬虫基础与核心原理再探" id="toc-第一章爬虫基础与核心原理再探" class="nav-link active" data-scroll-target="#第一章爬虫基础与核心原理再探">第一章：爬虫基础与核心原理再探</a>
+  <ul class="collapse">
+  <li><a href="#什么是爬虫" id="toc-什么是爬虫" class="nav-link" data-scroll-target="#什么是爬虫">什么是爬虫？</a></li>
+  <li><a href="#http爬虫与网站沟通的语言" id="toc-http爬虫与网站沟通的语言" class="nav-link" data-scroll-target="#http爬虫与网站沟通的语言">HTTP：爬虫与网站沟通的语言</a></li>
+  <li><a href="#网页的骨架html简介" id="toc-网页的骨架html简介" class="nav-link" data-scroll-target="#网页的骨架html简介">网页的骨架：HTML简介</a></li>
+  <li><a href="#正则表达式强大的文本匹配工具" id="toc-正则表达式强大的文本匹配工具" class="nav-link" data-scroll-target="#正则表达式强大的文本匹配工具">正则表达式：强大的文本匹配工具</a></li>
+  </ul></li>
+  <li><a href="#第二章环境准备与第一个静态爬虫" id="toc-第二章环境准备与第一个静态爬虫" class="nav-link" data-scroll-target="#第二章环境准备与第一个静态爬虫">第二章：环境准备与第一个静态爬虫</a>
+  <ul class="collapse">
+  <li><a href="#搭建你的爬虫工作室" id="toc-搭建你的爬虫工作室" class="nav-link" data-scroll-target="#搭建你的爬虫工作室">2.1 搭建你的爬虫工作室</a></li>
+  <li><a href="#实战抓取学者主页上的信息" id="toc-实战抓取学者主页上的信息" class="nav-link" data-scroll-target="#实战抓取学者主页上的信息">2.2 实战：抓取学者主页上的信息</a></li>
+  </ul></li>
+  <li><a href="#第三章进阶爬取技术" id="toc-第三章进阶爬取技术" class="nav-link" data-scroll-target="#第三章进阶爬取技术">第三章：进阶爬取技术</a>
+  <ul class="collapse">
+  <li><a href="#爬取列表页数据爬列表" id="toc-爬取列表页数据爬列表" class="nav-link" data-scroll-target="#爬取列表页数据爬列表">3.1 爬取列表页数据（“爬列表”）</a></li>
+  <li><a href="#循环爬取多个页面循环爬翻页" id="toc-循环爬取多个页面循环爬翻页" class="nav-link" data-scroll-target="#循环爬取多个页面循环爬翻页">3.2 循环爬取多个页面（“循环爬”/翻页）</a></li>
+  </ul></li>
+  <li><a href="#第四章攻克动态网站动态爬" id="toc-第四章攻克动态网站动态爬" class="nav-link" data-scroll-target="#第四章攻克动态网站动态爬">第四章：攻克动态网站（“动态爬”）</a>
+  <ul class="collapse">
+  <li><a href="#安装与配置-selenium" id="toc-安装与配置-selenium" class="nav-link" data-scroll-target="#安装与配置-selenium">4.1 安装与配置 Selenium</a></li>
+  <li><a href="#实战抓取动态加载的数据" id="toc-实战抓取动态加载的数据" class="nav-link" data-scroll-target="#实战抓取动态加载的数据">4.2 实战：抓取动态加载的数据</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Imbernoulli/summer/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Lessons/lesson4.html">计算机实战应用</a></li><li class="breadcrumb-item"><a href="../Lessons/lesson5.html">2: Python爬虫原理与实践</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">2: Python爬虫原理与实践</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="第一章爬虫基础与核心原理再探" class="level2">
+<h2 class="anchored" data-anchor-id="第一章爬虫基础与核心原理再探">第一章：爬虫基础与核心原理再探</h2>
+<p>在我们开始写代码之前，必须先稳固地掌握爬虫的内在逻辑。</p>
+<section id="什么是爬虫" class="level3">
+<h3 class="anchored" data-anchor-id="什么是爬虫">什么是爬虫？</h3>
+<p>网络爬虫，本质上是一个<strong>自动化</strong>的程序。它的核心任务是<strong>模拟人类访问网页的行为</strong>，但速度和规模远超人类。</p>
+<ul>
+<li><strong>人类访问网页</strong>：打开浏览器 -&gt; 输入网址 (URL) -&gt; 回车 -&gt; 浏览器发送请求 -&gt; 服务器返回HTML代码 -&gt; 浏览器将代码<strong>渲染</strong>成我们看到的图文并茂的页面。</li>
+<li><strong>爬虫访问网页</strong>：执行程序 -&gt; 指定URL -&gt; 程序发送请求 -&gt; 服务器返回HTML代码 -&gt; 程序<strong>不渲染</strong>，而是直接<strong>解析</strong>这份纯文本的HTML代码，寻找并提取数据。</li>
+</ul>
+<p>关键区别在于<strong>“渲染”</strong>和<strong>“解析”</strong>。浏览器负责美观地展示，而爬虫负责高效地提取。</p>
+</section>
+<section id="http爬虫与网站沟通的语言" class="level3">
+<h3 class="anchored" data-anchor-id="http爬虫与网站沟通的语言">HTTP：爬虫与网站沟通的语言</h3>
+<p>你的爬虫程序通过HTTP协议与网站服务器对话。最常见的两种对话方式是 <code>GET</code> 和 <code>POST</code>。</p>
+<ul>
+<li><strong><code>GET</code> 请求</strong>：就像在浏览器地址栏输入网址后回车。这是最常见的请求，用于<strong>获取</strong>（GET）网页数据。我们的绝大多数抓取任务都从<code>GET</code>请求开始。</li>
+<li><strong><code>POST</code> 请求</strong>：通常用于向服务器<strong>提交</strong>（POST）数据，例如填写登录表单、提交搜索关键词等。有些需要登录或搜索后才能看到内容的页面，就需要模拟<code>POST</code>请求。</li>
+</ul>
+</section>
+<section id="网页的骨架html简介" class="level3">
+<h3 class="anchored" data-anchor-id="网页的骨架html简介">网页的骨架：HTML简介</h3>
+<p>爬虫获取到的就是一堆HTML（超文本标记语言）代码。你需要能看懂它的基本结构，才能知道去哪里找数据。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>网页标题<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"content"</span><span class="dt">&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>这是一个主标题<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> id</span><span class="op">=</span><span class="st">"intro"</span><span class="dt">&gt;</span>这是一个段落。<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"/about.html"</span><span class="dt">&gt;</span>关于我们<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><strong>标签 (Tag)</strong>：由尖括号包围，如<code>&lt;html&gt;</code>, <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;a&gt;</code>。它们定义了内容的类型和结构。</li>
+<li><strong>属性 (Attribute)</strong>：在标签内部，提供额外信息，如<code>class="content"</code>，<code>id="intro"</code>，<code>href="/about.html"</code>。<strong>属性是我们定位数据的关键线索</strong>。</li>
+</ul>
+</section>
+<section id="正则表达式强大的文本匹配工具" class="level3">
+<h3 class="anchored" data-anchor-id="正则表达式强大的文本匹配工具">正则表达式：强大的文本匹配工具</h3>
+<p>正则表达式（Regular Expression，简称Regex）是一种用于文本匹配的模式语言，它在爬虫中扮演着重要角色，特别是当HTML结构不规则或需要提取特定格式的内容时。</p>
+<section id="基本语法" class="level4">
+<h4 class="anchored" data-anchor-id="基本语法">基本语法</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>符号</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>.</td>
+<td>匹配任意单个字符</td>
+<td><code>a.c</code> 匹配 “abc”, “adc”, “a2c” 等</td>
+</tr>
+<tr class="even">
+<td>*</td>
+<td>匹配前面的表达式0次或多次</td>
+<td><code>a*b</code> 匹配 “b”, “ab”, “aab” 等</td>
+</tr>
+<tr class="odd">
+<td>+</td>
+<td>匹配前面的表达式1次或多次</td>
+<td><code>a+b</code> 匹配 “ab”, “aab” 等，但不匹配 “b”</td>
+</tr>
+<tr class="even">
+<td>?</td>
+<td>匹配前面的表达式0次或1次</td>
+<td><code>a?b</code> 匹配 “b” 或 “ab”</td>
+</tr>
+<tr class="odd">
+<td>[]</td>
+<td>匹配方括号内任意一个字符</td>
+<td><code>[abc]</code> 匹配 “a”, “b” 或 “c”</td>
+</tr>
+<tr class="even">
+<td>[^]</td>
+<td>匹配除方括号内字符外的任何字符</td>
+<td><code>[^abc]</code> 匹配除 “a”, “b”, “c” 外的任何字符</td>
+</tr>
+<tr class="odd">
+<td>()</td>
+<td>创建捕获组</td>
+<td><code>(abc)</code> 将 “abc” 作为一个组捕获</td>
+</tr>
+<tr class="even">
+<td> 匹配任意数字</td>
+<td><code>\d{4}</code> 匹配四位数字，如 “2025”</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>匹配字母、数字或下划线</td>
+<td><code>\w+</code> 匹配单词</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>匹配空白字符（空格、制表符等）</td>
+<td><code>a\sb</code> 匹配 “a b”</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="python中使用正则表达式" class="level4">
+<h4 class="anchored" data-anchor-id="python中使用正则表达式">Python中使用正则表达式</h4>
+<p>Python通过<code>re</code>模块提供正则表达式支持：</p>
+<div id="83e3690c" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 示例：提取邮箱地址</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"联系我：lyubh22@gmail.com，或者通过微信：13120040612"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 匹配邮箱</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>email_pattern <span class="op">=</span> <span class="vs">r'</span><span class="pp">[a-zA-Z0-9._%+-]</span><span class="op">+</span><span class="vs">@</span><span class="pp">[a-zA-Z0-9.-]</span><span class="op">+</span><span class="ch">\.</span><span class="pp">[a-zA-Z]</span><span class="op">{2,}</span><span class="vs">'</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>emails <span class="op">=</span> re.findall(email_pattern, text)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"邮箱:"</span>, emails)  <span class="co"># 输出: ['lyubh22@gmail.com']</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 匹配电话号码</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>phone_pattern <span class="op">=</span> <span class="vs">r'</span><span class="dv">\d</span><span class="op">{11}</span><span class="vs">'</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>phones <span class="op">=</span> re.findall(phone_pattern, text)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"电话:"</span>, phones)  <span class="co"># 输出: ['13120040612']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>邮箱: ['lyubh22@gmail.com']
+电话: ['13120040612']</code></pre>
+</div>
+</div>
+</section>
+<section id="爬虫中的应用实例" class="level4">
+<h4 class="anchored" data-anchor-id="爬虫中的应用实例">爬虫中的应用实例</h4>
+<p>当BeautifulSoup无法精确定位元素时，正则表达式可以派上用场：</p>
+<div id="91d52c43" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 假设我们要从网页中提取所有发表年份</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://lyubh.cn'</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 用正则表达式匹配所有"20XX-XX"格式的年月</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>date_pattern <span class="op">=</span> <span class="vs">r'20</span><span class="dv">\d</span><span class="op">{2}</span><span class="vs">-</span><span class="dv">\d</span><span class="op">{2}</span><span class="vs">'</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>all_text <span class="op">=</span> soup.get_text()</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>publication_dates <span class="op">=</span> re.findall(date_pattern, all_text)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"发现的出版日期:"</span>, publication_dates)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>发现的出版日期: []</code></pre>
+</div>
+</div>
+<p>正则表达式虽然强大，但过于复杂的表达式可能难以维护。在实际爬虫开发中，应该先尝试使用BeautifulSoup等结构化解析工具，当这些工具无法满足需求时再考虑使用正则表达式。</p>
+</section>
+</section>
+</section>
+<section id="第二章环境准备与第一个静态爬虫" class="level2">
+<h2 class="anchored" data-anchor-id="第二章环境准备与第一个静态爬虫">第二章：环境准备与第一个静态爬虫</h2>
+<p>现在，让我们卷起袖子，开始动手！</p>
+<section id="搭建你的爬虫工作室" class="level3">
+<h3 class="anchored" data-anchor-id="搭建你的爬虫工作室">2.1 搭建你的爬虫工作室</h3>
+<ol type="1">
+<li><p><strong>安装 Python</strong>: 确保你的电脑上安装了Python 3。</p></li>
+<li><p><strong>安装必备库</strong>: 打开你的终端或命令行工具，安装我们即将使用的两个核心库。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install requests</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install beautifulsoup4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>requests</code>: 负责发送HTTP请求，从网站获取HTML。</li>
+<li><code>beautifulsoup4</code>: 负责解析HTML，帮我们轻松提取数据。</li>
+</ul></li>
+</ol>
+</section>
+<section id="实战抓取学者主页上的信息" class="level3">
+<h3 class="anchored" data-anchor-id="实战抓取学者主页上的信息">2.2 实战：抓取学者主页上的信息</h3>
+<p><strong>目标</strong>：自动抓取学者主页（如 <a href="https://lyubh.cn">https://lyubh.cn</a>）上的姓名、简介、新闻动态，以及每一篇论文的标题、作者和会议。</p>
+<section id="第一步分析目标网页侦察工作" class="level4">
+<h4 class="anchored" data-anchor-id="第一步分析目标网页侦察工作">第一步：分析目标网页（侦察工作）</h4>
+<p>在浏览器中打开目标网页，右键点击你想要爬取的内容，选择“检查”或“审查元素”。你会看到类似这样的 HTML 结构：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 姓名 --&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Bohan Lyu<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 简介 --&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  I am an undergruduate at Tsinghua University. I'm interested in ML and NLP topics. My works are published in ICML and ACL.</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 新闻 --&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="ot"> id</span><span class="op">=</span><span class="st">"News"</span><span class="dt">&gt;</span>News<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>2025-07 Goedel-Prover is accepted to COLM 2025!<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- 论文条目，title、作者、会议分布在同一个&lt;tr&gt;里 --&gt;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tr</span><span class="ot"> class</span><span class="op">=</span><span class="st">"paper-row"</span><span class="dt">&gt;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>...<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Goedel-Prover: A Frontier Model for Open-Source Automated Theorem Proving<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>      Yong Lin*, Shange Tang*, <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;</span>Bohan Lyu<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;</span>, Jiayun Wu, ...</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">em</span><span class="dt">&gt;</span>COLM 2025<span class="dt">&lt;/</span><span class="kw">em</span><span class="dt">&gt;</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>      ...</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>侦察结论</strong>：</p>
+<ul>
+<li>姓名在 <code>&lt;h1&gt;</code> 标签里。</li>
+<li>简介在第一个 <code>&lt;p&gt;</code> 标签里。</li>
+<li>新闻在 <code>&lt;h2 id="News"&gt;</code> 后的 <code>&lt;ul&gt;</code> 里。</li>
+<li>论文信息在 <code>&lt;tr class="paper-row"&gt;</code> 里，标题是 <code>&lt;h3&gt;</code>，作者是 <code>&lt;h3&gt;</code> 下方的所有文本，会议在 <code>&lt;em&gt;</code> 内。</li>
+</ul>
+<p><strong>第二步：编写Python代码</strong></p>
+<div id="bc2fb5e0" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup, NavigableString, Tag</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://lyubh.cn'</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    response.raise_for_status()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Name</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> soup.find(<span class="st">'h1'</span>).text.strip() <span class="cf">if</span> soup.find(<span class="st">'h1'</span>) <span class="cf">else</span> <span class="st">'Name not found'</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Introduction</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    intro_section <span class="op">=</span> soup.find(<span class="st">'p'</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    intro_text <span class="op">=</span> intro_section.text.strip() <span class="cf">if</span> intro_section <span class="cf">else</span> <span class="st">''</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># News</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    news_items <span class="op">=</span> []</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    news_ul <span class="op">=</span> soup.find(<span class="st">'h2'</span>, <span class="bu">id</span><span class="op">=</span><span class="st">'News'</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> news_ul:</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        news_ul <span class="op">=</span> news_ul.find_next(<span class="st">'ul'</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> news_ul:</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> li <span class="kw">in</span> news_ul.find_all(<span class="st">'li'</span>):</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>                news_items.append(li.text.strip())</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Publications with full authors and venue</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    publications <span class="op">=</span> []</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> tr <span class="kw">in</span> soup.find_all(<span class="st">'tr'</span>, class_<span class="op">=</span><span class="st">'paper-row'</span>):</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        h3 <span class="op">=</span> tr.find(<span class="st">'h3'</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> h3:</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>            title <span class="op">=</span> h3.text.strip()</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>            <span class="co"># 下面拼接所有作者节点（包括&lt;b&gt;、普通文本等），直到遇到&lt;em&gt;或者&lt;p&gt;为止</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>            authors <span class="op">=</span> []</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>            node <span class="op">=</span> h3.next_sibling</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> node:</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="bu">isinstance</span>(node, Tag) <span class="kw">and</span> node.name <span class="kw">in</span> [<span class="st">'em'</span>, <span class="st">'p'</span>]:</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>                <span class="co"># 跳过换行等</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="bu">isinstance</span>(node, NavigableString):</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>                    t <span class="op">=</span> node.strip()</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> t:</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>                        authors.append(t)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>                <span class="cf">elif</span> <span class="bu">isinstance</span>(node, Tag):</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>                    t <span class="op">=</span> node.get_text(strip<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> t:</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>                        authors.append(t)</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>                node <span class="op">=</span> node.next_sibling</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>            authors_str <span class="op">=</span> <span class="st">' '</span>.join(authors).replace(<span class="st">' ,'</span>, <span class="st">','</span>).replace(<span class="st">'  '</span>, <span class="st">' '</span>).replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">''</span>).strip()</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>            <span class="co"># venue</span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>            venue_elem <span class="op">=</span> tr.find(<span class="st">'em'</span>)</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>            venue <span class="op">=</span> venue_elem.text.strip() <span class="cf">if</span> venue_elem <span class="cf">else</span> <span class="st">''</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>            publications.append({</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>                <span class="st">'title'</span>: title,</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>                <span class="st">'authors'</span>: authors_str,</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>                <span class="st">'venue'</span>: venue</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>            })</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 输出</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Name: </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Introduction: </span><span class="sc">{</span>intro_text<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Recent News:"</span>)</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> news_items[:<span class="dv">3</span>]:</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- </span><span class="sc">{</span>item<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Selected Publications:"</span>)</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, pub <span class="kw">in</span> <span class="bu">enumerate</span>(publications[:<span class="dv">3</span>], <span class="dv">1</span>):</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">. </span><span class="sc">{</span>pub[<span class="st">'title'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"    Authors: </span><span class="sc">{</span>pub[<span class="st">'authors'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"    Venue: </span><span class="sc">{</span>pub[<span class="st">'venue'</span>]<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> requests.exceptions.RequestException <span class="im">as</span> e:</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Error: Could not connect to website </span><span class="sc">{</span>url<span class="sc">}</span><span class="ss">. Reason: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Name: Name not found
+
+Introduction: If you are not redirected automatically, please click here.
+
+Recent News:
+
+Selected Publications:</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="第三章进阶爬取技术" class="level2">
+<h2 class="anchored" data-anchor-id="第三章进阶爬取技术">第三章：进阶爬取技术</h2>
+<p>抓取单个页面只是开始，真正的威力在于处理列表和多个页面。</p>
+<section id="爬取列表页数据爬列表" class="level3">
+<h3 class="anchored" data-anchor-id="爬取列表页数据爬列表">3.1 爬取列表页数据（“爬列表”）</h3>
+<p><strong>目标</strong>：抓取一个虚构的图书商店（<code>http://books.toscrape.com</code> - 这是一个真实的、为爬虫练习而生的网站）第一页所有书的标题和价格。</p>
+<p><strong>侦察工作</strong>： 打开网站，用开发者工具检查一本书。你会发现，每一本书的信息都在一个<code>&lt;article class="product_pod"&gt;</code>标签里。书名在<code>&lt;h3&gt;</code>标签的<code>&lt;a&gt;</code>标签里，价格在<code>&lt;p class="price_color"&gt;</code>标签里。</p>
+<p><strong>代码实现</strong>：</p>
+<div id="80dabebf" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv <span class="co"># 引入csv库，用于保存数据</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 目标URL</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'http://books.toscrape.com/'</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 定位所有包含书籍信息的article标签</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># find_all()会返回一个包含所有匹配项的列表</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> soup.find_all(<span class="st">'article'</span>, class_<span class="op">=</span><span class="st">'product_pod'</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>book_data <span class="op">=</span> [] <span class="co"># 创建一个列表来存储所有书籍信息</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 循环处理每一本书</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 在每个book标签内继续查找标题和价格</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 注意这里的路径查找方式</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> book.h3.a[<span class="st">'title'</span>]</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    price <span class="op">=</span> book.find(<span class="st">'p'</span>, class_<span class="op">=</span><span class="st">'price_color'</span>).text</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 打印出来看看</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"书名: </span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">, 价格: </span><span class="sc">{</span>price<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 将提取的数据存入字典，再添加到列表中</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    book_data.append({<span class="st">'title'</span>: title, <span class="st">'price'</span>: price})</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(book_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>书名: A Light in the Attic, 价格: Â£51.77
+书名: Tipping the Velvet, 价格: Â£53.74
+书名: Soumission, 价格: Â£50.10
+书名: Sharp Objects, 价格: Â£47.82
+书名: Sapiens: A Brief History of Humankind, 价格: Â£54.23
+书名: The Requiem Red, 价格: Â£22.65
+书名: The Dirty Little Secrets of Getting Your Dream Job, 价格: Â£33.34
+书名: The Coming Woman: A Novel Based on the Life of the Infamous Feminist, Victoria Woodhull, 价格: Â£17.93
+书名: The Boys in the Boat: Nine Americans and Their Epic Quest for Gold at the 1936 Berlin Olympics, 价格: Â£22.60
+书名: The Black Maria, 价格: Â£52.15
+书名: Starving Hearts (Triangular Trade Trilogy, #1), 价格: Â£13.99
+书名: Shakespeare's Sonnets, 价格: Â£20.66
+书名: Set Me Free, 价格: Â£17.46
+书名: Scott Pilgrim's Precious Little Life (Scott Pilgrim #1), 价格: Â£52.29
+书名: Rip it Up and Start Again, 价格: Â£35.02
+书名: Our Band Could Be Your Life: Scenes from the American Indie Underground, 1981-1991, 价格: Â£57.25
+书名: Olio, 价格: Â£23.88
+书名: Mesaerion: The Best Science Fiction Stories 1800-1849, 价格: Â£37.59
+书名: Libertarianism for Beginners, 价格: Â£51.33
+书名: It's Only the Himalayas, 价格: Â£45.17
+[{'title': 'A Light in the Attic', 'price': 'Â£51.77'}, {'title': 'Tipping the Velvet', 'price': 'Â£53.74'}, {'title': 'Soumission', 'price': 'Â£50.10'}, {'title': 'Sharp Objects', 'price': 'Â£47.82'}, {'title': 'Sapiens: A Brief History of Humankind', 'price': 'Â£54.23'}, {'title': 'The Requiem Red', 'price': 'Â£22.65'}, {'title': 'The Dirty Little Secrets of Getting Your Dream Job', 'price': 'Â£33.34'}, {'title': 'The Coming Woman: A Novel Based on the Life of the Infamous Feminist, Victoria Woodhull', 'price': 'Â£17.93'}, {'title': 'The Boys in the Boat: Nine Americans and Their Epic Quest for Gold at the 1936 Berlin Olympics', 'price': 'Â£22.60'}, {'title': 'The Black Maria', 'price': 'Â£52.15'}, {'title': 'Starving Hearts (Triangular Trade Trilogy, #1)', 'price': 'Â£13.99'}, {'title': "Shakespeare's Sonnets", 'price': 'Â£20.66'}, {'title': 'Set Me Free', 'price': 'Â£17.46'}, {'title': "Scott Pilgrim's Precious Little Life (Scott Pilgrim #1)", 'price': 'Â£52.29'}, {'title': 'Rip it Up and Start Again', 'price': 'Â£35.02'}, {'title': 'Our Band Could Be Your Life: Scenes from the American Indie Underground, 1981-1991', 'price': 'Â£57.25'}, {'title': 'Olio', 'price': 'Â£23.88'}, {'title': 'Mesaerion: The Best Science Fiction Stories 1800-1849', 'price': 'Â£37.59'}, {'title': 'Libertarianism for Beginners', 'price': 'Â£51.33'}, {'title': "It's Only the Himalayas", 'price': 'Â£45.17'}]</code></pre>
+</div>
+</div>
+</section>
+<section id="循环爬取多个页面循环爬翻页" class="level3">
+<h3 class="anchored" data-anchor-id="循环爬取多个页面循环爬翻页">3.2 循环爬取多个页面（“循环爬”/翻页）</h3>
+<p><strong>目标</strong>：抓取<code>books.toscrape.com</code>前5页所有书的信息。</p>
+<p><strong>侦察工作</strong>： 在第一页底部，找到“next”按钮。检查它的HTML，你会看到一个<code>&lt;a&gt;</code>标签，它的<code>href</code>属性指向下一页的地址（<code>catalogue/page-2.html</code>）。这给了我们构建下一页URL的规律。</p>
+<p><strong>代码实现</strong>：</p>
+<div id="38ff3592" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time <span class="co"># 引入时间库，用于设置延时</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>base_url <span class="op">=</span> <span class="st">'http://books.toscrape.com/catalogue/'</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>all_book_data <span class="op">=</span> []</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 循环爬取前3页</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">4</span>): <span class="co"># 从第1页到第3页</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 构造每一页的完整URL</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>base_url<span class="sc">}</span><span class="ss">page-</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">.html"</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"正在抓取页面: </span><span class="sc">{</span>url<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 如果页面不存在，则跳出循环</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">!=</span> <span class="dv">200</span>:</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"页面 </span><span class="sc">{</span>url<span class="sc">}</span><span class="ss"> 不存在，停止抓取。"</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    books <span class="op">=</span> soup.find_all(<span class="st">'article'</span>, class_<span class="op">=</span><span class="st">'product_pod'</span>)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> book <span class="kw">in</span> books:</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> book.h3.a[<span class="st">'title'</span>]</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        price <span class="op">=</span> book.find(<span class="st">'p'</span>, class_<span class="op">=</span><span class="st">'price_color'</span>).text</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>        all_book_data.append({<span class="st">'title'</span>: title, <span class="st">'price'</span>: price})</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 做一个有礼貌的爬虫，每次请求后暂停一下</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"页面 </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> 抓取完毕，暂停1秒..."</span>)</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">1</span>) </span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">全部 </span><span class="sc">{</span><span class="bu">len</span>(all_book_data)<span class="sc">}</span><span class="ss"> 本书的信息抓取完毕！"</span>)</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(all_book_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>正在抓取页面: http://books.toscrape.com/catalogue/page-1.html
+页面 1 抓取完毕，暂停1秒...
+正在抓取页面: http://books.toscrape.com/catalogue/page-2.html
+页面 2 抓取完毕，暂停1秒...
+正在抓取页面: http://books.toscrape.com/catalogue/page-3.html
+页面 3 抓取完毕，暂停1秒...
+
+全部 60 本书的信息抓取完毕！
+[{'title': 'A Light in the Attic', 'price': 'Â£51.77'}, {'title': 'Tipping the Velvet', 'price': 'Â£53.74'}, {'title': 'Soumission', 'price': 'Â£50.10'}, {'title': 'Sharp Objects', 'price': 'Â£47.82'}, {'title': 'Sapiens: A Brief History of Humankind', 'price': 'Â£54.23'}, {'title': 'The Requiem Red', 'price': 'Â£22.65'}, {'title': 'The Dirty Little Secrets of Getting Your Dream Job', 'price': 'Â£33.34'}, {'title': 'The Coming Woman: A Novel Based on the Life of the Infamous Feminist, Victoria Woodhull', 'price': 'Â£17.93'}, {'title': 'The Boys in the Boat: Nine Americans and Their Epic Quest for Gold at the 1936 Berlin Olympics', 'price': 'Â£22.60'}, {'title': 'The Black Maria', 'price': 'Â£52.15'}, {'title': 'Starving Hearts (Triangular Trade Trilogy, #1)', 'price': 'Â£13.99'}, {'title': "Shakespeare's Sonnets", 'price': 'Â£20.66'}, {'title': 'Set Me Free', 'price': 'Â£17.46'}, {'title': "Scott Pilgrim's Precious Little Life (Scott Pilgrim #1)", 'price': 'Â£52.29'}, {'title': 'Rip it Up and Start Again', 'price': 'Â£35.02'}, {'title': 'Our Band Could Be Your Life: Scenes from the American Indie Underground, 1981-1991', 'price': 'Â£57.25'}, {'title': 'Olio', 'price': 'Â£23.88'}, {'title': 'Mesaerion: The Best Science Fiction Stories 1800-1849', 'price': 'Â£37.59'}, {'title': 'Libertarianism for Beginners', 'price': 'Â£51.33'}, {'title': "It's Only the Himalayas", 'price': 'Â£45.17'}, {'title': 'In Her Wake', 'price': 'Â£12.84'}, {'title': 'How Music Works', 'price': 'Â£37.32'}, {'title': 'Foolproof Preserving: A Guide to Small Batch Jams, Jellies, Pickles, Condiments, and More: A Foolproof Guide to Making Small Batch Jams, Jellies, Pickles, Condiments, and More', 'price': 'Â£30.52'}, {'title': 'Chase Me (Paris Nights #2)', 'price': 'Â£25.27'}, {'title': 'Black Dust', 'price': 'Â£34.53'}, {'title': 'Birdsong: A Story in Pictures', 'price': 'Â£54.64'}, {'title': "America's Cradle of Quarterbacks: Western Pennsylvania's Football Factory from Johnny Unitas to Joe Montana", 'price': 'Â£22.50'}, {'title': 'Aladdin and His Wonderful Lamp', 'price': 'Â£53.13'}, {'title': 'Worlds Elsewhere: Journeys Around Shakespeareâ\x80\x99s Globe', 'price': 'Â£40.30'}, {'title': 'Wall and Piece', 'price': 'Â£44.18'}, {'title': 'The Four Agreements: A Practical Guide to Personal Freedom', 'price': 'Â£17.66'}, {'title': 'The Five Love Languages: How to Express Heartfelt Commitment to Your Mate', 'price': 'Â£31.05'}, {'title': 'The Elephant Tree', 'price': 'Â£23.82'}, {'title': 'The Bear and the Piano', 'price': 'Â£36.89'}, {'title': "Sophie's World", 'price': 'Â£15.94'}, {'title': 'Penny Maybe', 'price': 'Â£33.29'}, {'title': 'Maude (1883-1993):She Grew Up with the country', 'price': 'Â£18.02'}, {'title': 'In a Dark, Dark Wood', 'price': 'Â£19.63'}, {'title': 'Behind Closed Doors', 'price': 'Â£52.22'}, {'title': "You can't bury them all: Poems", 'price': 'Â£33.63'}, {'title': 'Slow States of Collapse: Poems', 'price': 'Â£57.31'}, {'title': 'Reasons to Stay Alive', 'price': 'Â£26.41'}, {'title': 'Private Paris (Private #10)', 'price': 'Â£47.61'}, {'title': '#HigherSelfie: Wake Up Your Life. Free Your Soul. Find Your Tribe.', 'price': 'Â£23.11'}, {'title': 'Without Borders (Wanderlove #1)', 'price': 'Â£45.07'}, {'title': 'When We Collided', 'price': 'Â£31.77'}, {'title': 'We Love You, Charlie Freeman', 'price': 'Â£50.27'}, {'title': 'Untitled Collection: Sabbath Poems 2014', 'price': 'Â£14.27'}, {'title': 'Unseen City: The Majesty of Pigeons, the Discreet Charm of Snails &amp; Other Wonders of the Urban Wilderness', 'price': 'Â£44.18'}, {'title': 'Unicorn Tracks', 'price': 'Â£18.78'}, {'title': 'Unbound: How Eight Technologies Made Us Human, Transformed Society, and Brought Our World to the Brink', 'price': 'Â£25.52'}, {'title': 'Tsubasa: WoRLD CHRoNiCLE 2 (Tsubasa WoRLD CHRoNiCLE #2)', 'price': 'Â£16.28'}, {'title': 'Throwing Rocks at the Google Bus: How Growth Became the Enemy of Prosperity', 'price': 'Â£31.12'}, {'title': 'This One Summer', 'price': 'Â£19.49'}, {'title': 'Thirst', 'price': 'Â£17.27'}, {'title': 'The Torch Is Passed: A Harding Family Story', 'price': 'Â£19.09'}, {'title': 'The Secret of Dreadwillow Carse', 'price': 'Â£56.13'}, {'title': 'The Pioneer Woman Cooks: Dinnertime: Comfort Classics, Freezer Food, 16-Minute Meals, and Other Delicious Ways to Solve Supper!', 'price': 'Â£56.41'}, {'title': 'The Past Never Ends', 'price': 'Â£56.50'}, {'title': 'The Natural History of Us (The Fine Art of Pretending #2)', 'price': 'Â£45.22'}]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="第四章攻克动态网站动态爬" class="level2">
+<h2 class="anchored" data-anchor-id="第四章攻克动态网站动态爬">第四章：攻克动态网站（“动态爬”）</h2>
+<p><strong>挑战</strong>：很多现代网站使用JavaScript在页面加载后才动态地载入数据。你用<code>requests</code>直接请求，只能拿到一个空壳HTML，数据根本不在里面。</p>
+<p><strong>例子</strong>：一个股价实时更新的页面，或者无限滚动的社交媒体。</p>
+<p><strong>解决方案</strong>：使用<strong>浏览器自动化工具</strong>，如<code>Selenium</code>。</p>
+<p><code>Selenium</code>可以驱动一个真实的浏览器（如Chrome或Firefox）去加载网页。它会等待所有JavaScript执行完毕，渲染出最终的页面，然后我们再从这个完整的页面中提取数据。</p>
+<section id="安装与配置-selenium" class="level3">
+<h3 class="anchored" data-anchor-id="安装与配置-selenium">4.1 安装与配置 Selenium</h3>
+<ol type="1">
+<li><p><strong>安装 Selenium 库</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install selenium</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>下载 WebDriver</strong>: <code>Selenium</code>需要一个叫做<code>WebDriver</code>的驱动程序来控制浏览器。你需要下载与你的<strong>浏览器版本完全对应</strong>的<code>WebDriver</code>。</p>
+<ul>
+<li><strong>Chrome用户</strong>: 搜索 “ChromeDriver” 下载。</li>
+<li><strong>Firefox用户</strong>: 搜索 “GeckoDriver” 下载。</li>
+<li>下载后，将<code>chromedriver.exe</code>（或<code>geckodriver.exe</code>）放到你的Python脚本所在的文件夹，或者一个系统路径下。</li>
+</ul></li>
+</ol>
+</section>
+<section id="实战抓取动态加载的数据" class="level3">
+<h3 class="anchored" data-anchor-id="实战抓取动态加载的数据">4.2 实战：抓取动态加载的数据</h3>
+<p><strong>目标</strong>：抓取一个虚构的、由JS加载名言的网站 (<code>http://quotes.toscrape.com/js/</code>) 的第一页所有名言。</p>
+<p><strong>侦察工作</strong>： 如果你直接用<code>requests</code>请求这个URL，会发现返回的HTML里根本没有名言数据。但用浏览器打开，名言却清晰可见。这就是JS动态加载的证据。</p>
+<p><strong>代码实现</strong>：</p>
+<div id="7ab56856" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.support.ui <span class="im">import</span> WebDriverWait</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.support <span class="im">import</span> expected_conditions <span class="im">as</span> EC</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Selenium 设置 ---</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 指定WebDriver的路径（如果不在系统路径下）</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># driver_path = 'path/to/your/chromedriver.exe'</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># driver = webdriver.Chrome(executable_path=driver_path)</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome() <span class="co"># 假设chromedriver在PATH中</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'http://quotes.toscrape.com/js/'</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>driver.get(url)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># --- 等待动态内容加载 ---</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 设置一个最长等待时间（10秒）</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 等待直到class为'quote'的元素出现</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    WebDriverWait(driver, <span class="dv">10</span>).until(</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        EC.presence_of_element_located((By.CLASS_NAME, <span class="st">"quote"</span>))</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 此刻，浏览器中的页面已经完全加载好了</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 获取渲染后的页面源代码</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    html_content <span class="op">=</span> driver.page_source</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># --- 使用BeautifulSoup解析 ---</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(html_content, <span class="st">'html.parser'</span>)</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    quotes <span class="op">=</span> soup.find_all(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">'quote'</span>)</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> quote <span class="kw">in</span> quotes:</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> quote.find(<span class="st">'span'</span>, class_<span class="op">=</span><span class="st">'text'</span>).text</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>        author <span class="op">=</span> quote.find(<span class="st">'small'</span>, class_<span class="op">=</span><span class="st">'author'</span>).text</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span>text<span class="sc">}</span><span class="ss">' - </span><span class="sc">{</span>author<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 完成后务必关闭浏览器，释放资源</span></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">2</span>) <span class="co"># 稍等片刻，方便观察</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    driver.quit()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>动态爬取小结</strong>：</p>
+<ul>
+<li><strong>优点</strong>：能抓取几乎所有“所见即所得”的网页内容，是终极解决方案。</li>
+<li><strong>缺点</strong>：速度慢（因为要真实加载整个浏览器），消耗资源多。</li>
+</ul>
+<p><strong>更高效的动态抓取思路（高级）</strong>： 在开发者工具的“Network”标签页下，筛选<code>XHR</code>或<code>Fetch</code>请求。你往往能找到JS用来获取数据的那个后台API接口。如果能找到这个接口，你就可以直接用<code>requests</code>去请求这个API，获取返回的JSON数据，这比启动整个Selenium快得多！</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/sem-sast\.cn");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../Lessons/lesson4.html" class="pagination-link" aria-label="1: Git与GitHub的应用">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1: Git与GitHub的应用</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../Lessons/lesson6.html" class="pagination-link" aria-label="3: Python数据可视化">
+        <span class="nav-page-text">3: Python数据可视化</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Imbernoulli/summer/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
